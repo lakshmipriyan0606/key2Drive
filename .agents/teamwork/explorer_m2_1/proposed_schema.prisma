@@ -1,0 +1,182 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum BookingStatus {
+  REQUESTED
+  CONFIRMED
+  REJECTED
+  CANCELLED
+  COMPLETED
+}
+
+enum EnquiryStatus {
+  PENDING
+  IN_REVIEW
+  RESOLVED
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  passwordHash String
+  name         String
+  role         Role        @default(ADMIN)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  sessions     Session[]
+  adminNotes   AdminNote[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  tagline     String
+  description String
+  features    String
+  basePrice   Float
+  priceUnit   String
+  isActive    Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tariffs     Tariff[]
+  bookings    Booking[]
+
+  @@index([slug])
+  @@index([isActive])
+  @@map("services")
+}
+
+model Tariff {
+  id                  String   @id @default(cuid())
+  serviceId           String
+  title               String
+  vehicleCategory     String
+  baseRate            Float
+  includedHours       Int?
+  includedKm          Int?
+  extraHourRate       Float
+  extraKmRate         Float
+  nightChargeRate     Float
+  waitingChargePerMin Float
+  cancellationPolicy  String?
+  isUnconfirmed       Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  service             Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@index([serviceId])
+  @@map("tariffs")
+}
+
+model Booking {
+  id                  String                 @id @default(cuid())
+  reference           String                 @unique
+  status              BookingStatus          @default(REQUESTED)
+  customerName        String
+  customerPhone       String
+  customerEmail       String
+  serviceId           String
+  pickupAddress       String
+  dropAddress         String?
+  pickupDateTime      DateTime
+  duration            String?
+  vehicleInfo         String?
+  specialInstructions String?
+  estimatedAmount     Float
+  finalAmount         Float?
+  submissionHash      String?
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+  service             Service                @relation(fields: [serviceId], references: [id])
+  statusHistory       BookingStatusHistory[]
+  notes               AdminNote[]
+
+  @@index([reference])
+  @@index([status])
+  @@index([serviceId])
+  @@index([customerEmail])
+  @@index([customerPhone])
+  @@index([pickupDateTime])
+  @@index([submissionHash])
+  @@map("bookings")
+}
+
+model BookingStatusHistory {
+  id         String        @id @default(cuid())
+  bookingId  String
+  fromStatus BookingStatus
+  toStatus   BookingStatus
+  changedBy  String
+  note       String?
+  createdAt  DateTime      @default(now())
+  booking    Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId])
+  @@index([createdAt])
+  @@map("booking_status_histories")
+}
+
+model Enquiry {
+  id            String        @id @default(cuid())
+  name          String
+  phone         String
+  email         String
+  subject       String
+  message       String
+  status        EnquiryStatus @default(PENDING)
+  isResolved    Boolean       @default(false)
+  internalNotes String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  notes         AdminNote[]
+
+  @@index([status])
+  @@index([isResolved])
+  @@index([createdAt])
+  @@map("enquiries")
+}
+
+model AdminNote {
+  id        String   @id @default(cuid())
+  content   String
+  authorId  String
+  bookingId String?
+  enquiryId String?
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  booking   Booking? @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  enquiry   Enquiry? @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([bookingId])
+  @@index([enquiryId])
+  @@map("admin_notes")
+}
