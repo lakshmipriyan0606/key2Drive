@@ -1,25 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SonnerToaster from "@/components/ui/SonnerToaster";
-
-// Primary Heading Font: Manrope (400, 500, 600, 700, 800)
-const manrope = Manrope({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-manrope",
-});
-
-// Body and UI Font: Inter (400, 500, 600, 700)
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-});
 
 export const viewport: Viewport = {
   themeColor: "#11243D",
@@ -80,10 +63,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${manrope.variable} ${inter.variable} font-sans h-full antialiased`}
-    >
+    <html lang="en" className="scroll-smooth font-sans h-full antialiased">
       <body className="min-h-screen bg-brand-warm-bg text-brand-text flex flex-col font-sans selection:bg-brand-orange/20 selection:text-brand-navy">
         {/* Accessible skip link for keyboard & assistive technology users */}
         <a
