@@ -30,6 +30,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# SQLite ephemeral WAL and shared memory files
+*.db-shm
+*.db-wal
+
 # OS files
 .DS_Store
 Thumbs.db
