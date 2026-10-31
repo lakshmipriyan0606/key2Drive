@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import CustomSelect, { CustomSelectOption } from "@/components/ui/CustomSelect";
+import { SEED_SERVICES, SEED_TARIFFS } from "@/lib/data/seedData";
 
 interface ServiceItem {
   id: string;
@@ -51,16 +52,16 @@ function BookingContent() {
   const preselectedTariff = searchParams.get("tariff") || "";
 
   const [step, setStep] = useState<number>(1);
-  const [services, setServices] = useState<ServiceItem[]>([]);
-  const [tariffs, setTariffs] = useState<TariffItem[]>([]);
-  const [loadingInitial, setLoadingInitial] = useState<boolean>(true);
+  const [services, setServices] = useState<ServiceItem[]>(SEED_SERVICES as any);
+  const [tariffs, setTariffs] = useState<TariffItem[]>(SEED_TARIFFS as any);
+  const [loadingInitial, setLoadingInitial] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [showDetailsModal, setShowDetailsModal] = useState<boolean>(false);
 
   // Form State
   const [formData, setFormData] = useState({
-    serviceId: "",
-    tariffId: "",
+    serviceId: preselectedService || SEED_SERVICES[0].id,
+    tariffId: preselectedTariff || SEED_TARIFFS[0].id,
     pickupDate: "",
     pickupTime: "10:00",
     duration: "4 hours",

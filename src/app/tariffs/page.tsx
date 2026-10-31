@@ -20,6 +20,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
+import { SEED_TARIFFS } from "@/lib/data/seedData";
 
 interface TariffItem {
   id: string;
@@ -175,8 +176,8 @@ const TARIFF_TABS: ServiceTab[] = [
 ];
 
 export default function TariffsPage() {
-  const [tariffs, setTariffs] = useState<TariffItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [tariffs, setTariffs] = useState<TariffItem[]>(SEED_TARIFFS as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("hourly-driver");
 
   useEffect(() => {

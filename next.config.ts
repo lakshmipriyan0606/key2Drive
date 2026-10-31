@@ -3,6 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   transpilePackages: ["framer-motion"],
+  outputFileTracingIncludes: {
+    "/api/**/*": ["./prisma/dev.db", "./prisma/schema.prisma"],
+    "/**/*": ["./prisma/dev.db", "./prisma/schema.prisma"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

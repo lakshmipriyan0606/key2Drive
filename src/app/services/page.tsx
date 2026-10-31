@@ -19,6 +19,7 @@ import {
   Calendar,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
+import { SEED_SERVICES } from "@/lib/data/seedData";
 
 interface ServiceItem {
   id: string;
@@ -27,6 +28,7 @@ interface ServiceItem {
   tagline: string;
   description: string;
   features: string;
+  featuresList?: string[];
   basePrice: number;
   priceUnit: string;
   isActive: boolean;
@@ -60,8 +62,8 @@ const CATEGORY_TABS = [
 ];
 
 export default function ServicesPage() {
-  const [services, setServices] = useState<ServiceItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [services, setServices] = useState<ServiceItem[]>(SEED_SERVICES as any);
+  const [loading, setLoading] = useState<boolean>(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
@@ -70,7 +72,7 @@ export default function ServicesPage() {
       try {
         const res = await fetch("/api/services");
         const json = await res.json();
-        if (json.success && Array.isArray(json.services)) {
+        if (json.success && Array.isArray(json.services) && json.services.length > 0) {
           setServices(json.services);
         }
       } catch (err) {
