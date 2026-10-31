@@ -1,5 +1,4 @@
 const { chromium } = require('playwright');
-const path = require('path');
 
 async function main() {
   const browser = await chromium.launch({ headless: true });
@@ -23,43 +22,45 @@ async function main() {
     pageErrors.push(err.message);
   });
 
-  console.log('Navigating to http://localhost:3000/admin/login...');
+  console.log('1. Navigating to http://localhost:3000/admin/login...');
   await page.goto('http://localhost:3000/admin/login', { waitUntil: 'networkidle' });
 
-  console.log('Filling login credentials...');
+  console.log('2. Filling credentials and signing in...');
   await page.fill('input[type="email"]', 'admin@key2drive.com');
   await page.fill('input[type="password"]', 'Key2DriveAdmin2026!');
 
-  console.log('Clicking submit...');
   await Promise.all([
     page.waitForURL('**/admin', { timeout: 10000 }),
     page.click('button[type="submit"]'),
   ]);
 
-  console.log('Waiting for network idle on /admin...');
   await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(2000);
+  console.log('3. Navigated to /admin successfully.');
 
-  const title = await page.title();
-  const currentUrl = page.url();
-  console.log('Current URL:', currentUrl);
-  console.log('Page Title:', title);
+  console.log('4. Navigating to http://localhost:3000/admin/pricing...');
+  await page.goto('http://localhost:3000/admin/pricing', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(1500);
+
+  const pricingTitle = await page.title();
+  const pricingUrl = page.url();
+  console.log('Current URL:', pricingUrl);
+  console.log('Page Title:', pricingTitle);
 
   const bodyText = await page.evaluate(() => document.body.innerText);
   const hasAppError = bodyText.includes('Application error: a client-side exception has occurred');
   console.log('Has Application Error?', hasAppError);
 
-  const artifactPath = 'C:/Users/LAKSHMI/.gemini/antigravity/brain/13ebf5af-fcdb-4582-b81c-39ed02b18bfd/admin_dashboard_rendered.png';
-  await page.screenshot({ path: artifactPath, fullPage: true });
-  console.log('Screenshot saved to:', artifactPath);
+  const screenshotPath = 'C:/Users/LAKSHMI/.gemini/antigravity/brain/13ebf5af-fcdb-4582-b81c-39ed02b18bfd/admin_pricing_rendered.png';
+  await page.screenshot({ path: screenshotPath, fullPage: true });
+  console.log('Screenshot saved to:', screenshotPath);
 
   await browser.close();
 
   if (hasAppError || pageErrors.length > 0) {
-    console.error('FAILED! Application error or page errors detected.');
+    console.error('FAILED! Errors detected on /admin/pricing:', pageErrors);
     process.exit(1);
   } else {
-    console.log('SUCCESS! Admin rendered without application error.');
+    console.log('SUCCESS! /admin/pricing rendered without any application error or unhandled exceptions.');
   }
 }
 
@@ -67,4 +68,3 @@ main().catch((err) => {
   console.error('Script failure:', err);
   process.exit(1);
 });
-
