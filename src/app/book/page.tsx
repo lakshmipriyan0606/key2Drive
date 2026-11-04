@@ -166,8 +166,8 @@ function BookingContent() {
   const serviceOptions: CustomSelectOption[] = services.map((svc) => ({
     value: svc.id,
     label: svc.title,
-    badge: `₹${svc.basePrice.toLocaleString()}`,
-    description: svc.priceUnit,
+    badge: "Custom Quote",
+    description: "Discussed with dispatch",
     icon: <Car className="w-4 h-4" />,
   }));
 
@@ -459,9 +459,9 @@ function BookingContent() {
                   </span>
                 </div>
                 <div className="flex justify-between py-1 border-b">
-                  <span>Estimated Fare:</span>
+                  <span>Trip Fare:</span>
                   <span className="font-bold text-brand-orange">
-                    ₹{confirmedBooking.estimatedFare.toLocaleString()}
+                    Discussed on Call / WhatsApp
                   </span>
                 </div>
                 <div className="flex justify-between py-1">
@@ -866,9 +866,9 @@ function BookingContent() {
                       </span>
                     </div>
                     <div className="flex justify-between border-t border-brand-border/60 pt-2">
-                      <span className="text-secondary-text font-bold">Estimated Fare:</span>
-                      <span className="font-extrabold text-brand-orange text-sm">
-                        ₹{calculateEstimatedFare().toLocaleString()}
+                      <span className="text-secondary-text font-bold">Trip Charges:</span>
+                      <span className="font-bold text-brand-orange text-xs sm:text-sm">
+                        Discussed on Call / WhatsApp
                       </span>
                     </div>
                   </div>
@@ -917,7 +917,7 @@ function BookingContent() {
                   Guaranteed Comfort
                 </span>
                 <p className="font-bold text-sm text-white">Your Car, Our Professional Driver</p>
-                <p className="text-xs text-white/70">Police-verified chauffeurs with zero surge guarantee.</p>
+                <p className="text-xs text-white/70">Background-checked professional drivers with zero surge guarantee.</p>
               </div>
             </div>
           </div>

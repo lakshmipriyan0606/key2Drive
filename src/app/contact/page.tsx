@@ -138,23 +138,24 @@ export default function ContactPage() {
               <div className="space-y-6 text-sm">
                 {/* 1. Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 text-brand-orange border border-white/10">
-                    <Phone className="w-5 h-5" />
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0 text-brand-orange border border-amber-500/30">
+                    <Phone className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
                     <a
                       href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                      className="font-bold text-white hover:text-brand-orange transition-colors"
+                      className="font-black text-white hover:text-brand-orange transition-colors text-base block"
+                      title="Tap to Call Now"
                     >
-                      {CONTACT_DETAILS.phoneDisplay}
+                      Call Now: {CONTACT_DETAILS.phoneDisplay}
                     </a>
-                    <p className="text-xs text-white/60">Call us anytime</p>
+                    <p className="text-xs text-brand-orange/90 font-medium">Click to Call (24/7 Dispatch Desk)</p>
                   </div>
                 </div>
 
                 {/* 2. WhatsApp */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400 border border-emerald-500/20">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400 border border-emerald-500/30">
                     <MessageSquare className="w-5 h-5" />
                   </div>
                   <div>
@@ -162,11 +163,12 @@ export default function ContactPage() {
                       href={CONTACT_DETAILS.whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-bold text-white hover:text-emerald-400 transition-colors"
+                      className="font-black text-emerald-400 hover:text-emerald-300 transition-colors text-base block"
+                      title="Chat on WhatsApp with Pre-filled Greeting"
                     >
-                      Chat on WhatsApp
+                      WhatsApp Booking
                     </a>
-                    <p className="text-xs text-white/60">Quick support</p>
+                    <p className="text-xs text-white/70">Click to start with pre-filled greeting</p>
                   </div>
                 </div>
 

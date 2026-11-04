@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Phone } from "lucide-react";
+import { Menu, X, ArrowRight, Phone, MessageSquare } from "lucide-react";
 import BrandLogo from "@/components/ui/BrandLogo";
 import MobileNav from "@/components/layout/MobileNav";
 import ButtonMotion from "@/components/ui/ButtonMotion";
+import { CONTACT_DETAILS } from "@/lib/constants/navigation";
 
 export default function Header() {
   const pathname = usePathname();
@@ -34,8 +35,6 @@ export default function Header() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
-    { label: "Tariff", href: "/tariffs" },
-    { label: "About", href: "/#why-us" },
     { label: "Contact", href: "/contact" },
   ];
 
@@ -85,8 +84,28 @@ export default function Header() {
               })}
             </nav>
 
-            {/* Right Action: Book a Driver CTA */}
-            <div className="hidden md:flex items-center gap-4">
+            {/* Right Action: 3-Way Reach (WhatsApp, Call, Book) */}
+            <div className="hidden md:flex items-center gap-3">
+              <a
+                href={CONTACT_DETAILS.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 text-xs font-semibold transition-all duration-150"
+                title="Chat on WhatsApp (Instant Greeting)"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>WhatsApp</span>
+              </a>
+
+              <a
+                href={`tel:${CONTACT_DETAILS.phoneTel}`}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-brand-orange hover:bg-amber-500/25 text-xs font-bold transition-all duration-150"
+                title="Call Now for Instant Driver Dispatch"
+              >
+                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <span>Call Now: <span className="text-white font-semibold">{CONTACT_DETAILS.phoneDisplay}</span></span>
+              </a>
+
               <Link href="/book">
                 <ButtonMotion
                   variant="accent"
@@ -99,13 +118,34 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile Actions: WhatsApp, Call, Book & Hamburger */}
             <div className="flex md:hidden items-center gap-2">
+              <a
+                href={CONTACT_DETAILS.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center"
+                aria-label="WhatsApp Dispatch"
+                title="Chat on WhatsApp"
+              >
+                <MessageSquare className="w-4 h-4" />
+              </a>
+
+              <a
+                href={`tel:${CONTACT_DETAILS.phoneTel}`}
+                className="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-brand-orange border border-amber-500/30 flex items-center gap-1 text-xs font-bold"
+                aria-label="Call Dispatch Now"
+                title="Call Now"
+              >
+                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <span>Call Now</span>
+              </a>
+
               <Link href="/book">
                 <ButtonMotion
                   variant="accent"
                   size="sm"
-                  className="!px-3.5 !py-1.5 !rounded-full text-xs font-bold"
+                  className="!px-3 !py-1.5 !rounded-full text-xs font-bold"
                 >
                   Book
                 </ButtonMotion>

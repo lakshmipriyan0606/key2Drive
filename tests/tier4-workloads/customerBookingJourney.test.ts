@@ -38,7 +38,9 @@ describe('Tier 4: Workload Scenario - End-to-End Customer Booking Flow', () => {
     expect(routeEstimate.durationMinutes).toBeGreaterThan(0);
 
     // Step 3: Fare preview calculation
-    const requestedPickupTime = new Date(Date.now() + 48 * 3600 * 1000).toISOString(); // 2 days in future
+    const pickupDateObj = new Date(Date.now() + 48 * 3600 * 1000);
+    pickupDateObj.setHours(11, 0, 0, 0);
+    const requestedPickupTime = pickupDateObj.toISOString(); // 2 days in future at 11:00 AM (daytime)
     const requestedDuration = 6; // 4 hrs base + 2 extra hours
     const farePreview = calculateFare({
       serviceId: selectedService!.id,

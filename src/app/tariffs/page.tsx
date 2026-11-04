@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   AlertTriangle,
   Clock,
@@ -72,7 +73,7 @@ const TARIFF_TABS: ServiceTab[] = [
     badge: "Most Popular City Choice",
     icon: <Clock className="w-3.5 h-3.5 shrink-0" />,
     features: [
-      "100% Police-verified, background-checked professional chauffeur",
+      "100% Background-checked & DL verified professional driver",
       "Certified competence in Manual, Automatic & EV transmissions",
       "Doorstep arrival 10 minutes ahead of scheduled pickup",
       "Zero surge guarantee during rush hours, rain, or festivities",
@@ -176,9 +177,15 @@ const TARIFF_TABS: ServiceTab[] = [
 ];
 
 export default function TariffsPage() {
+  const router = useRouter();
   const [tariffs, setTariffs] = useState<TariffItem[]>(SEED_TARIFFS as any);
   const [loading, setLoading] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>("hourly-driver");
+
+  useEffect(() => {
+    // Tariff section hidden per client instruction - redirect to services
+    router.replace("/services");
+  }, [router]);
 
   useEffect(() => {
     async function fetchTariffs() {
@@ -244,7 +251,7 @@ export default function TariffsPage() {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white/90 font-medium">
                   <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
-                  <span>Police-Verified Drivers</span>
+                  <span>Govt ID & DL Verified Drivers</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white/90 font-medium">
                   <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
@@ -489,7 +496,7 @@ export default function TariffsPage() {
                 </div>
                 <p className="text-xs text-secondary-text leading-relaxed">
                   Every driver holds a valid Indian Commercial/Badge Driving License, has undergone
-                  police background verification, and is trained in courteous hospitality for family and executive travel.
+                  government identity & driving license verification, and is trained in courteous hospitality for family and executive travel.
                 </p>
                 <div className="pt-1">
                   <Link

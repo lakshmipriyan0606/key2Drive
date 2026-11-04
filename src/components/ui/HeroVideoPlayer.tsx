@@ -63,7 +63,7 @@ export default function HeroVideoPlayer() {
 
   return (
     <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-brand-navy-deep">
-      {/* 1. High-Definition Automotive Video Clip: heroclip.mp4 */}
+      {/* 1. Automotive Video Clip with Fallback Poster */}
       <div className="relative w-full h-[340px] sm:h-[420px] lg:h-[450px] overflow-hidden bg-brand-navy">
         <video
           ref={videoRef}
@@ -72,7 +72,7 @@ export default function HeroVideoPlayer() {
           muted={isMuted}
           playsInline
           onLoadedData={() => setIsLoaded(true)}
-          poster="/images/hero-mercedes.jpg"
+          poster="/images/chauffeur-indian.jpg"
           className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
         >
           <source src="/videos/heroclip.mp4" type="video/mp4" />
@@ -80,16 +80,16 @@ export default function HeroVideoPlayer() {
 
         {/* Fallback poster while initializing */}
         <img
-          src="/images/hero-mercedes.jpg"
-          alt="Mercedes-Benz S-Class & Executive Fleet"
+          src="/images/chauffeur-indian.jpg"
+          alt="Professional Indian Acting Driver & Chauffeur for Personal Cars"
           className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 pointer-events-none ${
             isLoaded ? "opacity-0" : "opacity-100"
           }`}
           loading="eager"
         />
 
-        {/* Gradient dark overlays for cinematic depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/20 to-transparent opacity-80 pointer-events-none" />
+        {/* Gradient dark overlays for cinematic depth and contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent opacity-80 pointer-events-none" />
       </div>
 
       {/* 2. Top-right Video Player Controls (Play/Pause, Mute/Unmute, Restart) */}
@@ -130,11 +130,11 @@ export default function HeroVideoPlayer() {
         </button>
       </div>
 
-      {/* 3. Bottom Floating Glass Pill Bar (Matching Exact Reference Screenshot) */}
-      <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#11243D]/85 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs shadow-xl z-20">
+      {/* 3. Bottom Floating Glass Pill Bar (Indian Acting Driver & Car Specialists) */}
+      <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#11243D]/90 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs shadow-xl z-20">
         <div>
           <span className="text-white font-heading font-bold text-xs sm:text-sm block leading-tight">
-            Mercedes-Benz S-Class & Executive Fleet
+            Swift, Innova, Creta & Luxury Cars
           </span>
           <span className="text-brand-orange text-[11px] font-sans font-medium">
             Manual & Automatic Specialists
@@ -142,7 +142,7 @@ export default function HeroVideoPlayer() {
         </div>
         <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 font-sans text-xs flex items-center gap-1.5 shrink-0">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>24/7 Dispatch Ready</span>
+          <span>24/7 Doorstep Ready</span>
         </span>
       </div>
     </div>

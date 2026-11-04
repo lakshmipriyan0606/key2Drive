@@ -56,14 +56,14 @@ const STEPS: Step[] = [
   {
     step: "STEP 03",
     number: "03",
-    title: "Police-Verified Dispatch",
+    title: "Verified Driver Allocation",
     subtitle: "Assigned with credentials",
     description:
-      "Receive instant confirmation with your chauffeur's verified photo, driving credentials, and direct contact details.",
-    tag: "100% Police Verified",
+      "Receive instant confirmation with your assigned driver's verified profile photo, government driving license, direct mobile number, and live arrival updates.",
+    tag: "Govt ID & DL Verified",
     tagColor: "bg-emerald-500/10 text-emerald-600 border-emerald-500/30",
     icon: <ShieldCheck className="w-6 h-6 text-emerald-500" />,
-    highlights: ["Formal uniform & driver badge", "Direct phone contact & live ETA"],
+    highlights: ["Govt ID & Driving License verified", "Direct mobile contact & live ETA"],
   },
   {
     step: "STEP 04",

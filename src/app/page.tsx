@@ -17,10 +17,13 @@ import {
   Compass,
   MapPin,
   Check,
+  MessageSquare,
+  Phone,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import HeroVideoPlayer from "@/components/ui/HeroVideoPlayer";
-import HowItWorksTravelJourney from "@/components/ui/HowItWorksTravelJourney";
+import HomepageBookingForm from "@/components/ui/HomepageBookingForm";
+import { CONTACT_DETAILS } from "@/lib/constants/navigation";
 
 export default function HomePage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -33,41 +36,33 @@ export default function HomePage() {
     {
       id: "hourly",
       title: "Hourly Driver",
-      tagline: "For your short trips",
-      description: "Convenient hourly chauffeur service for shopping, dining, and city business meetings.",
-      image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=800&auto=format&fit=crop",
-      price: "₹150",
-      unit: "/ hour (min 4 hrs)",
+      tagline: "For city traffic, shopping & errands",
+      description: "Convenient hourly acting driver to drive your personal car with zero parking or traffic stress.",
+      image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
       slug: "hourly-driver",
     },
     {
       id: "full-day",
       title: "Full Day Driver",
-      tagline: "For your entire day",
-      description: "Dedicated personal chauffeur for 8 hours / 80 km. Seamless multi-destination travel.",
-      image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800&auto=format&fit=crop",
-      price: "₹1,000",
-      unit: "/ 8 hrs package",
+      tagline: "8 hrs / 80 km for office & family",
+      description: "Dedicated personal driver for your entire day with unlimited city stops across the city.",
+      image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop",
       slug: "full-day-driver",
     },
     {
       id: "airport",
       title: "Airport Transfers",
-      tagline: "Hassle-free airport rides",
-      description: "Punctual point-to-point airport drops and pickups with flight tracking and 30-min waiting.",
-      image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800&auto=format&fit=crop",
-      price: "₹700",
-      unit: "/ transfer onwards",
+      tagline: "Punctual terminal drops & pickups",
+      description: "On-time doorstep pickup and airport terminal transfer with flight tracking.",
+      image: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=800&auto=format&fit=crop",
       slug: "airport-transfer",
     },
     {
       id: "outstation",
       title: "Outstation Trips",
-      tagline: "Explore beyond limits",
-      description: "Skilled highway chauffeurs for weekend getaways, family holidays, and inter-city routes.",
+      tagline: "Safe highway & weekend road trips",
+      description: "Experienced long-distance driver for weekend getaways and intercity highway travel.",
       image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop",
-      price: "₹1,500",
-      unit: "/ day + allowance",
       slug: "outstation-driver",
     },
   ];
@@ -76,33 +71,33 @@ export default function HomePage() {
     {
       question: "How does the acting driver service work?",
       answer:
-        "Key2Drive provides background-verified, professional chauffeurs to drive your personal or company car. You simply book online with your pickup location, date, and vehicle details, and our vetted chauffeur arrives at your doorstep ready to drive.",
+        "Key2Drive provides background-verified, professional drivers to drive your personal or company car. You simply book online with your pickup location, date, and vehicle details, or call/WhatsApp us directly, and our vetted driver arrives at your doorstep ready to drive.",
     },
     {
       question: "Are your drivers background-verified and experienced?",
       answer:
-        "Yes, 100%. Every Key2Drive chauffeur undergoes rigorous criminal background checks, address verification, government driving license authenticity validation, and hands-on driving evaluations across both manual and high-end automatic transmissions.",
+        "Yes, 100%. Every Key2Drive driver undergoes rigorous identity verification, government driving license authenticity validation, residential address verification, and hands-on driving evaluations across both manual and automatic transmissions.",
     },
     {
-      question: "What is your pricing policy? Are there surge charges?",
+      question: "How is pricing decided for my booking?",
       answer:
-        "We have a strict Zero Surge Guarantee. The tariff shown when you book is transparent and fixed according to duration and service tier. There are no sudden dynamic multiples during peak rush hours or rain.",
+        "We discuss and confirm the exact trip charges upfront when you contact our dispatch team or submit your booking request. Rates depend on your travel route, duration, and vehicle type, with complete transparency and zero hidden fees.",
     },
     {
       question: "What happens if I need to extend my booking duration?",
       answer:
-        "You can easily extend your booking with your assigned chauffeur or by contacting dispatch. Additional hours are charged at the transparent nominal hourly rate configured for your service tier without penalty.",
+        "You can easily extend your booking with your assigned driver or by contacting dispatch. Additional hours are charged at the transparent nominal hourly rate configured for your service without penalty.",
     },
     {
       question: "Can I book a driver for outstation or overnight road trips?",
       answer:
-        "Absolutely. Our outstation chauffeurs are experienced with national highway driving, night navigation, and multi-day travel. An outstation daily allowance applies as detailed on our Tariffs page.",
+        "Absolutely. Our outstation drivers are experienced with national highway driving, night navigation, toll plazas, and multi-day travel. A transparent outstation daily driver allowance applies for meals and overnight stay.",
     },
   ];
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-warm-bg">
-      {/* 1. CINEMATIC HERO SECTION (Matching Reference Design) */}
+      {/* 1. CINEMATIC HERO SECTION (Authentic Indian Acting Driver Service) */}
       <section className="relative overflow-hidden bg-brand-navy text-white pt-12 pb-20 lg:pt-16 lg:pb-28">
         <div
           className="absolute inset-0 bg-radial-[at_top_right] from-brand-navy-deep/90 via-brand-navy to-brand-navy pointer-events-none"
@@ -115,11 +110,11 @@ export default function HomePage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left Column: Headlines & Call to Actions */}
+            {/* Left Column: Headlines & 3-Way Booking Options */}
             <div className="lg:col-span-6 space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-orange text-xs font-bold tracking-wide uppercase">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Premium Chauffeur & Acting Driver Services</span>
+                <span>Premium Acting Driver & Chauffeur Services</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12]">
@@ -128,27 +123,27 @@ export default function HomePage() {
               </h1>
 
               <p className="text-base sm:text-lg text-white/80 max-w-xl leading-relaxed">
-                Your trusted travel partner for a smooth, safe and comfortable journey. Police-verified personal chauffeurs for city commutes, airport transfers, and outstation trips.
+                Your trusted travel partner for a smooth, safe and comfortable journey. Experienced, background-checked acting drivers for city commutes, late-night party returns, airport transfers, and outstation trips.
               </p>
 
-              {/* CTAs */}
+              {/* Clean Primary Hero CTAs (No Duplicates) */}
               <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link href="/book">
+                <a href="#book-form">
                   <ButtonMotion
                     variant="accent"
                     size="lg"
-                    className="!px-7 !py-3.5 !rounded-full text-sm font-bold shadow-xl"
+                    className="!px-8 !py-4 !rounded-full text-sm font-bold shadow-xl"
                     rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
                   >
                     Book a Driver
                   </ButtonMotion>
-                </Link>
+                </a>
 
                 <Link href="/services">
                   <ButtonMotion
                     variant="secondary"
                     size="lg"
-                    className="!px-6 !py-3.5 !rounded-full !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-sm font-semibold"
+                    className="!px-7 !py-4 !rounded-full !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-sm font-semibold"
                   >
                     Explore Services
                   </ButtonMotion>
@@ -156,7 +151,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Hero Automotive Video & Trip Walkthrough */}
+            {/* Right Column: Hero Visual with Indian Chauffeur & Vehicle Context */}
             <div className="lg:col-span-6 relative">
               <HeroVideoPlayer />
             </div>
@@ -164,7 +159,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. FLOATING QUICK TRUST FEATURE STRIP (Matching Reference Design) */}
+      {/* 2. FLOATING QUICK TRUST FEATURE STRIP */}
       <section className="-mt-8 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-2xl sm:rounded-full border border-brand-border shadow-xl p-4 sm:p-5">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:divide-x md:divide-brand-border">
@@ -174,7 +169,7 @@ export default function HomePage() {
               </div>
               <div className="text-left">
                 <span className="font-bold text-xs sm:text-sm text-brand-navy block">Professional Drivers</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">100% Police Verified</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block">Govt ID & DL Verified</span>
               </div>
             </div>
 
@@ -203,15 +198,15 @@ export default function HomePage() {
                 <Star className="w-5 h-5" />
               </div>
               <div className="text-left">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block">Transparent Pricing</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">Zero surge guarantee</span>
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block">Transparent Billing</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block">Discussed with dispatch</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. OUR SERVICES SECTION WITH IMAGE CARDS (Matching Reference Design) */}
+      {/* 3. OUR SERVICES SECTION WITH INDIAN CONTEXT IMAGES */}
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-2 mb-12 sm:mb-16">
@@ -219,7 +214,7 @@ export default function HomePage() {
               Our Services
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
-              Choose from our premium driver services
+              Choose from our premium acting driver and chauffeur services
             </p>
           </div>
 
@@ -238,9 +233,6 @@ export default function HomePage() {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute top-3 right-3 bg-brand-navy/90 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-sm">
-                      {svc.price}
-                    </div>
                   </div>
 
                   {/* Body */}
@@ -252,13 +244,13 @@ export default function HomePage() {
                 </div>
 
                 <div className="p-5 pt-0">
-                  <Link
-                    href={`/services#${svc.slug}`}
+                  <a
+                    href="#book-form"
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors"
                   >
-                    <span>Learn More</span>
+                    <span>Book This Service</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             ))}
@@ -274,7 +266,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. "WHY CHOOSE KEY2DRIVE?" BANNER (Matching Reference Design) */}
+      {/* 4. "WHY CHOOSE KEY2DRIVE?" BANNER (Exact Client Reference Design) */}
       <section id="why-us" className="py-12 sm:py-16 bg-white border-y border-brand-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="rounded-3xl bg-brand-navy text-white overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-center">
@@ -290,14 +282,14 @@ export default function HomePage() {
                 Experience the difference with our premium chauffeur services. We do not treat driving as casual gig work—every driver is a trained, polite professional dedicated to your safety.
               </p>
 
-              {/* Checklist from Reference Design */}
+              {/* Checklist from Reference Design (Govt ID & DL Verified) */}
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                     <Check className="w-4 h-4 font-bold" />
                   </div>
                   <span className="text-sm font-semibold text-white">
-                    Professional & Verified Drivers (Police background checked)
+                    Professional & Verified Drivers (Govt ID & DL verified)
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
@@ -319,7 +311,7 @@ export default function HomePage() {
               </div>
 
               <div className="pt-4">
-                <Link href="/book">
+                <a href="#book-form">
                   <ButtonMotion
                     variant="accent"
                     size="lg"
@@ -328,7 +320,7 @@ export default function HomePage() {
                   >
                     Book Now
                   </ButtonMotion>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -346,8 +338,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. HOW IT WORKS — EXECUTIVE TRAVEL WORKFLOW */}
-      <HowItWorksTravelJourney />
+      {/* 5. HOMEPAGE DIRECT BOOKING FORM (3-Way Reach: Call, WhatsApp, Online Form) */}
+      <HomepageBookingForm />
 
       {/* 6. FREQUENTLY ASKED QUESTIONS (FAQ) */}
       <section className="py-16 sm:py-24 bg-white border-t border-brand-border">
@@ -360,7 +352,7 @@ export default function HomePage() {
               Frequently Asked Questions
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
-              Clear answers regarding bookings, safety protocols, and tariffs.
+              Clear answers regarding bookings, safety protocols, and driver allocation.
             </p>
           </div>
 
@@ -407,20 +399,40 @@ export default function HomePage() {
             Experience First-Class Driving Comfort Today
           </h2>
           <p className="text-white/80 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-            Whether for your daily city commute, a late dinner, or an early morning flight, let our professional chauffeurs take the wheel.
+            Whether for your daily city commute, a late dinner, or an early morning flight, let our professional acting drivers take the wheel.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link href="/book">
+            <a href="#book-form">
               <ButtonMotion
                 variant="accent"
                 size="lg"
                 className="!rounded-full !px-8 shadow-xl font-bold"
                 rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}
               >
-                Book a Chauffeur Now
+                Book a Driver Now
               </ButtonMotion>
-            </Link>
+            </a>
+
+            <a
+              href={`tel:${CONTACT_DETAILS.phoneTel}`}
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-white text-sm font-bold border border-amber-400/40 shadow-lg transition-transform active:scale-95"
+              title="Call Now for Instant Driver Dispatch"
+            >
+              <Phone className="w-4 h-4 text-brand-orange animate-pulse" />
+              <span>Call Now: {CONTACT_DETAILS.phoneDisplay}</span>
+            </a>
+
+            <a
+              href={CONTACT_DETAILS.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg transition-transform active:scale-95"
+              title="Chat on WhatsApp"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>WhatsApp Booking</span>
+            </a>
 
             <Link href="/contact">
               <ButtonMotion

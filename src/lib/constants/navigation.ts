@@ -12,17 +12,16 @@ export interface NavItem {
 export const MAIN_NAV_ITEMS: readonly NavItem[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
-  { label: "Tariff", href: "/tariffs" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
 export const FOOTER_SERVICE_LINKS: readonly NavItem[] = [
   { label: "Hourly City Driver", href: "/services#hourly" },
-  { label: "Full-Day Chauffeur", href: "/services#full-day" },
+  { label: "Full-Day Driver", href: "/services#full-day" },
   { label: "Airport Transfers", href: "/services#airport" },
   { label: "Outstation Journeys", href: "/services#outstation" },
-  { label: "Corporate Retainers", href: "/services#corporate" },
-  { label: "Personal Chauffeur", href: "/services#personal" },
+  { label: "Corporate Drivers", href: "/services#corporate" },
+  { label: "Personal Driver", href: "/services#personal" },
 ] as const;
 
 export const FOOTER_LEGAL_LINKS: readonly NavItem[] = [
@@ -33,16 +32,29 @@ export const FOOTER_LEGAL_LINKS: readonly NavItem[] = [
   { label: "Refund Guidelines", href: "/terms#refunds" },
 ] as const;
 
+export const WHATSAPP_GREETINGS = {
+  default: `Hello Key2Drive! 👋\nI would like to book a professional acting driver for my car.\n\n📍 Pickup Location:\n📅 Date & Time:\n🚗 Car Model & Transmission (Manual/Auto):\n⏱️ Service (Hourly / Full Day / Airport / Outstation):\n\nPlease share driver availability and charges. Thank you!`,
+  hourly: `Hello Key2Drive! 👋\nI would like to book an Hourly Acting Driver for flexible city travel.\n\n📍 Pickup Location:\n📅 Date & Time:\n🚗 Car Model:\n\nPlease share driver availability and pricing. Thank you!`,
+  fullDay: `Hello Key2Drive! 👋\nI would like to book a Full-Day Acting Driver (8 hrs / 80 km) for my car.\n\n📍 Pickup Location:\n📅 Date & Time:\n🚗 Car Model:\n\nPlease share driver availability and pricing. Thank you!`,
+  airport: `Hello Key2Drive! 👋\nI would like to book an Airport Pickup / Drop Acting Driver.\n\n📍 Pickup / Drop Location:\n📅 Flight Time & Date:\n🚗 Car Model:\n\nPlease share driver availability and pricing. Thank you!`,
+  outstation: `Hello Key2Drive! 👋\nI would like to book an Outstation Acting Driver for an intercity journey.\n\n📍 Departure City & Destination:\n📅 Travel Dates:\n🚗 Car Model:\n\nPlease share driver availability and outstation allowance details. Thank you!`,
+} as const;
+
+export function getWhatsAppUrl(customMessage?: string): string {
+  const message = customMessage || WHATSAPP_GREETINGS.default;
+  return `https://wa.me/919876543210?text=${encodeURIComponent(message)}`;
+}
+
 export const CONTACT_DETAILS = {
   phoneDisplay: "+91 98765 43210",
   phoneTel: "+919876543210",
-  phoneReviewNotice: "[Pending Client Review]",
+  phoneReviewNotice: "",
   emailDisplay: "dispatch@key2drive.com",
   emailMailto: "dispatch@key2drive.com",
-  emailReviewNotice: "[Pending Client Review]",
+  emailReviewNotice: "",
   addressDisplay: "Key2Drive Mobility Solutions, 100 Feet Rd, Indiranagar, Bangalore, KA - 560038",
-  addressReviewNotice: "[Pending Client Review]",
-  whatsappUrl: "https://wa.me/919876543210?text=Hello%20Key2Drive%2C%20I%20would%20like%20to%20inquire%20about%20booking%20a%20chauffeur.",
+  addressReviewNotice: "",
+  whatsappUrl: getWhatsAppUrl(),
   operatingHours: "24 Hours / 7 Days a Week",
 } as const;
 
@@ -54,8 +66,8 @@ export interface TrustBadgeItem {
 
 export const TRUST_BADGES: readonly TrustBadgeItem[] = [
   {
-    title: "100% Verified Chauffeurs",
-    description: "Police background verified, licensed, and vetted driving pedigree.",
+    title: "100% Verified Drivers",
+    description: "Government ID & Driving License authenticated, vetted driving pedigree.",
     iconName: "ShieldCheck",
   },
   {
@@ -64,13 +76,13 @@ export const TRUST_BADGES: readonly TrustBadgeItem[] = [
     iconName: "Clock",
   },
   {
-    title: "Zero Surge Pricing",
-    description: "Fixed transparent slabs, no peak surge, clear overtime billing.",
+    title: "Transparent Billing",
+    description: "Custom quotes discussed directly with dispatch, zero hidden charges.",
     iconName: "BadgePercent",
   },
   {
-    title: "Luxury Fleet Care",
-    description: "Certified expertise in manual, automatic, and premium luxury cars.",
+    title: "All Vehicles Expertise",
+    description: "Expert competence in manual, automatic, SUV, and luxury cars.",
     iconName: "Car",
   },
 ] as const;

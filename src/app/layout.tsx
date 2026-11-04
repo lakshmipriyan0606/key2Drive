@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SonnerToaster from "@/components/ui/SonnerToaster";
+import FloatingContactBar from "@/components/ui/FloatingContactBar";
 
 export const viewport: Viewport = {
   themeColor: "#11243D",
@@ -83,6 +84,9 @@ export default function RootLayout({
 
         {/* Global Application Footer */}
         <Footer />
+
+        {/* Global Sticky Call & WhatsApp Instant Action Dock */}
+        <FloatingContactBar />
 
         {/* Emil Kowalski Sonner Toast Notification Center */}
         <SonnerToaster />

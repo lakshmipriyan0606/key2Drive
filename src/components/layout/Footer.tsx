@@ -122,29 +122,39 @@ export default function Footer() {
               </Link>
 
               <p className="text-sm text-slate-300 leading-relaxed max-w-sm font-sans">
-                Key2Drive is a premier chauffeur and acting driver platform delivering vetted, professional drivers directly to your vehicle for hourly errands, outstation adventures, corporate duty, and airport transfers.
+                Key2Drive is a premier acting driver service platform delivering verified, professional drivers directly to your vehicle for city traffic, outstation trips, family duties, and airport transfers.
               </p>
 
-              {/* Direct WhatsApp Trigger Button */}
-              <div className="pt-1">
+              {/* Direct Reach Action Buttons */}
+              <div className="pt-2 flex flex-wrap items-center gap-2.5">
+                <a
+                  href={`tel:${CONTACT_DETAILS.phoneTel}`}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-all duration-150 active:scale-[0.97] shadow-md"
+                  title="Call Now for Instant Dispatch"
+                >
+                  <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>Call Now</span>
+                </a>
+
                 <a
                   href={CONTACT_DETAILS.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all duration-150 active:scale-[0.97] shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all duration-150 active:scale-[0.97] shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                  title="WhatsApp Booking with Greeting"
                 >
-                  <MessageSquare className="w-4 h-4" aria-hidden="true" />
-                  <span>Chat on WhatsApp</span>
+                  <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>WhatsApp Booking</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-80" aria-hidden="true" />
                 </a>
               </div>
             </div>
 
-            {/* Column 2: Chauffeur Services (3 cols on lg) */}
+            {/* Column 2: Driver Services (3 cols on lg) */}
             <div className="lg:col-span-3 space-y-4">
               <h4 className="text-xs font-heading font-bold uppercase tracking-widest text-brand-orange flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                <span>Chauffeur Services</span>
+                <span>Driver Services</span>
               </h4>
               <ul className="space-y-2.5 text-sm">
                 {FOOTER_SERVICE_LINKS.map((link) => (
@@ -185,7 +195,7 @@ export default function Footer() {
                     className="text-brand-orange hover:text-white font-bold inline-flex items-center gap-1.5 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
                   >
                     <Sparkles className="w-3 h-3 text-brand-orange" />
-                    <span>Book a Chauffeur</span>
+                    <span>Book a Driver</span>
                   </Link>
                 </li>
               </ul>
@@ -198,31 +208,22 @@ export default function Footer() {
                 <span>Direct Inquiries</span>
               </h4>
 
-              {/* Dignified Client Review Notice Banner */}
-              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-amber-200/90 text-xs leading-relaxed space-y-1">
-                <div className="flex items-center gap-1.5 font-semibold text-amber-300">
-                  <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
-                  <span>Provisional Contact Coordinates</span>
-                </div>
-                <p className="text-[11px] text-amber-200/80">
-                  Bengaluru operations desk pending final client commercial verification.
-                </p>
-              </div>
-
               <address className="not-italic space-y-3 text-sm">
                 <div className="flex items-start gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center shrink-0 mt-0.5">
                     <Phone className="w-3.5 h-3.5 text-brand-orange" aria-hidden="true" />
                   </div>
                   <div>
                     <a
                       href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                      className="hover:text-brand-orange transition-colors font-bold text-white text-sm block"
+                      className="hover:text-brand-orange transition-colors font-extrabold text-white text-sm block"
+                      title="Tap to Call Now"
                     >
-                      {CONTACT_DETAILS.phoneDisplay}
+                      <span className="text-brand-orange font-bold mr-1.5">Call Now:</span>
+                      <span>{CONTACT_DETAILS.phoneDisplay}</span>
                     </a>
-                    <span className="text-[10px] text-slate-400 font-sans block">
-                      24/7 Dispatch Desk
+                    <span className="text-[10px] text-brand-orange font-sans block">
+                      Click to Call • 24/7 Dispatch Desk
                     </span>
                   </div>
                 </div>

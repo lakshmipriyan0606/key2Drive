@@ -15,11 +15,14 @@ import {
   List,
   Sparkles,
   Check,
+  Phone,
   PhoneCall,
+  MessageSquare,
   Calendar,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { SEED_SERVICES } from "@/lib/data/seedData";
+import { CONTACT_DETAILS } from "@/lib/constants/navigation";
 
 interface ServiceItem {
   id: string;
@@ -34,24 +37,23 @@ interface ServiceItem {
   isActive: boolean;
 }
 
-// Authentic executive automotive & chauffeur photography
+// Authentic, relatable acting driver photography (real cars, city & travel context)
 const SERVICE_IMAGES: Record<string, string> = {
   "hourly-driver":
-    "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1000&auto=format&fit=crop", // Executive Black Mercedes/BMW in city
+    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop", // Relatable driver behind steering wheel in city
   "full-day-driver":
-    "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1000&auto=format&fit=crop", // Premium Executive Chauffeur Saloon
+    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop", // Family sedan on everyday street
   "airport-transfer":
-    "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=1000&auto=format&fit=crop", // Aviation / Airport Terminal Departure
+    "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=800&auto=format&fit=crop", // Luggage loaded for airport travel
   "outstation-driver":
-    "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?q=80&w=1000&auto=format&fit=crop", // Highway Luxury SUV on open expressway
+    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop", // Highway road trip open road
   "corporate-services":
-    "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=1000&auto=format&fit=crop", // Executive corporate fleet
+    "https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=800&auto=format&fit=crop", // Courteous professional driver
   "personal-chauffeur":
-    "/images/chauffeur-indian.jpg", // Authentic Verified Indian Chauffeur
+    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop", // Verified family driver
 };
 
-const DEFAULT_IMAGE =
-  "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1000&auto=format&fit=crop";
+const DEFAULT_IMAGE = "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop";
 
 const CATEGORY_TABS = [
   { id: "all", label: "All Services" },
@@ -116,21 +118,21 @@ export default function ServicesPage() {
                 Our Services
               </h1>
               <p className="text-white/80 text-sm sm:text-base max-w-xl leading-relaxed font-sans font-normal">
-                Premium acting drivers and personal chauffeurs for every itinerary in your personal or corporate car. Guaranteed police-verified, courteous, and zero-surge.
+                Premium acting drivers and personal chauffeurs for every itinerary in your personal or corporate car. Guaranteed background-checked, courteous, and zero-surge.
               </p>
             </div>
 
-            {/* Right luxury car visual matching reference design */}
+            {/* Right car visual */}
             <div className="lg:col-span-5 relative hidden sm:block">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-brand-navy-deep aspect-[16/9] group">
                 <img
-                  src="/images/hero-mercedes.jpg"
-                  alt="Key2Drive Premium Luxury Mercedes Chauffeur"
+                  src="/images/chauffeur-indian.jpg"
+                  alt="Key2Drive Professional Acting Driver Services"
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-transparent to-transparent opacity-70 pointer-events-none" />
                 <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-brand-navy/85 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs">
-                  <span className="font-bold text-white text-xs">Mercedes-Benz & Executive Fleet Certified</span>
+                  <span className="font-bold text-white text-xs">Hatchback, Sedan, SUV & Luxury Car Certified</span>
                   <span className="text-emerald-400 font-bold text-[11px] flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                     Available 24/7
@@ -217,8 +219,8 @@ export default function ServicesPage() {
               ))}
             </div>
           ) : viewMode === "grid" ? (
-            /* ===== BEST VIEW: PREMIER 3-COLUMN LUXURY TRAVEL CARDS ===== */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+            /* ===== COMPACT 3-COLUMN SERVICE CARDS (CLEAN IMAGES, REDUCED HEIGHT) ===== */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map((service) => {
                 const featureList = parseFeatures(service.features);
                 const carImage = SERVICE_IMAGES[service.slug] || DEFAULT_IMAGE;
@@ -227,83 +229,78 @@ export default function ServicesPage() {
                   <div
                     key={service.id}
                     id={service.slug}
-                    className="rounded-3xl bg-white border border-brand-border overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group hover:border-brand-orange/50"
+                    className="rounded-2xl bg-white border border-brand-border overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group hover:border-brand-orange/40"
                   >
                     <div>
-                      {/* Top Visual Image with Overlaid Floating Price Pill */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-navy">
+                      {/* Top Visual Image - Compact Height & Clean (No Overlaid Badges) */}
+                      <div className="relative h-44 w-full overflow-hidden bg-brand-navy/10">
                         <img
                           src={carImage}
                           alt={service.title}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-transparent to-transparent pointer-events-none" />
-
-                        {/* Floating Price Pill in Top Right */}
-                        <div className="absolute top-3 right-3 z-10">
-                          <span className="px-3.5 py-1.5 rounded-full bg-brand-navy/90 backdrop-blur-md border border-white/20 text-white font-bold text-xs shadow-md inline-flex items-center gap-1 font-heading">
-                            <span className="text-brand-orange">Starting</span>
-                            <span>₹{service.basePrice.toLocaleString()}</span>
-                          </span>
-                        </div>
-
-                        {/* Category Pill in Top Left */}
-                        <div className="absolute top-3 left-3 z-10">
-                          <span className="px-2.5 py-1 rounded-full bg-brand-orange text-white font-bold text-[10px] uppercase tracking-wider shadow-md">
-                            Verified Tier
-                          </span>
-                        </div>
-
-                        {/* Bottom Vehicle Tagline in image */}
-                        <div className="absolute bottom-3 left-4 right-4 z-10 text-white">
-                          <span className="text-[11px] font-sans text-brand-orange font-bold uppercase tracking-wider block">
-                            {service.priceUnit}
-                          </span>
-                        </div>
                       </div>
 
-                      {/* Card Content & Features */}
-                      <div className="p-6 space-y-4">
-                        <div className="space-y-1">
-                          <h2 className="text-xl font-heading font-extrabold text-brand-navy group-hover:text-brand-orange transition-colors">
+                      {/* Card Body - Compact, Simple & Easy to Understand */}
+                      <div className="p-5 space-y-3">
+                        <div>
+                          <h2 className="text-lg font-heading font-extrabold text-brand-navy group-hover:text-brand-orange transition-colors">
                             {service.title}
                           </h2>
-                          <p className="text-xs text-secondary-text font-sans leading-relaxed line-clamp-2">
+                          <p className="text-xs text-secondary-text font-sans mt-1 line-clamp-2 leading-relaxed">
                             {service.description || service.tagline}
                           </p>
                         </div>
 
-                        {/* Inclusions Feature Checklist */}
-                        <div className="p-3.5 rounded-2xl bg-brand-warm-bg border border-brand-border/60 space-y-2">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-secondary-text block">
-                            Included in this Service:
-                          </span>
-                          {featureList.slice(0, 3).map((feature, idx) => (
-                            <div
+                        {/* Compact 2-Line Key Highlights (No Bulky Inclusion Box) */}
+                        <ul className="space-y-1.5 pt-2 border-t border-brand-border/60">
+                          {featureList.slice(0, 2).map((feature, idx) => (
+                            <li
                               key={idx}
-                              className="flex items-center gap-2 text-xs text-brand-navy font-medium"
+                              className="flex items-center gap-2 text-xs text-slate-700 font-medium"
                             >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                               <span className="truncate">{feature}</span>
-                            </div>
+                            </li>
                           ))}
-                        </div>
+                        </ul>
                       </div>
                     </div>
 
-                    {/* Card Footer & Full-Width CTA */}
-                    <div className="p-6 pt-0">
-                      <Link href={`/book?service=${service.slug}`} className="block w-full">
-                        <ButtonMotion
-                          variant="accent"
-                          size="md"
-                          className="w-full !rounded-2xl !py-3 font-bold shadow-md text-xs sm:text-sm flex items-center justify-center gap-2"
+                    {/* Card Footer - Streamlined 1-Row Actions */}
+                    <div className="p-5 pt-0 flex items-center gap-2">
+                      <Link href={`/book?service=${service.slug}`} className="flex-1">
+                        <button
+                          type="button"
+                          className="w-full py-2.5 px-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-xs transition-all active:scale-95 flex items-center justify-center gap-1.5"
                         >
-                          <span>Book This Service</span>
-                          <ArrowRight className="w-4 h-4 ml-1" />
-                        </ButtonMotion>
+                          <span>Book Driver</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </button>
                       </Link>
+
+                      <a
+                        href="tel:+919876543210"
+                        className="py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-brand-orange font-bold text-xs border border-amber-500/25 transition-colors flex items-center gap-1 shrink-0"
+                        title="Call Dispatch"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        <span className="hidden sm:inline">Call</span>
+                      </a>
+
+                      <a
+                        href={`https://wa.me/919876543210?text=${encodeURIComponent(
+                          `Hello Key2Drive! 👋 I would like to book the "${service.title}" service for my car. Please share availability and rates. Thank you!`
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-200 transition-colors flex items-center gap-1 shrink-0"
+                        title="Chat on WhatsApp"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="hidden sm:inline">WhatsApp</span>
+                      </a>
                     </div>
                   </div>
                 );
@@ -322,20 +319,14 @@ export default function ServicesPage() {
                     id={service.slug}
                     className="flex flex-col md:flex-row items-stretch rounded-3xl bg-white border border-brand-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:border-brand-orange/40 group"
                   >
-                    {/* Left: Balanced Image Thumbnail (35% width) */}
-                    <div className="w-full md:w-80 h-52 md:h-auto relative overflow-hidden bg-brand-navy shrink-0">
+                    {/* Left: Balanced Image Thumbnail (No Badges) */}
+                    <div className="w-full md:w-64 h-44 md:h-auto relative overflow-hidden bg-brand-navy/10 shrink-0">
                       <img
                         src={carImage}
                         alt={service.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-transparent pointer-events-none" />
-                      <div className="absolute top-3 left-3">
-                        <span className="px-2.5 py-1 rounded-full bg-brand-orange text-white font-bold text-[10px] uppercase tracking-wider">
-                          Key2Drive Tier
-                        </span>
-                      </div>
                     </div>
 
                     {/* Middle: Rich Content & Feature Badges */}
@@ -367,13 +358,13 @@ export default function ServicesPage() {
                     <div className="w-full md:w-56 p-6 border-t md:border-t-0 md:border-l border-brand-border bg-brand-warm-bg/50 flex flex-col items-center justify-center text-center gap-3 shrink-0">
                       <div>
                         <span className="text-[10px] font-bold text-secondary-text uppercase tracking-wider block">
-                          Base Tariff
+                          Pricing
                         </span>
-                        <div className="font-heading font-black text-2xl text-brand-navy">
-                          ₹{service.basePrice.toLocaleString()}
+                        <div className="font-heading font-bold text-lg text-brand-navy">
+                          Custom Quote
                         </div>
                         <span className="text-[11px] text-brand-orange font-semibold block">
-                          {service.priceUnit}
+                          Discussed with Dispatch
                         </span>
                       </div>
 
@@ -414,23 +405,35 @@ export default function ServicesPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+              <a
+                href="tel:+919876543210"
+                className="w-full sm:w-auto px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+                title="Call Now for Instant Driver Dispatch"
+              >
+                <PhoneCall className="w-4 h-4" />
+                <span>Call Now: +91 98765 43210</span>
+              </a>
+
+              <a
+                href={CONTACT_DETAILS.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+                title="WhatsApp Booking with Greeting"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>WhatsApp Booking</span>
+              </a>
+
               <Link href="/contact" className="w-full sm:w-auto">
                 <ButtonMotion
                   variant="secondary"
                   size="md"
-                  className="w-full sm:w-auto !rounded-full !px-7 font-bold !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-xs"
+                  className="w-full sm:w-auto !rounded-full !px-6 font-bold !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-xs"
                 >
-                  Contact Corporate Desk
+                  Contact Desk
                 </ButtonMotion>
               </Link>
-
-              <a
-                href="tel:+919876543210"
-                className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-brand-orange hover:bg-brand-orange-hover text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-md"
-              >
-                <PhoneCall className="w-3.5 h-3.5" />
-                <span>+91 98765 43210</span>
-              </a>
             </div>
           </div>
         </div>

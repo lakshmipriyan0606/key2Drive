@@ -83,7 +83,7 @@ const TERMS_SECTIONS: TermSection[] = [
     id: 8,
     title: "Chauffeur Standards & Code of Conduct",
     content: [
-      "Every Key2Drive driver is police-verified, background-checked, and trained in defensive driving techniques.",
+      "Every Key2Drive driver is government ID and driving license verified, background-checked, and trained in defensive driving techniques.",
       "Drivers adhere to zero-tolerance policies regarding alcohol, substances, or reckless navigation.",
       "Chauffeurs are instructed to respect absolute client privacy and discretion regarding conversations and belongings.",
     ],

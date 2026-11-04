@@ -40,9 +40,9 @@ describe('Tier 1: Customer Website Pages & Admin Portal', () => {
       expect(exploreServices).toBeDefined();
     });
 
-    it('renders trust guarantees: Police Verified, Zero Surge, Manual & Automatic', () => {
+    it('renders trust guarantees: Govt ID & DL Verified, Zero Surge, Manual & Automatic', () => {
       render(<HomePage />);
-      expect(screen.getAllByText(/Police Verified/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Govt ID & DL Verified|DL Verified/i).length).toBeGreaterThan(0);
       expect(screen.getAllByText(/Zero Surge/i).length).toBeGreaterThan(0);
       expect(screen.getAllByText(/Manual & Automatic/i).length).toBeGreaterThan(0);
     });

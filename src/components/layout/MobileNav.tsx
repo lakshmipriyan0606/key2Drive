@@ -221,37 +221,25 @@ export default function MobileNav({
                   className="flex items-center justify-center gap-2 w-full min-h-[48px] bg-brand-orange hover:bg-brand-orange/90 active:scale-[0.97] text-white font-semibold text-base py-3.5 px-4 rounded-xl shadow-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
                 >
                   <Calendar className="w-5 h-5" aria-hidden="true" />
-                  <span>Book a Chauffeur</span>
+                  <span>Book a Driver</span>
                 </Link>
               </div>
             </nav>
 
-            {/* Bottom Contact & Review Banner */}
+            {/* Bottom 3-Way Contact: Call & WhatsApp */}
             <div className="p-5 border-t border-brand-border/60 bg-warm-bg/70 space-y-3">
-              {/* Unconfirmed data notice */}
-              <div className="flex items-start gap-2 p-2.5 bg-amber-50 rounded-lg border border-amber-200/60 text-amber-900 text-xs leading-relaxed">
-                <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                <span>
-                  <strong>Notice:</strong> Contact details are placeholder specifications pending final client review.
-                </span>
-              </div>
-
               {/* Direct Call Trigger */}
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="flex items-center gap-3 min-h-[44px] px-3 py-2 rounded-lg text-sm text-primary-text hover:bg-white transition-colors"
+                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-sm hover:bg-amber-500/20 transition-colors shadow-sm"
+                title="Call Now"
               >
-                <div className="w-8 h-8 rounded-lg bg-brand-navy/5 flex items-center justify-center text-brand-navy flex-shrink-0">
-                  <Phone className="w-4 h-4" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-lg bg-brand-orange text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <Phone className="w-5 h-5 animate-pulse" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs text-secondary-text">Call 24/7 Dispatch</span>
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-semibold text-brand-navy">{CONTACT_DETAILS.phoneDisplay}</span>
-                    <span className="text-[10px] text-amber-700 bg-amber-100/80 px-1.5 py-0.5 rounded font-medium">
-                      Review
-                    </span>
-                  </div>
+                  <span className="text-xs font-bold text-brand-orange uppercase tracking-wide">Call Now (24/7 Dispatch)</span>
+                  <span className="font-extrabold text-brand-navy text-base">{CONTACT_DETAILS.phoneDisplay}</span>
                 </div>
               </a>
 
@@ -260,14 +248,15 @@ export default function MobileNav({
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 min-h-[44px] px-3 py-2 rounded-lg text-sm text-emerald-800 bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-200/70 transition-colors"
+                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-emerald-50 border border-emerald-300 text-sm text-emerald-900 hover:bg-emerald-100 transition-colors shadow-sm"
+                title="WhatsApp Booking Greeting"
               >
-                <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white flex-shrink-0">
-                  <MessageSquare className="w-4 h-4" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <MessageSquare className="w-5 h-5" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold text-emerald-950">WhatsApp Quick Chat</span>
-                  <span className="text-[11px] text-emerald-800">Instant driver booking assistance</span>
+                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">WhatsApp Booking</span>
+                  <span className="font-extrabold text-emerald-950 text-sm">Instant Chat with Greeting</span>
                 </div>
               </a>
             </div>
