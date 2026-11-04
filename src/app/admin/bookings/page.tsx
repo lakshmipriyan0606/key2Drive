@@ -359,7 +359,7 @@ export default function AdminBookingsPage() {
                     {/* Service */}
                     <td className="px-5 py-3.5">
                       <span className="text-brand-navy font-medium">
-                        {b.service?.title || "Chauffeur"}
+                        {b.service?.title || "Driver"}
                       </span>
                     </td>
 

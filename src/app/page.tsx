@@ -19,10 +19,11 @@ import {
   Check,
   MessageSquare,
   Phone,
+  ArrowUpRight,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import HeroVideoPlayer from "@/components/ui/HeroVideoPlayer";
-import HomepageBookingForm from "@/components/ui/HomepageBookingForm";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { CONTACT_DETAILS, getServiceWhatsAppUrl } from "@/lib/constants/navigation";
 
 export default function HomePage() {
@@ -98,7 +99,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen bg-brand-warm-bg">
       {/* 1. CINEMATIC HERO SECTION (Authentic Indian Acting Driver Service) */}
-      <section className="relative overflow-hidden bg-brand-navy text-white pt-12 pb-20 lg:pt-16 lg:pb-28">
+      <section className="relative overflow-hidden bg-brand-navy text-white pt-8 pb-14 sm:pt-12 sm:pb-20 lg:pt-16 lg:pb-28">
         <div
           className="absolute inset-0 bg-radial-[at_top_right] from-brand-navy-deep/90 via-brand-navy to-brand-navy pointer-events-none"
           aria-hidden="true"
@@ -111,39 +112,39 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Headlines & 3-Way Booking Options */}
-            <div className="lg:col-span-6 space-y-6 text-left">
+            <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-orange text-xs font-bold tracking-wide uppercase">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Premium Acting Driver & Chauffeur Services</span>
+                <span>Professional Acting Driver & Call Driver Services</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12] text-balance">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12] text-balance">
                 Need an Acting Driver <br />
                 <span className="text-brand-orange">for Your Car?</span>
               </h1>
 
-              <p className="text-base sm:text-lg text-white/80 max-w-xl leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-white/80 max-w-xl leading-relaxed">
                 Your trusted travel partner for a smooth, safe and comfortable journey. Experienced, background-checked acting drivers for city commutes, late-night party returns, airport transfers, and outstation trips.
               </p>
 
               {/* Clean Primary Hero CTAs (No Duplicates) */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <a href="#book-form">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
+                <Link href="/book" className="w-full sm:w-auto">
                   <ButtonMotion
                     variant="accent"
                     size="lg"
-                    className="!px-8 !py-4 !rounded-full text-sm font-bold shadow-xl"
+                    className="w-full sm:w-auto !px-8 !py-3.5 sm:!py-4 !rounded-full text-sm font-bold shadow-xl justify-center"
                     rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
                   >
                     Book a Driver
                   </ButtonMotion>
-                </a>
+                </Link>
 
-                <Link href="/services">
+                <Link href="/services" className="w-full sm:w-auto">
                   <ButtonMotion
                     variant="secondary"
                     size="lg"
-                    className="!px-7 !py-4 !rounded-full !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-sm font-semibold"
+                    className="w-full sm:w-auto !px-7 !py-3.5 sm:!py-4 !rounded-full !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-sm font-semibold justify-center"
                   >
                     Explore Services
                   </ButtonMotion>
@@ -151,7 +152,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Hero Visual with Indian Chauffeur & Vehicle Context */}
+            {/* Right Column: Hero Visual with Indian Driver & Vehicle Context */}
             <div className="lg:col-span-6 relative">
               <HeroVideoPlayer />
             </div>
@@ -160,46 +161,46 @@ export default function HomePage() {
       </section>
 
       {/* 2. FLOATING QUICK TRUST FEATURE STRIP */}
-      <section className="-mt-8 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl sm:rounded-full border border-brand-border shadow-xl p-4 sm:p-5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:divide-x md:divide-brand-border">
-            <div className="flex items-center gap-3 px-2 justify-center sm:justify-start">
-              <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5" aria-hidden="true" />
+      <section className="-mt-6 sm:-mt-8 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl lg:rounded-full border border-brand-border shadow-xl p-4 sm:p-5">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:divide-x lg:divide-brand-border">
+            <div className="flex items-center gap-3 px-2 justify-start">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
-              <div className="text-left">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block">Professional Drivers</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">Govt ID & DL Verified</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
-              <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Clock className="w-5 h-5" aria-hidden="true" />
-              </div>
-              <div className="text-left">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block">24/7 Support</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">Always on call</span>
+              <div className="text-left min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Professional Drivers</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block truncate">Govt ID & DL Verified</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
-              <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Car className="w-5 h-5" aria-hidden="true" />
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
-              <div className="text-left">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block">Safe & Reliable</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">Experienced handling</span>
+              <div className="text-left min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">24/7 Support</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block truncate">Always on call</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
-              <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Star className="w-5 h-5" aria-hidden="true" />
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+                <Car className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
-              <div className="text-left">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block">Transparent Billing</span>
-                <span className="text-[11px] text-secondary-text hidden sm:block">Discussed with dispatch</span>
+              <div className="text-left min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Safe & Reliable</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block truncate">Experienced handling</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+                <Star className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
+              </div>
+              <div className="text-left min-w-0">
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Transparent Billing</span>
+                <span className="text-[11px] text-secondary-text hidden sm:block truncate">Discussed with dispatch</span>
               </div>
             </div>
           </div>
@@ -214,7 +215,7 @@ export default function HomePage() {
               Our Services
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
-              Choose from our premium acting driver and chauffeur services
+              Choose from our professional acting driver and car driver services
             </p>
           </div>
 
@@ -246,23 +247,23 @@ export default function HomePage() {
                 </div>
 
                 <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-brand-border/40">
-                  <a
-                    href="#book-form"
+                  <Link
+                    href={`/book?service=${svc.id}`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                   >
                     <span>Book Service</span>
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </a>
+                  </Link>
 
                   <a
                     href={getServiceWhatsAppUrl(svc)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 hover:text-emerald-600 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] px-3.5 py-1.5 rounded-full shadow-xs transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     title={`Chat on WhatsApp for ${svc.title}`}
                     aria-label={`Chat on WhatsApp for ${svc.title}`}
                   >
-                    <MessageSquare className="w-3 h-3 text-emerald-600" aria-hidden="true" />
+                    <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
                     <span>WhatsApp</span>
                   </a>
                 </div>
@@ -293,7 +294,7 @@ export default function HomePage() {
                 Why Choose Key2Drive?
               </h2>
               <p className="text-white/80 text-sm sm:text-base leading-relaxed">
-                Experience the difference with our premium chauffeur services. We do not treat driving as casual gig work—every driver is a trained, polite professional dedicated to your safety.
+                Experience the difference with our professional acting driver service. We do not treat driving as casual gig work—every driver is a trained, polite professional dedicated to your safety.
               </p>
 
               {/* Checklist from Reference Design (Govt ID & DL Verified) */}
@@ -325,7 +326,7 @@ export default function HomePage() {
               </div>
 
               <div className="pt-4">
-                <a href="#book-form">
+                <Link href="/book">
                   <ButtonMotion
                     variant="accent"
                     size="lg"
@@ -334,15 +335,15 @@ export default function HomePage() {
                   >
                     Book Now
                   </ButtonMotion>
-                </a>
+                </Link>
               </div>
             </div>
 
-            {/* Right Photo: Professional Verified Indian Chauffeur in suit opening luxury car door */}
+            {/* Right Photo: Professional Verified Indian Driver opening car door */}
             <div className="lg:col-span-5 h-72 sm:h-96 lg:h-full relative min-h-[360px]">
               <img
                 src="/images/chauffeur-indian.jpg"
-                alt="Professional Verified Indian Chauffeur in suit opening luxury car door"
+                alt="Professional Verified Indian Acting Driver opening car door"
                 width={600}
                 height={400}
                 className="w-full h-full object-cover object-top sm:object-center"
@@ -354,8 +355,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. HOMEPAGE DIRECT BOOKING FORM (3-Way Reach: Call, WhatsApp, Online Form) */}
-      <HomepageBookingForm />
 
       {/* 6. FREQUENTLY ASKED QUESTIONS (FAQ) */}
       <section className="py-16 sm:py-24 bg-white border-t border-brand-border">
@@ -426,7 +425,7 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <a href="#book-form">
+            <Link href="/book">
               <ButtonMotion
                 variant="accent"
                 size="lg"
@@ -435,7 +434,7 @@ export default function HomePage() {
               >
                 Book a Driver Now
               </ButtonMotion>
-            </a>
+            </Link>
 
             <a
               href={`tel:${CONTACT_DETAILS.phoneTel}`}
@@ -451,12 +450,12 @@ export default function HomePage() {
               href={CONTACT_DETAILS.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-sm font-extrabold shadow-lg transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
               title="Chat on WhatsApp"
               aria-label="WhatsApp Booking with greeting"
             >
-              <MessageSquare className="w-4 h-4" aria-hidden="true" />
-              <span>WhatsApp Booking</span>
+              <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
+              <span>WhatsApp</span>
             </a>
 
             <Link href="/contact">

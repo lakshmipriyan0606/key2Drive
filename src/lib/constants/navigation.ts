@@ -88,25 +88,25 @@ I would like to book an *Outstation Acting Driver* for an intercity highway jour
 Please confirm driver availability, outstation allowance, and charges. Thank you!`,
 
   corporate: `*Hello Key2Drive!*
-I would like to inquire about *Corporate Chauffeur / Monthly Retainer* services.
+I would like to inquire about *Corporate Driver / Monthly Retainer* services.
 
-• Service: Corporate Chauffeur
+• Service: Corporate Driver
 • Company / Individual Name: 
 • Location / City: 
-• Requirement: Monthly Chauffeur / Executive Duty
+• Requirement: Monthly Driver / Corporate Duty
 • Vehicle Make & Model: 
 
 Please share corporate quotation and onboarding details. Thank you!`,
 
   personal: `*Hello Key2Drive!*
-I would like to book a dedicated *Personal Chauffeur* for private / family duty.
+I would like to book a dedicated *Personal Driver* for private / family duty.
 
-• Service: Personal Chauffeur
+• Service: Personal Driver
 • Pickup Area / Address: 
 • Required Schedule (Daily / Weekly / Monthly): 
 • Car Model & Transmission (Manual / Automatic): 
 
-Please share chauffeur profile availability and quote. Thank you!`,
+Please share driver availability and quote. Thank you!`,
 } as const;
 
 export function getWhatsAppUrl(

@@ -166,13 +166,13 @@ class MockMapsServiceImpl implements MapsService {
     if (!drop || drop.trim().length === 0) {
       return {
         pickup,
-        drop: 'Hourly Chauffeur Service Area',
+        drop: 'Hourly Driver Service Area',
         distanceKm: 35,
         durationMinutes: 90,
         durationFormatted: '1h 30m',
         isNightTime: isNight,
         isOutstation: false,
-        routeSummary: 'Citywide Chauffeur Standby',
+        routeSummary: 'Citywide Driver Standby',
       };
     }
 

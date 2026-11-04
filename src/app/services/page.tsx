@@ -19,8 +19,10 @@ import {
   PhoneCall,
   MessageSquare,
   Calendar,
+  ArrowUpRight,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { SEED_SERVICES } from "@/lib/data/seedData";
 import { CONTACT_DETAILS, getWhatsAppUrl, getServiceWhatsAppUrl } from "@/lib/constants/navigation";
 
@@ -112,13 +114,13 @@ export default function ServicesPage() {
             <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-orange/15 border border-brand-orange/30 text-brand-orange text-xs font-bold uppercase tracking-wider">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Executive Chauffeur Tiers</span>
+                <span>Professional Driver Services</span>
               </div>
               <h1 className="text-3xl sm:text-5xl font-heading font-extrabold tracking-tight text-white leading-tight text-balance">
                 Our Services
               </h1>
               <p className="text-white/80 text-sm sm:text-base max-w-xl leading-relaxed font-sans font-normal">
-                Premium acting drivers and personal chauffeurs for every itinerary in your personal or corporate car. Guaranteed background-checked, courteous, and zero-surge.
+                Professional acting drivers and personal car drivers for every itinerary in your personal or corporate car. Guaranteed background-checked, courteous, and zero-surge.
               </p>
             </div>
 
@@ -304,11 +306,11 @@ export default function ServicesPage() {
                         href={getServiceWhatsAppUrl(service)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-200 transition-colors flex items-center gap-1 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        className="py-2.5 px-3 rounded-xl sm:rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs shadow-xs transition-[background-color,transform] active:scale-95 flex items-center gap-1.5 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                         title={`Chat on WhatsApp for ${service.title}`}
                         aria-label={`Chat on WhatsApp for ${service.title}`}
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
+                        <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
                         <span className="hidden sm:inline">WhatsApp</span>
                       </a>
                     </div>
@@ -393,11 +395,11 @@ export default function ServicesPage() {
                           href={getServiceWhatsAppUrl(service)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                          className="p-2.5 rounded-xl sm:rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-xs transition-[background-color,transform] active:scale-95 flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                           title={`WhatsApp Booking for ${service.title}`}
                           aria-label={`WhatsApp Booking for ${service.title}`}
                         >
-                          <MessageSquare className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                          <WhatsAppIcon className="w-4 h-4 fill-current" />
                         </a>
                       </div>
 
@@ -412,49 +414,49 @@ export default function ServicesPage() {
             </div>
           )}
 
-          {/* 4. Bottom Fleet & Dedicated Chauffeur Callout Strip */}
-          <div className="mt-14 rounded-3xl bg-brand-navy text-white p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 shadow-xl">
+          {/* 4. Bottom Fleet & Dedicated Driver Callout Strip */}
+          <div className="mt-12 sm:mt-14 rounded-2xl sm:rounded-3xl bg-brand-navy text-white p-5 sm:p-8 lg:p-10 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 shadow-xl">
             <div className="space-y-2 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 text-brand-orange text-xs font-bold uppercase tracking-wider">
                 <Building2 className="w-4 h-4" aria-hidden="true" />
                 <span>Enterprise & Custom Solutions</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-bold font-heading text-white text-balance">
-                Need a Dedicated Corporate Fleet or Monthly Chauffeur?
+                Need a Dedicated Corporate Fleet or Monthly Driver?
               </h3>
               <p className="text-white/70 text-xs sm:text-sm max-w-xl">
                 We provide custom corporate transportation agreements, dedicated monthly drivers for executive vehicles, and luxury wedding event fleets.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full md:w-auto">
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
                 title="Call Now for Instant Driver Dispatch"
                 aria-label={`Call Key2Drive dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
               >
-                <PhoneCall className="w-4 h-4" aria-hidden="true" />
-                <span>Call Now: <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
+                <PhoneCall className="w-4 h-4 shrink-0" aria-hidden="true" />
+                <span className="truncate">Call Now: <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
               </a>
 
               <a
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                className="w-full sm:w-auto px-5 sm:px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 title="WhatsApp Booking with Greeting"
                 aria-label="WhatsApp Booking with Greeting"
               >
-                <MessageSquare className="w-4 h-4" aria-hidden="true" />
-                <span>WhatsApp Booking</span>
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
+                <span>WhatsApp</span>
               </a>
 
               <Link href="/contact" className="w-full sm:w-auto">
                 <ButtonMotion
                   variant="secondary"
                   size="md"
-                  className="w-full sm:w-auto !rounded-full !px-6 font-bold !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-xs"
+                  className="w-full sm:w-auto !rounded-full !px-6 font-bold !bg-white/10 !text-white !border-white/20 hover:!bg-white/20 text-xs justify-center"
                 >
                   Contact Desk
                 </ButtonMotion>

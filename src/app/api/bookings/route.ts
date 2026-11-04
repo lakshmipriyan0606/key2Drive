@@ -84,7 +84,7 @@ export async function POST(request: Request) {
 
     if (!service) {
       return NextResponse.json(
-        { success: false, error: 'Selected chauffeur service was not found.' },
+        { success: false, error: 'Selected driver service was not found.' },
         { status: 400 }
       );
     }

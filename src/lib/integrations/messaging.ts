@@ -94,7 +94,7 @@ class MockMessagingServiceImpl implements MessagingService {
   public generateBookingWhatsAppLink(reference: string, customMessage?: string): string {
     const text =
       customMessage ||
-      `Hello Key2Drive Team, I am inquiring regarding my chauffeur booking reference: ${reference}.`;
+      `Hello Key2Drive Team, I am inquiring regarding my driver booking reference: ${reference}.`;
     return this.generateWhatsAppLink(this.defaultPhone, text);
   }
 
@@ -189,7 +189,7 @@ class MockMessagingServiceImpl implements MessagingService {
     customerName: string,
     enquiryId: string
   ): Promise<MessagingResult> {
-    const body = `Hi ${customerName}, thanks for contacting Key2Drive! We received your enquiry (#${enquiryId.slice(-6)}) and a chauffeur specialist will contact you shortly.`;
+    const body = `Hi ${customerName}, thanks for contacting Key2Drive! We received your enquiry (#${enquiryId.slice(-6)}) and a driver coordinator will contact you shortly.`;
 
     const entry: MessagingLogEntry = {
       id: `sms_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,

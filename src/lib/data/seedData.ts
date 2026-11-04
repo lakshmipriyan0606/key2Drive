@@ -245,22 +245,22 @@ export const SEED_SERVICES: SeedService[] = [
   {
     id: "srv-corporate-05",
     slug: "corporate-chauffeur",
-    title: "Corporate Chauffeur",
+    title: "Corporate Driver",
     tagline: "Bespoke executive mobility solutions for leadership teams and enterprises.",
-    description: "Premium month-to-month chauffeur retainers tailored for corporate leaders, C-suite executives, and business fleets. Features NDA compliance, English-speaking professional drivers, and unified monthly invoicing.",
+    description: "Premium month-to-month driver retainers tailored for corporate leaders, executives, and business fleets. Features NDA compliance, professional drivers, and unified monthly invoicing.",
     features: JSON.stringify([
-      "Monthly dedicated executive chauffeur",
-      "English-fluent, formal suit-and-tie attire",
+      "Monthly dedicated executive driver",
+      "Formal attire and polite etiquette",
       "Strict confidentiality & non-disclosure compliance",
-      "Immediate chauffeur replacement guarantee during leave",
+      "Immediate driver replacement guarantee during leave",
       "Centralized GST invoicing and monthly trip logs",
       "Defensive driving certified",
     ]),
     featuresList: [
-      "Monthly dedicated executive chauffeur",
-      "English-fluent, formal suit-and-tie attire",
+      "Monthly dedicated executive driver",
+      "Formal attire and polite etiquette",
       "Strict confidentiality & non-disclosure compliance",
-      "Immediate chauffeur replacement guarantee during leave",
+      "Immediate driver replacement guarantee during leave",
       "Centralized GST invoicing and monthly trip logs",
       "Defensive driving certified",
     ],
@@ -271,7 +271,7 @@ export const SEED_SERVICES: SeedService[] = [
     tariffs: [
       {
         id: "trf-corp-monthly-01",
-        title: "Corporate Dedicated Monthly Chauffeur (26 Days)",
+        title: "Corporate Dedicated Monthly Driver (26 Days)",
         vehicleCategory: "Corporate Saloon & SUV",
         baseRate: 34999,
         includedHours: 260,
@@ -288,9 +288,9 @@ export const SEED_SERVICES: SeedService[] = [
   {
     id: "srv-personal-06",
     slug: "personal-chauffeur",
-    title: "Personal Chauffeur",
-    tagline: "Your family's trusted, verified chauffeur for daily routines and school runs.",
-    description: "Enjoy effortless everyday travel for your family. A dedicated personal chauffeur for regular school pickups, family elder medical appointments, grocery runs, and daily office commuting.",
+    title: "Personal Driver",
+    tagline: "Your family's trusted, verified driver for daily routines and school runs.",
+    description: "Enjoy effortless everyday travel for your family. A dedicated personal driver for regular school pickups, family elder medical appointments, grocery runs, and daily office commuting.",
     features: JSON.stringify([
       "Comprehensive background check & license verification",
       "Polite, family-friendly demeanor",
@@ -314,7 +314,7 @@ export const SEED_SERVICES: SeedService[] = [
     tariffs: [
       {
         id: "trf-personal-monthly-01",
-        title: "Personal Family Chauffeur (26 Days / Month)",
+        title: "Personal Family Driver (26 Days / Month)",
         vehicleCategory: "All Vehicles",
         baseRate: 28999,
         includedHours: 234,

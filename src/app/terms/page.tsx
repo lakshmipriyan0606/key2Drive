@@ -21,7 +21,7 @@ const TERMS_SECTIONS: TermSection[] = [
     id: 1,
     title: "Booking Conditions",
     content: [
-      "All bookings made through the Key2Drive portal or telephone dispatch represent a formal reservation request for professional chauffeur services.",
+      "All bookings made through the Key2Drive portal or telephone dispatch represent a formal reservation request for professional acting driver services.",
       "The customer warrants that the vehicle provided is registered, roadworthy, and covered by valid comprehensive third-party insurance as mandated by Indian Motor Vehicles Act.",
       "A booking is confirmed only upon system generation of a verified Booking Reference (e.g., K2D-YYYYMMDD-XXXX).",
     ],
@@ -30,7 +30,7 @@ const TERMS_SECTIONS: TermSection[] = [
     id: 2,
     title: "Payment Terms",
     content: [
-      "Standard journeys are payable post-completion directly to the assigned chauffeur via UPI or Cash.",
+      "Standard journeys are payable post-completion directly to the assigned driver via UPI or Cash.",
       "Corporate or outstation reservations exceeding 24 hours may require an initial security deposit of 20% prior to dispatch.",
       "All tariffs are inclusive of base driver services. Parking tolls, interstate entry permits, and state border taxes remain the direct responsibility of the customer.",
     ],
@@ -65,7 +65,7 @@ const TERMS_SECTIONS: TermSection[] = [
     id: 6,
     title: "Additional Charges",
     content: [
-      "Night allowance: Trips operating between 10:00 PM and 06:00 AM incur a night surcharge of ₹250 to compensate chauffeurs.",
+      "Night allowance: Trips operating between 10:00 PM and 06:00 AM incur a night surcharge of ₹250 to compensate drivers.",
       "Outstation driver food & stay allowance: Outstation trips overnight require food and lodging allowance of ₹400/night.",
       "Overtime: Extra hours beyond the booked package slab are calculated in 30-minute increments.",
     ],
@@ -76,16 +76,16 @@ const TERMS_SECTIONS: TermSection[] = [
     content: [
       "The vehicle owner or representative must possess all authentic vehicle documents including RC book, valid insurance policy, and PUC certificate.",
       "The customer is responsible for vehicle mechanical integrity (brakes, tires, fuel levels).",
-      "Key2Drive chauffeurs reserve the right to decline operating vehicles in visibly unsafe mechanical condition.",
+      "Key2Drive drivers reserve the right to decline operating vehicles in visibly unsafe mechanical condition.",
     ],
   },
   {
     id: 8,
-    title: "Chauffeur Standards & Code of Conduct",
+    title: "Driver Standards & Code of Conduct",
     content: [
       "Every Key2Drive driver is government ID and driving license verified, background-checked, and trained in defensive driving techniques.",
       "Drivers adhere to zero-tolerance policies regarding alcohol, substances, or reckless navigation.",
-      "Chauffeurs are instructed to respect absolute client privacy and discretion regarding conversations and belongings.",
+      "Drivers are instructed to respect absolute client privacy and discretion regarding conversations and belongings.",
     ],
   },
   {

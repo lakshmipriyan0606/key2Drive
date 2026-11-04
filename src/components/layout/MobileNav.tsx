@@ -8,11 +8,11 @@ import {
   X,
   ChevronRight,
   Phone,
-  MessageSquare,
   Calendar,
   ShieldCheck,
   AlertCircle,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import {
   MAIN_NAV_ITEMS,
   CONTACT_DETAILS,
@@ -253,11 +253,11 @@ export default function MobileNav({
                 title="WhatsApp Booking Greeting"
                 aria-label="Chat on WhatsApp with greeting"
               >
-                <div className="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
-                  <MessageSquare className="w-5 h-5" aria-hidden="true" />
+                <div className="w-10 h-10 rounded-xl bg-[#25D366] text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <WhatsAppIcon className="w-5 h-5 fill-current" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wide">WhatsApp Booking</span>
+                <div className="flex flex-col flex-1">
+                  <span className="text-xs font-bold text-[#25D366] uppercase tracking-wide">WhatsApp</span>
                   <span className="font-extrabold text-emerald-950 text-sm">Instant Chat with Greeting</span>
                 </div>
               </a>

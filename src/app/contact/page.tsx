@@ -13,8 +13,10 @@ import {
   AlertTriangle,
   CheckCircle2,
   ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { CONTACT_DETAILS } from "@/lib/constants/navigation";
 
 export default function ContactPage() {
@@ -22,7 +24,7 @@ export default function ContactPage() {
     name: "",
     phone: "",
     email: "",
-    subject: "Chauffeur Booking Enquiry",
+    subject: "Acting Driver Booking Enquiry",
     message: "",
   });
 
@@ -96,7 +98,7 @@ export default function ContactPage() {
         name: "",
         phone: "",
         email: "",
-        subject: "Chauffeur Booking Enquiry",
+        subject: "Acting Driver Booking Enquiry",
         message: "",
       });
     } catch (err: any) {
@@ -158,18 +160,18 @@ export default function ContactPage() {
 
                 {/* 2. WhatsApp */}
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400 border border-emerald-500/30">
-                    <MessageSquare className="w-5 h-5" aria-hidden="true" />
+                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/20 flex items-center justify-center shrink-0 text-[#25D366] border border-[#25D366]/30">
+                    <WhatsAppIcon className="w-5 h-5 fill-current" />
                   </div>
                   <div>
                     <a
                       href={CONTACT_DETAILS.whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-black text-emerald-400 hover:text-emerald-300 transition-colors text-base block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
+                      className="font-black text-[#25D366] hover:underline transition-colors text-base block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
                       title="Chat on WhatsApp with Pre-filled Greeting"
                     >
-                      WhatsApp Booking
+                      WhatsApp
                     </a>
                     <p className="text-xs text-white/70">Click to start with pre-filled greeting</p>
                   </div>
@@ -206,7 +208,7 @@ export default function ContactPage() {
 
             {/* Bottom notice */}
             <div className="relative z-10 pt-6 border-t border-white/10 mt-6 text-[11px] text-white/70">
-              Official Key2Drive helpline operating 24 hours daily. Professional verified chauffeurs dispatched directly to your vehicle.
+              Official Key2Drive helpline operating 24 hours daily. Professional verified drivers dispatched directly to your vehicle.
             </div>
           </div>
 
@@ -229,13 +231,26 @@ export default function ContactPage() {
                     Thank you. Your message reference is <b>#{submittedEnquiry.id.slice(0, 8)}</b>.
                     Our concierge team will respond within 30 minutes.
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => setSubmittedEnquiry(null)}
-                    className="px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                  >
-                    Send Another Message
-                  </button>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                    {submittedEnquiry.whatsappLink && (
+                      <a
+                        href={submittedEnquiry.whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-extrabold shadow-sm transition-[background-color,transform] active:scale-95"
+                      >
+                        <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                        <span>WhatsApp</span>
+                      </a>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setSubmittedEnquiry(null)}
+                      className="px-4 py-2.5 rounded-full bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    >
+                      Send Another Message
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -326,7 +341,7 @@ export default function ContactPage() {
                       id="contact-message"
                       name="message"
                       rows={4}
-                      placeholder="Tell us about your trip requirement, corporate inquiry, or chauffeur preferences…"
+                      placeholder="Tell us about your trip requirement, corporate inquiry, or driver preferences…"
                       value={formData.message}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, message: e.target.value }))

@@ -58,7 +58,7 @@ export async function POST(request: Request) {
       {
         success: true,
         enquiryId: enquiry.id,
-        message: 'Your enquiry has been received. Our chauffeur team will reach out shortly.',
+        message: 'Your enquiry has been received. Our team will reach out shortly.',
         whatsappLink,
       },
       { status: 201 }

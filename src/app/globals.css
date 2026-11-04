@@ -44,6 +44,8 @@
     scroll-behavior: smooth;
     background-color: var(--color-warm-bg);
     color: var(--color-primary-text);
+    overflow-x: hidden;
+    max-width: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -51,6 +53,7 @@
 
   body {
     min-height: 100vh;
+    max-width: 100%;
     background-color: var(--color-warm-bg);
     color: var(--color-primary-text);
     overflow-x: hidden;

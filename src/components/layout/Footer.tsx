@@ -4,26 +4,20 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  ShieldCheck,
-  Clock,
-  BadgePercent,
-  Car,
   Phone,
   Mail,
   MapPin,
-  MessageSquare,
   Lock,
-  ArrowUpRight,
-  AlertCircle,
-  Sparkles,
   ChevronRight,
+  ArrowUpRight,
+  Sparkles,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import {
   FOOTER_SERVICE_LINKS,
   FOOTER_LEGAL_LINKS,
   MAIN_NAV_ITEMS,
   CONTACT_DETAILS,
-  TRUST_BADGES,
 } from "@/lib/constants/navigation";
 
 export default function Footer() {
@@ -35,57 +29,10 @@ export default function Footer() {
     return null;
   }
 
-  const getIcon = (name: string) => {
-    switch (name) {
-      case "ShieldCheck":
-        return <ShieldCheck className="w-5 h-5 text-brand-orange" aria-hidden="true" />;
-      case "Clock":
-        return <Clock className="w-5 h-5 text-brand-orange" aria-hidden="true" />;
-      case "BadgePercent":
-        return <BadgePercent className="w-5 h-5 text-brand-orange" aria-hidden="true" />;
-      case "Car":
-        return <Car className="w-5 h-5 text-brand-orange" aria-hidden="true" />;
-      default:
-        return <ShieldCheck className="w-5 h-5 text-brand-orange" aria-hidden="true" />;
-    }
-  };
-
   return (
     <footer className="text-white relative z-10" role="contentinfo">
-      {/* 1. DISTINCT TRUST & GUARANTEES DECK (Layer 1: Deep Navy Slate) */}
-      <section
-        aria-label="Key2Drive Guarantees"
-        className="bg-[#0B1522] border-t border-white/10 py-12 sm:py-14 relative"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-            {TRUST_BADGES.map((badge) => (
-              <div
-                key={badge.title}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-[#132236]/90 border border-white/10 shadow-lg hover:border-brand-orange/40 hover:-translate-y-1 transition-[transform,border-color,box-shadow] duration-200 group"
-              >
-                <div className="w-12 h-12 rounded-xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-200">
-                  {getIcon(badge.iconName)}
-                </div>
-                <div className="space-y-1 min-w-0">
-                  <h3 className="font-heading font-bold text-white text-base leading-snug group-hover:text-brand-orange transition-colors">
-                    {badge.title}
-                  </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans font-normal">
-                    {badge.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Illuminated Gold/Amber Divider Hairline */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-brand-orange/30 to-transparent" />
-
-      {/* 2. EXECUTIVE MIDNIGHT FOOTER (Layer 2: Obsidian Midnight Navy) */}
-      <div className="bg-[#070D16] py-14 sm:py-16">
+      {/* EXECUTIVE MIDNIGHT FOOTER */}
+      <div className="bg-[#070D16] border-t border-white/10 py-14 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
             {/* Column 1: Brand & Value Proposition (4 cols on lg) */}
@@ -141,13 +88,12 @@ export default function Footer() {
                   href={CONTACT_DETAILS.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-[background-color,transform] duration-150 active:scale-[0.97] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold transition-[background-color,transform] duration-150 active:scale-[0.97] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   title="WhatsApp Booking with Greeting"
                   aria-label="WhatsApp Booking with greeting"
                 >
-                  <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>WhatsApp Booking</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-80" aria-hidden="true" />
+                  <WhatsAppIcon className="w-3.5 h-3.5 fill-current" />
+                  <span>WhatsApp</span>
                 </a>
               </div>
             </div>

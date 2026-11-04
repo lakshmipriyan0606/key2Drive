@@ -12,10 +12,10 @@ import {
   ShieldCheck,
   CheckCircle2,
   ArrowRight,
-  MessageSquare,
   Sparkles,
   AlertCircle,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { toast } from "sonner";
 import { CONTACT_DETAILS, getWhatsAppUrl } from "@/lib/constants/navigation";
@@ -243,25 +243,25 @@ export default function HomepageBookingForm() {
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2.5 sm:gap-3 w-full sm:w-auto shrink-0">
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-brand-orange text-xs font-bold hover:bg-amber-500/25 shadow-sm transition-transform active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-brand-orange text-xs font-bold hover:bg-amber-500/25 shadow-sm transition-transform active:scale-95 w-full sm:w-auto"
                 title="Call Now for Instant Driver Dispatch"
               >
-                <Phone className="w-3.5 h-3.5 text-brand-orange animate-pulse" />
-                <span>Call Now: <span className="text-brand-navy font-black">{CONTACT_DETAILS.phoneDisplay}</span></span>
+                <Phone className="w-3.5 h-3.5 text-brand-orange animate-pulse shrink-0" />
+                <span className="truncate">Call Now: <span className="text-brand-navy font-black">{CONTACT_DETAILS.phoneDisplay}</span></span>
               </a>
 
               <a
                 href={getDynamicWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm transition-transform active:scale-95"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold shadow-xs transition-[background-color,transform] active:scale-95 w-full sm:w-auto"
                 title="Chat on WhatsApp"
               >
-                <MessageSquare className="w-3.5 h-3.5" />
-                <span>WhatsApp Booking</span>
+                <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>
@@ -312,10 +312,10 @@ export default function HomepageBookingForm() {
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-[background-color,transform] duration-150 active:scale-95"
+                className="inline-flex items-center gap-1.5 px-6 py-3 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-extrabold shadow-md transition-[background-color,transform] duration-150 active:scale-95"
               >
-                <MessageSquare className="w-4 h-4" />
-                <span>Confirm on WhatsApp</span>
+                <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
+                <span>WhatsApp</span>
               </a>
 
               <a

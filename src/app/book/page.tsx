@@ -20,9 +20,11 @@ import {
   Sparkles,
   Info,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import CustomSelect, { CustomSelectOption } from "@/components/ui/CustomSelect";
 import { SEED_SERVICES, SEED_TARIFFS } from "@/lib/data/seedData";
+import { getWhatsAppUrl } from "@/lib/constants/navigation";
 
 interface ServiceItem {
   id: string;
@@ -204,7 +206,7 @@ function BookingContent() {
     {
       value: "MANUAL",
       label: "Manual",
-      description: "5 or 6-speed stick-shift certified chauffeur",
+      description: "5 or 6-speed stick-shift certified driver",
     },
   ];
 
@@ -330,7 +332,7 @@ function BookingContent() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || "Failed to create chauffeur booking.");
+        throw new Error(data.error || "Failed to create driver booking.");
       }
 
       setConfirmedBooking({
@@ -341,7 +343,7 @@ function BookingContent() {
         pickupAddress: data.booking.pickupAddress,
         dropAddress: data.booking.dropAddress,
         pickupDateTime: data.booking.pickupDateTime,
-        serviceName: selectedService?.title || "Chauffeur Service",
+        serviceName: selectedService?.title || "Acting Driver Service",
         customerName: formData.customerName,
         customerPhone: formData.customerPhone,
         vehicleMake: formData.vehicleMake,
@@ -403,11 +405,22 @@ function BookingContent() {
 
           {/* Action Buttons matching reference design */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <a
+              href={getWhatsAppUrl(
+                `*Hello Key2Drive!*\nI have submitted booking reference: *${confirmedBooking.reference}*.\n\n• Service: ${confirmedBooking.serviceName}\n• Schedule: ${confirmedBooking.pickupDateTime}\n• Pickup: ${confirmedBooking.pickupAddress}\n\nPlease confirm driver assignment and ETA. Thank you!`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl sm:rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-sm shadow-sm transition-[background-color,transform] active:scale-95 inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+            >
+              <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
+              <span>WhatsApp</span>
+            </a>
             <button
               onClick={() => setShowDetailsModal(true)}
               className="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-orange text-white font-bold text-sm hover:bg-[#d97d00] transition-colors shadow-sm"
             >
-              View Booking Details
+              View Details
             </button>
             <Link href="/" className="w-full sm:w-auto">
               <button className="w-full sm:w-auto px-6 py-3 rounded-xl bg-white border border-brand-border text-brand-navy font-bold text-sm hover:bg-gray-50 transition-colors">
@@ -573,7 +586,7 @@ function BookingContent() {
                       }))
                     }
                     error={errors.serviceId}
-                    placeholder="Choose chauffeur service tier…"
+                    placeholder="Choose driver service tier…"
                   />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -945,7 +958,7 @@ function BookingContent() {
                   </div>
 
                   <div className="text-[11px] text-secondary-text leading-relaxed">
-                    By confirming, you request a verified Key2Drive chauffeur. Payment is directly settled with the driver post-trip.
+                    By confirming, you request a verified Key2Drive driver. Payment is directly settled with the driver post-trip.
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
@@ -979,7 +992,7 @@ function BookingContent() {
             <div className="relative aspect-[4/5] w-full">
               <img
                 src="/images/chauffeur-indian.jpg"
-                alt="Key2Drive Executive Luxury Chauffeur"
+                alt="Key2Drive Professional Acting Driver"
                 width={400}
                 height={500}
                 className="w-full h-full object-cover object-center"

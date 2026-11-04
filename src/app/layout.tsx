@@ -15,29 +15,31 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Key2Drive | Premium Chauffeur & Professional Driver Services",
+    default: "Key2Drive | Professional Acting Driver & Car Driver Services",
     template: "%s | Key2Drive",
   },
   description:
-    "Key2Drive provides professional, background-verified personal chauffeurs for your car. Hourly drivers, full-day chauffeurs, airport transfers, and outstation trips with zero surge.",
+    "Key2Drive provides professional, background-verified personal car drivers for your car. Hourly acting drivers, full-day drivers, airport transfers, and outstation trips with zero surge.",
   keywords: [
-    "chauffeur",
     "acting driver",
+    "call driver",
+    "car driver",
     "personal driver",
+    "driver for car",
     "hire driver",
     "airport transfer",
     "outstation driver",
-    "corporate chauffeur",
-    "luxury car driver",
+    "corporate driver",
+    "monthly driver",
     "Key2Drive",
   ],
   authors: [{ name: "Key2Drive Mobility Solutions" }],
   creator: "Key2Drive",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   openGraph: {
-    title: "Key2Drive | Premium Chauffeur & Professional Driver Services",
+    title: "Key2Drive | Professional Acting Driver & Car Driver Services",
     description:
-      "Professional, background-verified personal chauffeurs for your car. Transparent hourly tariffs, 24/7 dispatch, and luxury mobility.",
+      "Professional, background-verified personal drivers for your car. Transparent hourly tariffs, 24/7 dispatch, and safe journey in your vehicle.",
     url: "/",
     siteName: "Key2Drive",
     locale: "en_IN",
@@ -45,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Key2Drive | Premium Chauffeur & Professional Driver Services",
+    title: "Key2Drive | Professional Acting Driver & Car Driver Services",
     description:
-      "Professional, background-verified personal chauffeurs for your car. Transparent hourly tariffs, 24/7 dispatch, and luxury mobility.",
+      "Professional, background-verified personal drivers for your car. Transparent hourly tariffs, 24/7 dispatch, and safe journey in your vehicle.",
   },
   robots: {
     index: true,

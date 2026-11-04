@@ -215,7 +215,7 @@ class MockPaymentServiceImpl implements PaymentService {
   }
 
   /**
-   * Records a cash/UPI transaction collected by chauffeur upon trip completion.
+   * Records a cash/UPI transaction collected by driver upon trip completion.
    */
   public async recordCashPayment(bookingReference: string, amount: number): Promise<StoredPaymentRecord> {
     const transactionId = `cash_k2d_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;

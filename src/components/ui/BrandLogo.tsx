@@ -19,23 +19,23 @@ export default function BrandLogo({
   const sizeStyles = {
     sm: {
       icon: "w-7 h-7",
-      title: "text-base tracking-tight",
-      subtitle: "text-[8px] tracking-[0.2em]",
+      title: "text-sm sm:text-base tracking-tight",
+      subtitle: "text-[7px] sm:text-[8px] tracking-[0.18em]",
     },
     md: {
-      icon: "w-9 h-9",
-      title: "text-lg tracking-tight",
-      subtitle: "text-[9px] tracking-[0.22em]",
+      icon: "w-8 h-8 sm:w-9 sm:h-9",
+      title: "text-base sm:text-lg tracking-tight",
+      subtitle: "text-[7.5px] sm:text-[9px] tracking-[0.16em] sm:tracking-[0.22em]",
     },
     lg: {
-      icon: "w-11 h-11",
-      title: "text-2xl tracking-tight",
-      subtitle: "text-[10px] tracking-[0.25em]",
+      icon: "w-10 h-10 sm:w-11 sm:h-11",
+      title: "text-xl sm:text-2xl tracking-tight",
+      subtitle: "text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em]",
     },
   }[size];
 
   const content = (
-    <div className={`flex items-center gap-2.5 group ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-2.5 group ${className}`}>
       {/* Automotive emblem with gold-orange swoosh */}
       <div className={`relative ${sizeStyles.icon} shrink-0 flex items-center justify-center`}>
         <svg

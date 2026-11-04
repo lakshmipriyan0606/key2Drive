@@ -20,6 +20,7 @@ import {
   MapPin,
   Sparkles,
 } from "lucide-react";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { SEED_TARIFFS } from "@/lib/data/seedData";
 import { CONTACT_DETAILS, getWhatsAppUrl, getServiceWhatsAppUrl, WHATSAPP_GREETINGS } from "@/lib/constants/navigation";
@@ -84,7 +85,7 @@ const TARIFF_TABS: ServiceTab[] = [
     id: "full-day",
     title: "Full Day Driver",
     slug: "full-day-driver",
-    tagline: "Dedicated 8-hour executive chauffeur on standby for uninterrupted mobility",
+    tagline: "Dedicated 8-hour executive driver on standby for uninterrupted mobility",
     image: "/images/hero-mercedes.jpg",
     defaultPrice: 1899,
     priceUnit: "day",
@@ -93,7 +94,7 @@ const TARIFF_TABS: ServiceTab[] = [
     badge: "Executive Standard",
     icon: <Car className="w-3.5 h-3.5 shrink-0" />,
     features: [
-      "Dedicated personal chauffeur at your vehicle's disposal all day",
+      "Dedicated personal driver at your vehicle's disposal all day",
       "Unlimited stopovers for meetings, shopping, and family errands",
       "Expertise in premium sedans, luxury SUVs, and executive fleets",
       "Transparent overtime billing calibrated per half-hour increment",
@@ -131,7 +132,7 @@ const TARIFF_TABS: ServiceTab[] = [
     badge: "Intercity Highway Specialist",
     icon: <Compass className="w-3.5 h-3.5 shrink-0" />,
     features: [
-      "Seasoned highway chauffeurs with extensive night-driving pedigree",
+      "Seasoned highway drivers with extensive night-driving pedigree",
       "All-India route competence across Ghats, expressways, and state borders",
       "Complete familiarity with FASTag lanes and intercity toll crossings",
       "Driver food & overnight boarding allowance transparently bundled",
@@ -141,7 +142,7 @@ const TARIFF_TABS: ServiceTab[] = [
     id: "corporate",
     title: "Corporate Retainer",
     slug: "corporate-chauffeur",
-    tagline: "Dedicated monthly chauffeurs for C-suite executives and company fleets",
+    tagline: "Dedicated monthly drivers for C-suite executives and company fleets",
     image: "/images/hero-mercedes.jpg",
     defaultPrice: 34999,
     priceUnit: "month",
@@ -150,15 +151,15 @@ const TARIFF_TABS: ServiceTab[] = [
     badge: "Corporate Fleet Agreement",
     icon: <Briefcase className="w-3.5 h-3.5 shrink-0" />,
     features: [
-      "Dedicated, groomed, and English/regional language speaking chauffeur",
-      "Replacement driver guarantee within 2 hours in case of chauffeur leave",
+      "Dedicated, groomed, and English/regional language speaking driver",
+      "Replacement driver guarantee within 2 hours in case of driver leave",
       "Strict confidentiality, route optimization, and VIP etiquette",
       "Consolidated monthly corporate billing with GST invoice",
     ],
   },
   {
     id: "personal",
-    title: "Personal Chauffeur",
+    title: "Personal Driver",
     slug: "personal-chauffeur",
     tagline: "Your family's trusted, private monthly acting driver for peace of mind",
     image: "/images/chauffeur-indian.jpg",
@@ -240,8 +241,8 @@ export default function TariffsPage() {
 
               <p className="text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed font-normal">
                 Predictable, slab-based pricing with strictly zero peak-hour or weather surges.
-                Verified professional Indian chauffeurs for your personal and executive cars across
-                Bengaluru, Mumbai, Delhi-NCR, and Hyderabad.
+                Verified professional Indian drivers for your personal and executive cars across
+                Chennai, Bengaluru, and all major travel destinations.
               </p>
 
               {/* 3 Trust Markers Strip */}
@@ -261,12 +262,12 @@ export default function TariffsPage() {
               </div>
             </div>
 
-            {/* Right Showcase Visual: Indian Luxury Airport & Chauffeur Scene */}
+            {/* Right Showcase Visual: Indian Luxury Airport & Driver Scene */}
             <div className="lg:col-span-5 relative hidden sm:block">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-white/15 bg-brand-navy-deep/60 aspect-[16/10] group">
                 <img
                   src="/images/tariff-airport-indian.jpg"
-                  alt="Key2Drive Indian Airport Chauffeur Showcase"
+                  alt="Key2Drive Indian Airport Driver Showcase"
                   width={600}
                   height={375}
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
@@ -277,10 +278,10 @@ export default function TariffsPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-bold text-white font-manrope">
-                        Executive Chauffeur Dispatch
+                        Executive Driver Dispatch
                       </p>
                       <p className="text-[11px] text-slate-300">
-                        Bengaluru Kempegowda T2, Mumbai BOM & Delhi DEL
+                        Chennai MAA, Bengaluru BLR & all terminals
                       </p>
                     </div>
                     <span className="px-2 py-0.5 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-[10px] font-bold">
@@ -312,7 +313,7 @@ export default function TariffsPage() {
       <section className="py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Service Tab Pills */}
-          <div className="flex flex-wrap items-center gap-2.5" role="tablist" aria-label="Tariff categories">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5" role="tablist" aria-label="Tariff categories">
             {TARIFF_TABS.map((tab) => {
               const isActive = activeTab === tab.slug;
               return (
@@ -322,7 +323,7 @@ export default function TariffsPage() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveTab(tab.slug)}
-                  className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-[background-color,color,box-shadow] duration-200 cursor-pointer flex items-center gap-2 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
+                  className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-bold transition-[background-color,color,box-shadow] duration-200 cursor-pointer flex items-center gap-1.5 sm:gap-2 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                     isActive
                       ? "bg-brand-navy text-white ring-2 ring-brand-orange shadow-md"
                       : "bg-white text-brand-navy border border-brand-border hover:border-brand-orange/50 hover:bg-gray-50"
@@ -360,7 +361,7 @@ export default function TariffsPage() {
 
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <span className="text-[11px] font-semibold text-brand-orange uppercase tracking-wider block">
-                    Verified Chauffeur Service
+                    Verified Driver Service
                   </span>
                   <h3 className="text-xl font-bold font-manrope text-white">
                     {currentTab.title}
@@ -499,7 +500,7 @@ export default function TariffsPage() {
                 <div className="flex items-center gap-2 text-brand-navy">
                   <ShieldCheck className="w-5 h-5 text-brand-orange" />
                   <h3 className="text-base font-bold font-manrope">
-                    All-India Chauffeur Standard
+                    All-India Driver Standard
                   </h3>
                 </div>
                 <p className="text-xs text-secondary-text leading-relaxed">
@@ -540,11 +541,12 @@ export default function TariffsPage() {
                     href={getServiceWhatsAppUrl(currentTab)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full text-center py-2.5 px-4 rounded-xl bg-emerald-600/90 text-white text-xs font-bold hover:bg-emerald-600 transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="w-full text-center py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold shadow-xs transition-[background-color,transform] active:scale-95 inline-flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     title={`WhatsApp Inquiry for ${currentTab.title}`}
                     aria-label={`WhatsApp Inquiry for ${currentTab.title}`}
                   >
-                    <span>WhatsApp Inquiry</span>
+                    <WhatsAppIcon className="w-3.5 h-3.5 fill-current shrink-0" />
+                    <span>WhatsApp</span>
                   </a>
                 </div>
               </div>

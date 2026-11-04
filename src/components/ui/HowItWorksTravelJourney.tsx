@@ -33,7 +33,7 @@ const STEPS: Step[] = [
   {
     step: "STEP 01",
     number: "01",
-    title: "Select Chauffeur Tier",
+    title: "Select Service Tier",
     subtitle: "Hourly, Airport or Outstation",
     description:
       "Choose the exact acting driver service tailored to your itinerary with guaranteed upfront transparent pricing.",
@@ -72,7 +72,7 @@ const STEPS: Step[] = [
     title: "Relax & Safe Arrival",
     subtitle: "Smooth executive journey",
     description:
-      "Your courteous chauffeur arrives on time, handles your car with executive care, and safely concludes your trip.",
+      "Your courteous driver arrives on time, handles your car with executive care, and safely concludes your trip.",
     tag: "Direct UPI Settlement",
     tagColor: "bg-purple-500/10 text-purple-600 border-purple-500/30",
     icon: <Sparkles className="w-6 h-6 text-purple-500" />,
@@ -101,7 +101,7 @@ export default function HowItWorksTravelJourney() {
           </h2>
 
           <p className="text-secondary-text text-sm sm:text-base font-sans max-w-xl mx-auto leading-relaxed">
-            From doorstep booking to arrival in your own car — experience seamless, transparent, and verified chauffeur travel.
+            From doorstep booking to arrival in your own car — experience seamless, transparent, and verified acting driver travel.
           </p>
         </div>
 
@@ -237,7 +237,7 @@ export default function HowItWorksTravelJourney() {
               <span>Instant Doorstep Driver Dispatch</span>
             </div>
             <h4 className="text-xl sm:text-2xl font-bold font-heading text-white">
-              Ready to experience first-class chauffeur travel?
+              Ready to experience reliable acting driver travel?
             </h4>
             <p className="text-xs sm:text-sm text-white/70 max-w-xl">
               Professional acting drivers available 24/7 across Chennai, New Perungalathur, and all major travel destinations.

@@ -74,7 +74,7 @@ export default function HeroVideoPlayer() {
   return (
     <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl group bg-brand-navy-deep">
       {/* 1. Automotive Video Clip with Fallback Poster */}
-      <div className="relative w-full h-[340px] sm:h-[420px] lg:h-[450px] overflow-hidden bg-brand-navy">
+      <div className="relative w-full h-[280px] sm:h-[380px] lg:h-[450px] overflow-hidden bg-brand-navy">
         <video
           ref={videoRef}
           autoPlay
@@ -91,7 +91,7 @@ export default function HeroVideoPlayer() {
         {/* Fallback poster while initializing */}
         <img
           src="/images/chauffeur-indian.jpg"
-          alt="Professional Indian Acting Driver & Chauffeur for Personal Cars"
+          alt="Professional Indian Acting Driver for Personal Cars"
           width={800}
           height={450}
           className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 pointer-events-none ${
@@ -143,16 +143,16 @@ export default function HeroVideoPlayer() {
       </div>
 
       {/* 3. Bottom Floating Glass Pill Bar (Indian Acting Driver & Car Specialists) */}
-      <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-[#11243D]/90 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs shadow-xl z-20">
-        <div>
-          <span className="text-white font-heading font-bold text-xs sm:text-sm block leading-tight">
+      <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-[#11243D]/90 backdrop-blur-md border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs shadow-xl z-20">
+        <div className="min-w-0">
+          <span className="text-white font-heading font-bold text-xs sm:text-sm block leading-tight truncate">
             Swift, Innova, Creta & Luxury Cars
           </span>
-          <span className="text-brand-orange text-[11px] font-sans font-medium">
+          <span className="text-brand-orange text-[10px] sm:text-[11px] font-sans font-medium block">
             Manual & Automatic Specialists
           </span>
         </div>
-        <span className="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 font-sans text-xs flex items-center gap-1.5 shrink-0">
+        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 font-sans text-[10px] sm:text-xs flex items-center gap-1.5 shrink-0 self-start sm:self-auto">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           <span>24/7 Doorstep Ready</span>
         </span>
