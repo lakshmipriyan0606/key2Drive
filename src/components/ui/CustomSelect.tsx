@@ -103,7 +103,7 @@ export default function CustomSelect({
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className={`w-full ${sizeClasses} border text-left flex items-center justify-between transition-all duration-200 bg-white shadow-xs group cursor-pointer ${
+        className={`w-full ${sizeClasses} border text-left flex items-center justify-between transition-[border-color,box-shadow,background-color] duration-200 bg-white shadow-xs group cursor-pointer ${
           isOpen
             ? "border-brand-orange ring-2 ring-brand-orange/20 shadow-md"
             : error

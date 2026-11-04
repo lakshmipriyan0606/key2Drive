@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { SEED_SERVICES } from "@/lib/data/seedData";
-import { CONTACT_DETAILS } from "@/lib/constants/navigation";
+import { CONTACT_DETAILS, getWhatsAppUrl, getServiceWhatsAppUrl } from "@/lib/constants/navigation";
 
 interface ServiceItem {
   id: string;
@@ -111,10 +111,10 @@ export default function ServicesPage() {
             {/* Left title & subtitle */}
             <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-orange/15 border border-brand-orange/30 text-brand-orange text-xs font-bold uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
+                <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Executive Chauffeur Tiers</span>
               </div>
-              <h1 className="text-3xl sm:text-5xl font-heading font-extrabold tracking-tight text-white leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-heading font-extrabold tracking-tight text-white leading-tight text-balance">
                 Our Services
               </h1>
               <p className="text-white/80 text-sm sm:text-base max-w-xl leading-relaxed font-sans font-normal">
@@ -128,13 +128,15 @@ export default function ServicesPage() {
                 <img
                   src="/images/chauffeur-indian.jpg"
                   alt="Key2Drive Professional Acting Driver Services"
+                  width={600}
+                  height={340}
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-transparent to-transparent opacity-70 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-transparent to-transparent opacity-70 pointer-events-none" aria-hidden="true" />
                 <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-brand-navy/85 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs">
                   <span className="font-bold text-white text-xs">Hatchback, Sedan, SUV & Luxury Car Certified</span>
                   <span className="text-emerald-400 font-bold text-[11px] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
                     Available 24/7
                   </span>
                 </div>
@@ -148,14 +150,16 @@ export default function ServicesPage() {
       <section className="border-b border-brand-border bg-white sticky top-16 z-20 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none" role="group" aria-label="Service Categories">
             {CATEGORY_TABS.map((tab) => {
               const isSelected = selectedCategory === tab.id;
               return (
                 <button
                   key={tab.id}
+                  type="button"
+                  aria-pressed={isSelected}
                   onClick={() => setSelectedCategory(tab.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-150 ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-[background-color,color,box-shadow] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                     isSelected
                       ? "bg-brand-navy text-white shadow-sm"
                       : "bg-brand-warm-bg text-secondary-text hover:text-brand-navy hover:bg-gray-200/60"
@@ -170,30 +174,34 @@ export default function ServicesPage() {
           {/* View Mode Toggle: Grid vs Compact List */}
           <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
             <span className="text-xs text-secondary-text font-medium hidden md:inline">View Mode:</span>
-            <div className="flex items-center p-1 rounded-xl bg-brand-warm-bg border border-brand-border text-xs">
+            <div className="flex items-center p-1 rounded-xl bg-brand-warm-bg border border-brand-border text-xs" role="group" aria-label="Layout view mode">
               <button
+                type="button"
+                aria-pressed={viewMode === "grid"}
                 onClick={() => setViewMode("grid")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-[background-color,color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                   viewMode === "grid"
                     ? "bg-white text-brand-navy shadow-xs border border-brand-border/60"
                     : "text-secondary-text hover:text-brand-navy"
                 }`}
                 title="Premier Travel Cards Grid View"
               >
-                <LayoutGrid className="w-3.5 h-3.5" />
+                <LayoutGrid className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Grid View</span>
               </button>
 
               <button
+                type="button"
+                aria-pressed={viewMode === "list"}
                 onClick={() => setViewMode("list")}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-bold transition-[background-color,color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                   viewMode === "list"
                     ? "bg-white text-brand-navy shadow-xs border border-brand-border/60"
                     : "text-secondary-text hover:text-brand-navy"
                 }`}
                 title="Balanced Detailed Row View"
               >
-                <List className="w-3.5 h-3.5" />
+                <List className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Compact View</span>
               </button>
             </div>
@@ -237,6 +245,8 @@ export default function ServicesPage() {
                         <img
                           src={carImage}
                           alt={service.title}
+                          width={400}
+                          height={176}
                           className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
@@ -260,7 +270,7 @@ export default function ServicesPage() {
                               key={idx}
                               className="flex items-center gap-2 text-xs text-slate-700 font-medium"
                             >
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
                               <span className="truncate">{feature}</span>
                             </li>
                           ))}
@@ -273,32 +283,32 @@ export default function ServicesPage() {
                       <Link href={`/book?service=${service.slug}`} className="flex-1">
                         <button
                           type="button"
-                          className="w-full py-2.5 px-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-xs transition-all active:scale-95 flex items-center justify-center gap-1.5"
+                          className="w-full py-2.5 px-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-xs shadow-xs transition-[background-color,transform] active:scale-95 flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                         >
                           <span>Book Driver</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
+                          <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                         </button>
                       </Link>
 
                       <a
-                        href="tel:+919876543210"
-                        className="py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-brand-orange font-bold text-xs border border-amber-500/25 transition-colors flex items-center gap-1 shrink-0"
-                        title="Call Dispatch"
+                        href={`tel:${CONTACT_DETAILS.phoneTel}`}
+                        className="py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-brand-orange font-bold text-xs border border-amber-500/25 transition-colors flex items-center gap-1 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
+                        title={`Call Dispatch: ${CONTACT_DETAILS.phoneDisplay}`}
+                        aria-label={`Call Dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
                       >
-                        <Phone className="w-3.5 h-3.5" />
+                        <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                         <span className="hidden sm:inline">Call</span>
                       </a>
 
                       <a
-                        href={`https://wa.me/919876543210?text=${encodeURIComponent(
-                          `Hello Key2Drive! 👋 I would like to book the "${service.title}" service for my car. Please share availability and rates. Thank you!`
-                        )}`}
+                        href={getServiceWhatsAppUrl(service)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-200 transition-colors flex items-center gap-1 shrink-0"
-                        title="Chat on WhatsApp"
+                        className="py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs border border-emerald-200 transition-colors flex items-center gap-1 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                        title={`Chat on WhatsApp for ${service.title}`}
+                        aria-label={`Chat on WhatsApp for ${service.title}`}
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                        <MessageSquare className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
                         <span className="hidden sm:inline">WhatsApp</span>
                       </a>
                     </div>
@@ -368,15 +378,28 @@ export default function ServicesPage() {
                         </span>
                       </div>
 
-                      <Link href={`/book?service=${service.slug}`} className="w-full">
-                        <ButtonMotion
-                          variant="accent"
-                          size="md"
-                          className="w-full !rounded-xl !py-2.5 font-bold shadow-sm text-xs"
+                      <div className="flex items-center gap-2 w-full">
+                        <Link href={`/book?service=${service.slug}`} className="flex-1">
+                          <ButtonMotion
+                            variant="accent"
+                            size="md"
+                            className="w-full !rounded-xl !py-2.5 font-bold shadow-sm text-xs"
+                          >
+                            Book Driver
+                          </ButtonMotion>
+                        </Link>
+
+                        <a
+                          href={getServiceWhatsAppUrl(service)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition-colors flex items-center justify-center shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                          title={`WhatsApp Booking for ${service.title}`}
+                          aria-label={`WhatsApp Booking for ${service.title}`}
                         >
-                          Book Now
-                        </ButtonMotion>
-                      </Link>
+                          <MessageSquare className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                        </a>
+                      </div>
 
                       <span className="text-[10px] text-secondary-text flex items-center gap-1">
                         <ShieldCheck className="w-3 h-3 text-emerald-500" />
@@ -393,10 +416,10 @@ export default function ServicesPage() {
           <div className="mt-14 rounded-3xl bg-brand-navy text-white p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 shadow-xl">
             <div className="space-y-2 text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-2 text-brand-orange text-xs font-bold uppercase tracking-wider">
-                <Building2 className="w-4 h-4" />
+                <Building2 className="w-4 h-4" aria-hidden="true" />
                 <span>Enterprise & Custom Solutions</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-heading text-white">
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-white text-balance">
                 Need a Dedicated Corporate Fleet or Monthly Chauffeur?
               </h3>
               <p className="text-white/70 text-xs sm:text-sm max-w-xl">
@@ -406,22 +429,24 @@ export default function ServicesPage() {
 
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
               <a
-                href="tel:+919876543210"
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+                href={`tel:${CONTACT_DETAILS.phoneTel}`}
+                className="w-full sm:w-auto px-6 py-3 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-extrabold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
                 title="Call Now for Instant Driver Dispatch"
+                aria-label={`Call Key2Drive dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
               >
-                <PhoneCall className="w-4 h-4" />
-                <span>Call Now: +91 98765 43210</span>
+                <PhoneCall className="w-4 h-4" aria-hidden="true" />
+                <span>Call Now: <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
               </a>
 
               <a
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-md"
+                className="w-full sm:w-auto px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-[background-color,transform] active:scale-95 shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
                 title="WhatsApp Booking with Greeting"
+                aria-label="WhatsApp Booking with Greeting"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-4 h-4" aria-hidden="true" />
                 <span>WhatsApp Booking</span>
               </a>
 

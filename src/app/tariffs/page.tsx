@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { SEED_TARIFFS } from "@/lib/data/seedData";
+import { CONTACT_DETAILS, getWhatsAppUrl, getServiceWhatsAppUrl, WHATSAPP_GREETINGS } from "@/lib/constants/navigation";
 
 interface TariffItem {
   id: string;
@@ -229,11 +230,11 @@ export default function TariffsPage() {
             {/* Title & Indian Value Proposition */}
             <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-orange/15 border border-brand-orange/30 text-brand-orange text-xs font-bold uppercase tracking-wider">
-                <ShieldCheck className="w-4 h-4 text-brand-orange" />
+                <ShieldCheck className="w-4 h-4 text-brand-orange" aria-hidden="true" />
                 <span>All-India RTO & Commercial Tariff Transparency</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-5xl font-black tracking-tight text-white leading-[1.15] font-manrope">
+              <h1 className="text-3xl sm:text-5xl lg:text-5xl font-black tracking-tight text-white leading-[1.15] font-manrope text-balance">
                 Our Tariff & Pricing
               </h1>
 
@@ -246,15 +247,15 @@ export default function TariffsPage() {
               {/* 3 Trust Markers Strip */}
               <div className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-white/10">
                 <div className="flex items-center gap-2 text-xs text-white/90 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" aria-hidden="true" />
                   <span>Strict Zero Surge Policy</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white/90 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" aria-hidden="true" />
                   <span>Govt ID & DL Verified Drivers</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-white/90 font-medium">
-                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0" aria-hidden="true" />
                   <span>FASTag & Toll Clarity</span>
                 </div>
               </div>
@@ -266,9 +267,11 @@ export default function TariffsPage() {
                 <img
                   src="/images/tariff-airport-indian.jpg"
                   alt="Key2Drive Indian Airport Chauffeur Showcase"
+                  width={600}
+                  height={375}
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent pointer-events-none" aria-hidden="true" />
 
                 <div className="absolute bottom-4 left-4 right-4 bg-brand-navy/80 backdrop-blur-md border border-white/15 rounded-2xl p-3 text-white">
                   <div className="flex items-center justify-between">
@@ -309,20 +312,23 @@ export default function TariffsPage() {
       <section className="py-12 sm:py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Service Tab Pills */}
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5" role="tablist" aria-label="Tariff categories">
             {TARIFF_TABS.map((tab) => {
               const isActive = activeTab === tab.slug;
               return (
                 <button
                   key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
                   onClick={() => setActiveTab(tab.slug)}
-                  className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer flex items-center gap-2 shadow-xs ${
+                  className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-[background-color,color,box-shadow] duration-200 cursor-pointer flex items-center gap-2 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                     isActive
                       ? "bg-brand-navy text-white ring-2 ring-brand-orange shadow-md"
                       : "bg-white text-brand-navy border border-brand-border hover:border-brand-orange/50 hover:bg-gray-50"
                   }`}
                 >
-                  <span className={isActive ? "text-brand-orange" : "text-brand-navy/60"}>
+                  <span className={isActive ? "text-brand-orange" : "text-brand-navy/60"} aria-hidden="true">
                     {tab.icon}
                   </span>
                   <span>{tab.title}</span>
@@ -340,9 +346,11 @@ export default function TariffsPage() {
                 <img
                   src={currentTab.image}
                   alt={currentTab.title}
+                  width={600}
+                  height={288}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
 
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full bg-brand-navy/90 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-md">
@@ -377,7 +385,7 @@ export default function TariffsPage() {
                     <span className="text-xs font-bold text-secondary-text uppercase tracking-wider block">
                       Standard Benchmark Rate
                     </span>
-                    <div className="flex items-baseline gap-2 mt-0.5">
+                    <div className="flex items-baseline gap-2 mt-0.5 tabular-nums">
                       <span className="text-3xl sm:text-4xl font-extrabold text-brand-navy font-manrope">
                         ₹{displayRate.toLocaleString()}
                       </span>
@@ -407,7 +415,7 @@ export default function TariffsPage() {
                         key={idx}
                         className="flex items-start gap-2.5 text-xs sm:text-sm text-brand-navy font-medium leading-relaxed"
                       >
-                        <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" aria-hidden="true" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -421,7 +429,7 @@ export default function TariffsPage() {
                       variant="accent"
                       size="lg"
                       className="w-full justify-center !rounded-xl font-bold py-3.5 shadow-md hover:shadow-lg text-sm"
-                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" />}
+                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
                     >
                       Book {currentTab.title} Now
                     </ButtonMotion>
@@ -443,7 +451,7 @@ export default function TariffsPage() {
                   </span>
                 </div>
 
-                <div className="space-y-3.5 text-xs sm:text-sm">
+                <div className="space-y-3.5 text-xs sm:text-sm tabular-nums">
                   <div className="flex items-center justify-between py-1 border-b border-brand-border/60">
                     <div>
                       <span className="text-brand-navy font-bold block">Extra Driving Hour</span>
@@ -529,10 +537,12 @@ export default function TariffsPage() {
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                   <a
-                    href="https://wa.me/919876543210"
+                    href={getServiceWhatsAppUrl(currentTab)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full text-center py-2.5 px-4 rounded-xl bg-emerald-600/90 text-white text-xs font-bold hover:bg-emerald-600 transition-colors shadow-sm inline-flex items-center justify-center gap-1.5"
+                    className="w-full text-center py-2.5 px-4 rounded-xl bg-emerald-600/90 text-white text-xs font-bold hover:bg-emerald-600 transition-colors shadow-sm inline-flex items-center justify-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    title={`WhatsApp Inquiry for ${currentTab.title}`}
+                    aria-label={`WhatsApp Inquiry for ${currentTab.title}`}
                   >
                     <span>WhatsApp Inquiry</span>
                   </a>

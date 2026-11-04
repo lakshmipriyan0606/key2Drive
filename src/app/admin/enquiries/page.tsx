@@ -175,9 +175,10 @@ export default function AdminEnquiriesPage() {
         <button
           onClick={fetchEnquiries}
           disabled={refreshing}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-brand-border text-brand-navy text-xs font-semibold hover:bg-gray-50 shadow-sm"
+          aria-label="Refresh customer enquiries"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-brand-border text-brand-navy text-xs font-semibold hover:bg-gray-50 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange disabled:opacity-50"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} aria-hidden="true" />
           <span>Refresh</span>
         </button>
       </div>
@@ -185,16 +186,20 @@ export default function AdminEnquiriesPage() {
       {/* Top Search Action Bar matching Reference Design */}
       <div className="bg-white rounded-2xl border border-brand-border p-4 shadow-sm">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" />
+          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" aria-hidden="true" />
           <input
-            type="text"
-            placeholder="Search enquiries..."
+            id="admin-enquiry-search"
+            type="search"
+            aria-label="Search customer enquiries"
+            autoComplete="off"
+            spellCheck={false}
+            placeholder="Search enquiries…"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-xs font-medium"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-xs font-medium"
           />
         </div>
       </div>
@@ -202,14 +207,14 @@ export default function AdminEnquiriesPage() {
       {/* Enquiries Table matching Reference Design */}
       <div className="bg-white rounded-2xl border border-brand-border shadow-sm overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center space-y-3">
+          <div className="p-12 text-center space-y-3" role="status" aria-live="polite">
             <div className="w-8 h-8 rounded-full border-2 border-brand-orange border-t-transparent animate-spin mx-auto" />
-            <p className="text-xs text-secondary-text">Loading enquiries...</p>
+            <p className="text-xs text-secondary-text">Loading enquiries…</p>
           </div>
         ) : enquiries.length === 0 ? (
-          <div className="py-16 text-center space-y-2">
-            <MessageSquare className="w-8 h-8 text-gray-400 mx-auto" />
-            <h3 className="font-bold text-brand-navy text-sm">No Enquiries Found</h3>
+          <div className="py-16 text-center space-y-2" role="status">
+            <MessageSquare className="w-8 h-8 text-gray-400 mx-auto" aria-hidden="true" />
+            <h2 className="font-bold text-brand-navy text-sm">No Enquiries Found</h2>
             <p className="text-xs text-secondary-text">No customer messages match your query.</p>
           </div>
         ) : (
@@ -217,10 +222,10 @@ export default function AdminEnquiriesPage() {
             <table className="w-full text-left text-xs">
               <thead className="bg-brand-warm-bg/60 border-b border-brand-border text-secondary-text uppercase font-bold text-[11px]">
                 <tr>
-                  <th className="px-5 py-3.5">Name</th>
-                  <th className="px-5 py-3.5">Subject</th>
-                  <th className="px-5 py-3.5">Status</th>
-                  <th className="px-5 py-3.5 text-right">Action</th>
+                  <th scope="col" className="px-5 py-3.5">Name</th>
+                  <th scope="col" className="px-5 py-3.5">Subject</th>
+                  <th scope="col" className="px-5 py-3.5">Status</th>
+                  <th scope="col" className="px-5 py-3.5 text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-border/60">
@@ -244,8 +249,10 @@ export default function AdminEnquiriesPage() {
                     {/* Action View Button */}
                     <td className="px-5 py-3.5 text-right">
                       <button
+                        type="button"
                         onClick={() => setSelectedEnquiry(e)}
-                        className="px-3 py-1 rounded-lg border border-brand-border text-brand-navy text-xs font-bold hover:bg-gray-50 transition-colors"
+                        aria-label={`View enquiry from ${e.name}`}
+                        className="px-3 py-1 rounded-lg border border-brand-border text-brand-navy text-xs font-bold hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                       >
                         View
                       </button>
@@ -258,20 +265,25 @@ export default function AdminEnquiriesPage() {
         )}
 
         {/* Pagination matching Reference Design: "< 1 2 3 >" */}
-        <div className="p-4 border-t border-brand-border flex items-center justify-center gap-1.5 text-xs font-bold">
+        <div className="p-4 border-t border-brand-border flex items-center justify-center gap-1.5 text-xs font-bold tabular-nums" role="navigation" aria-label="Pagination">
           <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none"
+            aria-label="Previous page"
+            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
           >
-            <ChevronLeft className="w-3.5 h-3.5" />
+            <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <button
               key={p}
+              type="button"
               onClick={() => setPage(p)}
-              className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors ${
+              aria-label={`Page ${p}`}
+              aria-current={page === p ? "page" : undefined}
+              className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                 page === p
                   ? "bg-brand-orange text-white shadow-sm"
                   : "border border-brand-border text-brand-navy hover:bg-gray-50"
@@ -282,29 +294,38 @@ export default function AdminEnquiriesPage() {
           ))}
 
           <button
+            type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none"
+            aria-label="Next page"
+            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
           >
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </div>
       </div>
 
       {/* Enquiry Detail Modal */}
       {selectedEnquiry && (
-        <div className="fixed inset-0 z-50 overflow-hidden bg-black/40 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="enquiry-modal-title"
+          className="fixed inset-0 z-50 overflow-hidden bg-black/40 flex items-center justify-center p-4 overscroll-contain"
+        >
           <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-6 space-y-5">
             <div className="flex items-center justify-between border-b border-brand-border pb-3">
               <div>
-                <h3 className="font-bold text-base text-brand-navy">{selectedEnquiry.subject}</h3>
+                <h3 id="enquiry-modal-title" className="font-bold text-base text-brand-navy">{selectedEnquiry.subject}</h3>
                 <p className="text-xs text-secondary-text">From {selectedEnquiry.name}</p>
               </div>
               <button
+                type="button"
                 onClick={() => setSelectedEnquiry(null)}
-                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700"
+                aria-label="Close enquiry modal"
+                className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -312,7 +333,7 @@ export default function AdminEnquiriesPage() {
               <div className="grid grid-cols-2 gap-2 p-3 rounded-xl bg-brand-warm-bg/50 border border-brand-border">
                 <div>
                   <span className="text-secondary-text">Phone:</span>
-                  <p className="font-bold text-brand-navy">{selectedEnquiry.phone}</p>
+                  <p className="font-bold text-brand-navy tabular-nums" translate="no">{selectedEnquiry.phone}</p>
                 </div>
                 <div>
                   <span className="text-secondary-text">Email:</span>
@@ -333,8 +354,9 @@ export default function AdminEnquiriesPage() {
               <div className="flex items-center justify-between pt-2">
                 <span className="text-xs font-bold text-brand-navy">Resolution Status:</span>
                 <button
+                  type="button"
                   onClick={() => handleToggleResolve(selectedEnquiry)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                     selectedEnquiry.isResolved
                       ? "bg-amber-100 text-amber-800 border border-amber-300"
                       : "bg-emerald-600 text-white"
@@ -347,8 +369,9 @@ export default function AdminEnquiriesPage() {
 
             <div className="pt-2 border-t border-brand-border">
               <button
+                type="button"
                 onClick={() => setSelectedEnquiry(null)}
-                className="w-full py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navy-deep"
+                className="w-full py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-brand-navy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
               >
                 Close
               </button>

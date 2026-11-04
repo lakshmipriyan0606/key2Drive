@@ -62,7 +62,7 @@ export default function Footer() {
             {TRUST_BADGES.map((badge) => (
               <div
                 key={badge.title}
-                className="flex items-start gap-4 p-5 rounded-2xl bg-[#132236]/90 border border-white/10 shadow-lg hover:border-brand-orange/40 hover:-translate-y-1 transition-all duration-200 group"
+                className="flex items-start gap-4 p-5 rounded-2xl bg-[#132236]/90 border border-white/10 shadow-lg hover:border-brand-orange/40 hover:-translate-y-1 transition-[transform,border-color,box-shadow] duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center shrink-0 shadow-inner group-hover:scale-105 transition-transform duration-200">
                   {getIcon(badge.iconName)}
@@ -92,7 +92,7 @@ export default function Footer() {
             <div className="lg:col-span-4 space-y-5">
               <Link
                 href="/"
-                className="inline-flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-orange rounded-lg"
+                className="inline-flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange rounded-lg"
                 aria-label="Key2Drive Home"
               >
                 <div className="w-10 h-10 rounded-xl bg-brand-orange/15 border border-brand-orange/30 flex items-center justify-center text-white shadow-inner">
@@ -116,7 +116,7 @@ export default function Footer() {
                     <path d="M10 15H14" stroke="#F28C00" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </div>
-                <span className="font-heading font-black text-2xl tracking-tight text-white">
+                <span className="font-heading font-black text-2xl tracking-tight text-white" translate="no">
                   Key<span className="text-brand-orange">2</span>Drive
                 </span>
               </Link>
@@ -129,8 +129,9 @@ export default function Footer() {
               <div className="pt-2 flex flex-wrap items-center gap-2.5">
                 <a
                   href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-all duration-150 active:scale-[0.97] shadow-md"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition-[background-color,transform] duration-150 active:scale-[0.97] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                   title="Call Now for Instant Dispatch"
+                  aria-label={`Call dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
                 >
                   <Phone className="w-3.5 h-3.5" aria-hidden="true" />
                   <span>Call Now</span>
@@ -140,8 +141,9 @@ export default function Footer() {
                   href={CONTACT_DETAILS.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all duration-150 active:scale-[0.97] shadow-md focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-[background-color,transform] duration-150 active:scale-[0.97] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
                   title="WhatsApp Booking with Greeting"
+                  aria-label="WhatsApp Booking with greeting"
                 >
                   <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
                   <span>WhatsApp Booking</span>
@@ -153,7 +155,7 @@ export default function Footer() {
             {/* Column 2: Driver Services (3 cols on lg) */}
             <div className="lg:col-span-3 space-y-4">
               <h4 className="text-xs font-heading font-bold uppercase tracking-widest text-brand-orange flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" aria-hidden="true" />
                 <span>Driver Services</span>
               </h4>
               <ul className="space-y-2.5 text-sm">
@@ -161,9 +163,9 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
+                      className="text-slate-300 hover:text-white hover:translate-x-1 transition-[color,transform] duration-150 inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                     >
-                      <ChevronRight className="w-3 h-3 text-slate-500" />
+                      <ChevronRight className="w-3 h-3 text-slate-500" aria-hidden="true" />
                       <span>{link.label}</span>
                     </Link>
                   </li>
@@ -174,7 +176,7 @@ export default function Footer() {
             {/* Column 3: Quick Navigation (2 cols on lg) */}
             <div className="lg:col-span-2 space-y-4">
               <h4 className="text-xs font-heading font-bold uppercase tracking-widest text-brand-orange flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" aria-hidden="true" />
                 <span>Company</span>
               </h4>
               <ul className="space-y-2.5 text-sm">
@@ -182,9 +184,9 @@ export default function Footer() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-150 inline-flex items-center gap-1.5 focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
+                      className="text-slate-300 hover:text-white hover:translate-x-1 transition-[color,transform] duration-150 inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                     >
-                      <ChevronRight className="w-3 h-3 text-slate-500" />
+                      <ChevronRight className="w-3 h-3 text-slate-500" aria-hidden="true" />
                       <span>{item.label}</span>
                     </Link>
                   </li>
@@ -192,9 +194,9 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/book"
-                    className="text-brand-orange hover:text-white font-bold inline-flex items-center gap-1.5 transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
+                    className="text-brand-orange hover:text-white font-bold inline-flex items-center gap-1.5 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                   >
-                    <Sparkles className="w-3 h-3 text-brand-orange" />
+                    <Sparkles className="w-3 h-3 text-brand-orange" aria-hidden="true" />
                     <span>Book a Driver</span>
                   </Link>
                 </li>
@@ -216,11 +218,11 @@ export default function Footer() {
                   <div>
                     <a
                       href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                      className="hover:text-brand-orange transition-colors font-extrabold text-white text-sm block"
+                      className="hover:text-brand-orange transition-colors font-extrabold text-white text-sm block tabular-nums focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                       title="Tap to Call Now"
                     >
                       <span className="text-brand-orange font-bold mr-1.5">Call Now:</span>
-                      <span>{CONTACT_DETAILS.phoneDisplay}</span>
+                      <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span>
                     </a>
                     <span className="text-[10px] text-brand-orange font-sans block">
                       Click to Call • 24/7 Dispatch Desk
@@ -235,7 +237,7 @@ export default function Footer() {
                   <div>
                     <a
                       href={`mailto:${CONTACT_DETAILS.emailMailto}`}
-                      className="hover:text-brand-orange transition-colors font-medium text-slate-200 text-xs block"
+                      className="hover:text-brand-orange transition-colors font-medium text-slate-200 text-xs block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                     >
                       {CONTACT_DETAILS.emailDisplay}
                     </a>
@@ -275,7 +277,7 @@ export default function Footer() {
                 <Link
                   key={legal.label}
                   href={legal.href}
-                  className="hover:text-white transition-colors focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
+                  className="hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                 >
                   {legal.label}
                 </Link>
@@ -284,7 +286,7 @@ export default function Footer() {
               {/* Discreet Admin Portal Link */}
               <Link
                 href="/admin/login"
-                className="flex items-center gap-1 text-slate-500 hover:text-brand-orange transition-colors pl-3 border-l border-white/15 focus:outline-none focus:ring-1 focus:ring-brand-orange rounded"
+                className="flex items-center gap-1 text-slate-500 hover:text-brand-orange transition-colors pl-3 border-l border-white/15 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                 aria-label="Admin Portal Login"
               >
                 <Lock className="w-3 h-3" aria-hidden="true" />

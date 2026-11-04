@@ -122,7 +122,7 @@ export default function TermsPage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
             {/* Title & subtitle */}
             <div className="md:col-span-8 space-y-3">
-              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+              <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight text-balance">
                 Terms & Conditions
               </h1>
               <p className="text-white/70 text-base sm:text-lg max-w-xl leading-relaxed font-normal">
@@ -136,9 +136,11 @@ export default function TermsPage() {
                 <img
                   src="https://images.unsplash.com/photo-1450133064473-71024230f91b?q=80&w=800&auto=format&fit=crop"
                   alt="Key2Drive Legal Terms & Conditions"
+                  width={400}
+                  height={300}
                   className="w-full h-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-transparent pointer-events-none" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -170,10 +172,12 @@ export default function TermsPage() {
               >
                 {/* Accordion Header */}
                 <button
+                  id={`terms-btn-${section.id}`}
                   type="button"
                   onClick={() => toggleSection(section.id)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
+                  className="w-full px-6 py-4 flex items-center justify-between text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                   aria-expanded={isExpanded}
+                  aria-controls={`terms-panel-${section.id}`}
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-sm font-bold text-brand-navy">
@@ -184,12 +188,18 @@ export default function TermsPage() {
                     className={`w-4 h-4 text-gray-500 transform transition-transform duration-200 ${
                       isExpanded ? "rotate-180 text-brand-orange" : ""
                     }`}
+                    aria-hidden="true"
                   />
                 </button>
 
                 {/* Accordion Content */}
                 {isExpanded && (
-                  <div className="px-6 pb-5 pt-1 border-t border-brand-border/60 bg-brand-warm-bg/30 space-y-2">
+                  <div
+                    id={`terms-panel-${section.id}`}
+                    role="region"
+                    aria-labelledby={`terms-btn-${section.id}`}
+                    className="px-6 pb-5 pt-1 border-t border-brand-border/60 bg-brand-warm-bg/30 space-y-2"
+                  >
                     {section.content.map((paragraph, idx) => (
                       <p
                         key={idx}

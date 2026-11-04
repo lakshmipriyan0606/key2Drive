@@ -23,7 +23,7 @@ import {
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import HeroVideoPlayer from "@/components/ui/HeroVideoPlayer";
 import HomepageBookingForm from "@/components/ui/HomepageBookingForm";
-import { CONTACT_DETAILS } from "@/lib/constants/navigation";
+import { CONTACT_DETAILS, getServiceWhatsAppUrl } from "@/lib/constants/navigation";
 
 export default function HomePage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -117,7 +117,7 @@ export default function HomePage() {
                 <span>Premium Acting Driver & Chauffeur Services</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12] text-balance">
                 Need an Acting Driver <br />
                 <span className="text-brand-orange">for Your Car?</span>
               </h1>
@@ -165,7 +165,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:divide-x md:divide-brand-border">
             <div className="flex items-center gap-3 px-2 justify-center sm:justify-start">
               <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5" />
+                <ShieldCheck className="w-5 h-5" aria-hidden="true" />
               </div>
               <div className="text-left">
                 <span className="font-bold text-xs sm:text-sm text-brand-navy block">Professional Drivers</span>
@@ -175,7 +175,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
               <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Clock className="w-5 h-5" />
+                <Clock className="w-5 h-5" aria-hidden="true" />
               </div>
               <div className="text-left">
                 <span className="font-bold text-xs sm:text-sm text-brand-navy block">24/7 Support</span>
@@ -185,7 +185,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
               <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Car className="w-5 h-5" />
+                <Car className="w-5 h-5" aria-hidden="true" />
               </div>
               <div className="text-left">
                 <span className="font-bold text-xs sm:text-sm text-brand-navy block">Safe & Reliable</span>
@@ -195,7 +195,7 @@ export default function HomePage() {
 
             <div className="flex items-center gap-3 px-2 justify-center sm:justify-start md:pl-6">
               <div className="w-10 h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
-                <Star className="w-5 h-5" />
+                <Star className="w-5 h-5" aria-hidden="true" />
               </div>
               <div className="text-left">
                 <span className="font-bold text-xs sm:text-sm text-brand-navy block">Transparent Billing</span>
@@ -210,7 +210,7 @@ export default function HomePage() {
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-2 mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight text-balance">
               Our Services
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
@@ -222,7 +222,7 @@ export default function HomePage() {
             {services.map((svc) => (
               <div
                 key={svc.id}
-                className="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:border-brand-orange/40 flex flex-col justify-between group"
+                className="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-lg transition-[box-shadow,border-color,transform] duration-300 hover:border-brand-orange/40 flex flex-col justify-between group"
               >
                 <div>
                   {/* Photo with hover zoom */}
@@ -230,6 +230,8 @@ export default function HomePage() {
                     <img
                       src={svc.image}
                       alt={svc.title}
+                      width={400}
+                      height={200}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
@@ -243,13 +245,25 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="p-5 pt-0">
+                <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-brand-border/40">
                   <a
                     href="#book-form"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                   >
-                    <span>Book This Service</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <span>Book Service</span>
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </a>
+
+                  <a
+                    href={getServiceWhatsAppUrl(svc)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 hover:text-emerald-600 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-500"
+                    title={`Chat on WhatsApp for ${svc.title}`}
+                    aria-label={`Chat on WhatsApp for ${svc.title}`}
+                  >
+                    <MessageSquare className="w-3 h-3 text-emerald-600" aria-hidden="true" />
+                    <span>WhatsApp</span>
                   </a>
                 </div>
               </div>
@@ -286,7 +300,7 @@ export default function HomePage() {
               <div className="space-y-3 pt-2">
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 font-bold" />
+                    <Check className="w-4 h-4 font-bold" aria-hidden="true" />
                   </div>
                   <span className="text-sm font-semibold text-white">
                     Professional & Verified Drivers (Govt ID & DL verified)
@@ -294,7 +308,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 font-bold" />
+                    <Check className="w-4 h-4 font-bold" aria-hidden="true" />
                   </div>
                   <span className="text-sm font-semibold text-white">
                     Transparent Pricing, No Hidden Cost (Strict zero surge policy)
@@ -302,7 +316,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
-                    <Check className="w-4 h-4 font-bold" />
+                    <Check className="w-4 h-4 font-bold" aria-hidden="true" />
                   </div>
                   <span className="text-sm font-semibold text-white">
                     Manual, Automatic & Luxury Vehicle Competence
@@ -316,7 +330,7 @@ export default function HomePage() {
                     variant="accent"
                     size="lg"
                     className="!rounded-full !px-8 shadow-lg font-bold"
-                    rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}
+                    rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}
                   >
                     Book Now
                   </ButtonMotion>
@@ -329,10 +343,12 @@ export default function HomePage() {
               <img
                 src="/images/chauffeur-indian.jpg"
                 alt="Professional Verified Indian Chauffeur in suit opening luxury car door"
+                width={600}
+                height={400}
                 className="w-full h-full object-cover object-top sm:object-center"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-brand-navy via-transparent to-transparent lg:block hidden" />
+              <div className="absolute inset-0 bg-gradient-to-r from-brand-navy via-transparent to-transparent lg:block hidden" aria-hidden="true" />
             </div>
           </div>
         </div>
@@ -348,7 +364,7 @@ export default function HomePage() {
             <span className="text-xs font-bold uppercase tracking-wider text-brand-orange">
               Got Questions?
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-navy tracking-tight text-balance">
               Frequently Asked Questions
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
@@ -365,10 +381,12 @@ export default function HomePage() {
                   className="border border-brand-border rounded-2xl overflow-hidden transition-colors"
                 >
                   <button
+                    id={`faq-btn-${index}`}
                     type="button"
                     onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-5 text-left bg-brand-warm-bg/40 hover:bg-brand-warm-bg transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange"
+                    className="w-full flex items-center justify-between p-5 text-left bg-brand-warm-bg/40 hover:bg-brand-warm-bg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                     aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${index}`}
                   >
                     <span className="font-bold text-brand-navy text-sm sm:text-base pr-4">
                       {faq.question}
@@ -381,7 +399,12 @@ export default function HomePage() {
                     />
                   </button>
                   {isOpen && (
-                    <div className="p-5 pt-3 bg-white text-xs sm:text-sm text-secondary-text leading-relaxed border-t border-brand-border/60">
+                    <div
+                      id={`faq-answer-${index}`}
+                      role="region"
+                      aria-labelledby={`faq-btn-${index}`}
+                      className="p-5 pt-3 bg-white text-xs sm:text-sm text-secondary-text leading-relaxed border-t border-brand-border/60"
+                    >
                       {faq.answer}
                     </div>
                   )}
@@ -395,7 +418,7 @@ export default function HomePage() {
       {/* 7. FINAL CALL TO ACTION BANNER */}
       <section className="py-16 bg-brand-navy text-white text-center space-y-6 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white text-balance">
             Experience First-Class Driving Comfort Today
           </h2>
           <p className="text-white/80 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
@@ -408,7 +431,7 @@ export default function HomePage() {
                 variant="accent"
                 size="lg"
                 className="!rounded-full !px-8 shadow-xl font-bold"
-                rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}
+                rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}
               >
                 Book a Driver Now
               </ButtonMotion>
@@ -416,21 +439,23 @@ export default function HomePage() {
 
             <a
               href={`tel:${CONTACT_DETAILS.phoneTel}`}
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-white text-sm font-bold border border-amber-400/40 shadow-lg transition-transform active:scale-95"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-amber-500/20 hover:bg-amber-500/30 text-white text-sm font-bold border border-amber-400/40 shadow-lg transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
               title="Call Now for Instant Driver Dispatch"
+              aria-label={`Call dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
             >
-              <Phone className="w-4 h-4 text-brand-orange animate-pulse" />
-              <span>Call Now: {CONTACT_DETAILS.phoneDisplay}</span>
+              <Phone className="w-4 h-4 text-brand-orange animate-pulse" aria-hidden="true" />
+              <span>Call Now: <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
             </a>
 
             <a
               href={CONTACT_DETAILS.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg transition-transform active:scale-95"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold shadow-lg transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
               title="Chat on WhatsApp"
+              aria-label="WhatsApp Booking with greeting"
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4" aria-hidden="true" />
               <span>WhatsApp Booking</span>
             </a>
 

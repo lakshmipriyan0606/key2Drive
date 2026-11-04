@@ -261,7 +261,7 @@ function BookingContent() {
     }
     const cleanPhone = formData.customerPhone.replace(/[\s\-\+]/g, "");
     if (!cleanPhone || !/^(?:91)?[6-9]\d{9}$/.test(cleanPhone)) {
-      errs.customerPhone = "Enter a valid 10-digit mobile number (e.g. 9876543210)";
+      errs.customerPhone = "Enter a valid 10-digit mobile number (e.g. 9600992709)";
     }
     if (
       !formData.customerEmail ||
@@ -424,18 +424,25 @@ function BookingContent() {
 
         {/* Modal for Details */}
         {showDetailsModal && (
-          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-trip-details-title"
+            className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4 overscroll-contain"
+          >
             <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
               <div className="flex items-center justify-between border-b pb-3">
-                <h3 className="font-bold text-base text-brand-navy">Trip Details</h3>
+                <h3 id="modal-trip-details-title" className="font-bold text-base text-brand-navy">Trip Details</h3>
                 <button
+                  type="button"
                   onClick={() => setShowDetailsModal(false)}
-                  className="text-gray-400 hover:text-gray-700 text-lg font-bold"
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 text-lg font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+                  aria-label="Close trip details modal"
                 >
                   ✕
                 </button>
               </div>
-              <div className="space-y-2 text-xs text-secondary-text">
+              <div className="space-y-2 text-xs text-secondary-text tabular-nums">
                 <div className="flex justify-between py-1 border-b">
                   <span>Reference:</span>
                   <span className="font-mono font-bold text-brand-navy">{confirmedBooking.reference}</span>
@@ -472,8 +479,9 @@ function BookingContent() {
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setShowDetailsModal(false)}
-                className="w-full py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold"
+                className="w-full py-2.5 rounded-xl bg-brand-navy hover:bg-brand-navy/90 text-white text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
               >
                 Close Details
               </button>
@@ -494,13 +502,13 @@ function BookingContent() {
             <h3 className="text-xs font-bold uppercase tracking-wider text-secondary-text">
               Booking Steps
             </h3>
-            <div className="space-y-6">
+            <div className="space-y-6" role="list">
               {STEPS.map((s) => {
                 const isActive = step === s.step;
                 const isPassed = step > s.step;
 
                 return (
-                  <div key={s.step} className="flex items-start gap-3">
+                  <div key={s.step} className="flex items-start gap-3" role="listitem" aria-current={isActive ? "step" : undefined}>
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs shrink-0 transition-colors ${
                         isActive
@@ -510,7 +518,7 @@ function BookingContent() {
                           : "border border-gray-300 text-gray-400 bg-white"
                       }`}
                     >
-                      {isPassed ? <CheckCircle2 className="w-4 h-4" /> : s.step}
+                      {isPassed ? <CheckCircle2 className="w-4 h-4" aria-hidden="true" /> : s.step}
                     </div>
                     <div>
                       <p
@@ -533,7 +541,7 @@ function BookingContent() {
           {/* CENTER COLUMN: Main Form Card matching reference design */}
           <div className="lg:col-span-5 bg-white rounded-2xl border border-brand-border p-6 sm:p-8 shadow-sm">
             <div className="mb-6">
-              <h1 className="text-2xl font-black text-brand-navy tracking-tight">
+              <h1 className="text-2xl font-black text-brand-navy tracking-tight text-balance">
                 Book Your Driver
               </h1>
               <p className="text-xs text-secondary-text mt-1">
@@ -565,46 +573,58 @@ function BookingContent() {
                       }))
                     }
                     error={errors.serviceId}
-                    placeholder="Choose chauffeur service tier..."
+                    placeholder="Choose chauffeur service tier…"
                   />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="bk-pickup-date" className="block text-xs font-bold text-brand-navy">
                         Pickup Date <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <input
+                          id="bk-pickup-date"
+                          name="pickupDate"
                           type="date"
                           value={formData.pickupDate}
                           min={new Date().toISOString().split("T")[0]}
                           onChange={(e) =>
                             setFormData((prev) => ({ ...prev, pickupDate: e.target.value }))
                           }
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                          aria-invalid={!!errors.pickupDate}
+                          aria-describedby={errors.pickupDate ? "bk-pickupDate-error" : undefined}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                         />
                       </div>
                       {errors.pickupDate && (
-                        <p className="text-xs text-red-600 mt-1">{errors.pickupDate}</p>
+                        <p id="bk-pickupDate-error" className="text-xs text-red-600 mt-1" role="alert">
+                          {errors.pickupDate}
+                        </p>
                       )}
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="bk-pickup-time" className="block text-xs font-bold text-brand-navy">
                         Pickup Time <span className="text-red-500">*</span>
                       </label>
                       <div className="relative">
                         <input
+                          id="bk-pickup-time"
+                          name="pickupTime"
                           type="time"
                           value={formData.pickupTime}
                           onChange={(e) =>
                             setFormData((prev) => ({ ...prev, pickupTime: e.target.value }))
                           }
-                          className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                          aria-invalid={!!errors.pickupTime}
+                          aria-describedby={errors.pickupTime ? "bk-pickupTime-error" : undefined}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                         />
                       </div>
                       {errors.pickupTime && (
-                        <p className="text-xs text-red-600 mt-1">{errors.pickupTime}</p>
+                        <p id="bk-pickupTime-error" className="text-xs text-red-600 mt-1" role="alert">
+                          {errors.pickupTime}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -616,7 +636,7 @@ function BookingContent() {
                     onChange={(val) =>
                       setFormData((prev) => ({ ...prev, duration: val }))
                     }
-                    placeholder="Choose duration..."
+                    placeholder="Choose duration…"
                   />
 
                   <div className="pt-2">
@@ -625,7 +645,7 @@ function BookingContent() {
                       size="md"
                       onClick={handleNextStep}
                       className="w-full justify-center !rounded-xl font-bold shadow-sm"
-                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" />}
+                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
                     >
                       Continue to Next Step
                     </ButtonMotion>
@@ -644,72 +664,98 @@ function BookingContent() {
                   className="space-y-5"
                 >
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-pickup-address" className="block text-xs font-bold text-brand-navy">
                       Pickup Address / Landmark <span className="text-red-500">*</span>
                     </label>
                     <input
+                      id="bk-pickup-address"
+                      name="pickupAddress"
                       type="text"
-                      placeholder="e.g. 104 Prestige Towers, Indiranagar, Bengaluru"
+                      autoComplete="street-address"
+                      placeholder="e.g. Saai Avenue, New Perungalathur, Chennai…"
                       value={formData.pickupAddress}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, pickupAddress: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.pickupAddress}
+                      aria-describedby={errors.pickupAddress ? "bk-pickupAddress-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                     {errors.pickupAddress && (
-                      <p className="text-xs text-red-600 mt-1">{errors.pickupAddress}</p>
+                      <p id="bk-pickupAddress-error" className="text-xs text-red-600 mt-1" role="alert">
+                        {errors.pickupAddress}
+                      </p>
                     )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-drop-address" className="block text-xs font-bold text-brand-navy">
                       Destination / Drop Address (Optional)
                     </label>
                     <input
+                      id="bk-drop-address"
+                      name="dropAddress"
                       type="text"
-                      placeholder="e.g. Kempegowda International Airport or Multi-stop"
+                      autoComplete="street-address"
+                      placeholder="e.g. Kempegowda International Airport or Multi-stop…"
                       value={formData.dropAddress}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, dropAddress: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="bk-vehicle-make" className="block text-xs font-bold text-brand-navy">
                         Car Make <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="bk-vehicle-make"
+                        name="vehicleMake"
                         type="text"
-                        placeholder="e.g. Honda, BMW"
+                        autoComplete="off"
+                        spellCheck={false}
+                        placeholder="e.g. Honda, BMW…"
                         value={formData.vehicleMake}
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, vehicleMake: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm"
+                        aria-invalid={!!errors.vehicleMake}
+                        aria-describedby={errors.vehicleMake ? "bk-vehicleMake-error" : undefined}
+                        className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm"
                       />
                       {errors.vehicleMake && (
-                        <p className="text-xs text-red-600 mt-1">{errors.vehicleMake}</p>
+                        <p id="bk-vehicleMake-error" className="text-xs text-red-600 mt-1" role="alert">
+                          {errors.vehicleMake}
+                        </p>
                       )}
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="bk-vehicle-model" className="block text-xs font-bold text-brand-navy">
                         Car Model <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="bk-vehicle-model"
+                        name="vehicleModel"
                         type="text"
-                        placeholder="e.g. City, 3 Series"
+                        autoComplete="off"
+                        spellCheck={false}
+                        placeholder="e.g. City, 3 Series…"
                         value={formData.vehicleModel}
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, vehicleModel: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm"
+                        aria-invalid={!!errors.vehicleModel}
+                        aria-describedby={errors.vehicleModel ? "bk-vehicleModel-error" : undefined}
+                        className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm"
                       />
                       {errors.vehicleModel && (
-                        <p className="text-xs text-red-600 mt-1">{errors.vehicleModel}</p>
+                        <p id="bk-vehicleModel-error" className="text-xs text-red-600 mt-1" role="alert">
+                          {errors.vehicleModel}
+                        </p>
                       )}
                     </div>
                   </div>
@@ -738,10 +784,10 @@ function BookingContent() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <ButtonMotion variant="secondary" size="md" onClick={handlePrevStep} leftIcon={<ArrowLeft className="w-4 h-4 mr-1" />}>
+                    <ButtonMotion variant="secondary" size="md" onClick={handlePrevStep} leftIcon={<ArrowLeft className="w-4 h-4 mr-1" aria-hidden="true" />}>
                       Back
                     </ButtonMotion>
-                    <ButtonMotion variant="accent" size="md" onClick={handleNextStep} rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}>
+                    <ButtonMotion variant="accent" size="md" onClick={handleNextStep} rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}>
                       Continue to Next Step
                     </ButtonMotion>
                   </div>
@@ -759,79 +805,104 @@ function BookingContent() {
                   className="space-y-4"
                 >
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-customer-name" className="block text-xs font-bold text-brand-navy">
                       Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
+                      id="bk-customer-name"
+                      name="customerName"
                       type="text"
-                      placeholder="e.g. Ramesh Kumar"
+                      autoComplete="name"
+                      placeholder="e.g. Ramesh Kumar…"
                       value={formData.customerName}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, customerName: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.customerName}
+                      aria-describedby={errors.customerName ? "bk-customerName-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                     {errors.customerName && (
-                      <p className="text-xs text-red-600 mt-1">{errors.customerName}</p>
+                      <p id="bk-customerName-error" className="text-xs text-red-600 mt-1" role="alert">
+                        {errors.customerName}
+                      </p>
                     )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-customer-phone" className="block text-xs font-bold text-brand-navy">
                       Mobile Number <span className="text-red-500">*</span>
                     </label>
                     <input
+                      id="bk-customer-phone"
+                      name="customerPhone"
                       type="tel"
-                      placeholder="9876543210"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      placeholder="e.g. 9600992709"
                       value={formData.customerPhone}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, customerPhone: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.customerPhone}
+                      aria-describedby={errors.customerPhone ? "bk-customerPhone-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium tabular-nums"
                     />
                     {errors.customerPhone && (
-                      <p className="text-xs text-red-600 mt-1">{errors.customerPhone}</p>
+                      <p id="bk-customerPhone-error" className="text-xs text-red-600 mt-1" role="alert">
+                        {errors.customerPhone}
+                      </p>
                     )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-customer-email" className="block text-xs font-bold text-brand-navy">
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
+                      id="bk-customer-email"
+                      name="customerEmail"
                       type="email"
-                      placeholder="ramesh@example.com"
+                      autoComplete="email"
+                      spellCheck={false}
+                      placeholder="e.g. ramesh@example.com"
                       value={formData.customerEmail}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, customerEmail: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.customerEmail}
+                      aria-describedby={errors.customerEmail ? "bk-customerEmail-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                     {errors.customerEmail && (
-                      <p className="text-xs text-red-600 mt-1">{errors.customerEmail}</p>
+                      <p id="bk-customerEmail-error" className="text-xs text-red-600 mt-1" role="alert">
+                        {errors.customerEmail}
+                      </p>
                     )}
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="bk-special-instructions" className="block text-xs font-bold text-brand-navy">
                       Special Notes (Optional)
                     </label>
                     <textarea
+                      id="bk-special-instructions"
+                      name="specialInstructions"
                       rows={2}
-                      placeholder="e.g. Call 10 mins before arrival, preferred route..."
+                      placeholder="e.g. Call 10 mins before arrival, preferred route…"
                       value={formData.specialInstructions}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, specialInstructions: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-xs"
+                      className="w-full px-3.5 py-2 rounded-lg border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-xs"
                     />
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <ButtonMotion variant="secondary" size="md" onClick={handlePrevStep} leftIcon={<ArrowLeft className="w-4 h-4 mr-1" />}>
+                    <ButtonMotion variant="secondary" size="md" onClick={handlePrevStep} leftIcon={<ArrowLeft className="w-4 h-4 mr-1" aria-hidden="true" />}>
                       Back
                     </ButtonMotion>
-                    <ButtonMotion variant="accent" size="md" onClick={handleNextStep} rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}>
+                    <ButtonMotion variant="accent" size="md" onClick={handleNextStep} rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}>
                       Review & Confirm
                     </ButtonMotion>
                   </div>
@@ -883,7 +954,7 @@ function BookingContent() {
                       size="md"
                       onClick={handlePrevStep}
                       disabled={isSubmitting}
-                      leftIcon={<ArrowLeft className="w-4 h-4 mr-1" />}
+                      leftIcon={<ArrowLeft className="w-4 h-4 mr-1" aria-hidden="true" />}
                     >
                       Back
                     </ButtonMotion>
@@ -893,9 +964,9 @@ function BookingContent() {
                       onClick={() => handleSubmitBooking()}
                       disabled={isSubmitting}
                       isLoading={isSubmitting}
-                      rightIcon={<CheckCircle2 className="w-4 h-4 ml-1" />}
+                      rightIcon={<CheckCircle2 className="w-4 h-4 ml-1" aria-hidden="true" />}
                     >
-                      {isSubmitting ? "Placing Booking..." : "Confirm Booking"}
+                      {isSubmitting ? "Placing Booking…" : "Confirm Booking"}
                     </ButtonMotion>
                   </div>
                 </motion.div>
@@ -909,9 +980,11 @@ function BookingContent() {
               <img
                 src="/images/chauffeur-indian.jpg"
                 alt="Key2Drive Executive Luxury Chauffeur"
+                width={400}
+                height={500}
                 className="w-full h-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-transparent to-transparent opacity-80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-transparent to-transparent opacity-80" aria-hidden="true" />
               <div className="absolute bottom-6 left-6 right-6 text-white space-y-1">
                 <span className="inline-block px-2.5 py-0.5 rounded-full bg-brand-orange text-white text-[10px] font-bold uppercase tracking-wider">
                   Guaranteed Comfort

@@ -15,6 +15,7 @@ import {
   Compass,
 } from "lucide-react";
 import ButtonMotion from "./ButtonMotion";
+import { CONTACT_DETAILS } from "@/lib/constants/navigation";
 
 interface Step {
   step: string;
@@ -111,7 +112,7 @@ export default function HowItWorksTravelJourney() {
           
           {/* Active progress accent line */}
           <div
-            className="absolute top-8 left-16 h-1 bg-gradient-to-r from-brand-orange via-amber-500 to-brand-orange rounded-full transition-all duration-500"
+            className="absolute top-8 left-16 h-1 bg-gradient-to-r from-brand-orange via-amber-500 to-brand-orange rounded-full transition-[width] duration-500 ease-out"
             style={{ width: `${(activeStep / (STEPS.length - 1)) * 88}%` }}
           />
 
@@ -124,11 +125,14 @@ export default function HowItWorksTravelJourney() {
               return (
                 <button
                   key={s.number}
+                  type="button"
                   onClick={() => setActiveStep(idx)}
-                  className="flex flex-col items-center group text-left focus:outline-none"
+                  className="flex flex-col items-center group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange rounded-xl"
+                  aria-label={`Step ${s.number}: ${s.step}`}
+                  aria-current={isCurrent ? "step" : undefined}
                 >
                   <div
-                    className={`w-16 h-16 rounded-2xl flex items-center justify-center font-heading font-extrabold text-lg transition-all duration-300 shadow-md ${
+                    className={`w-16 h-16 rounded-2xl flex items-center justify-center font-heading font-extrabold text-lg transition-[background-color,color,border-color,transform,box-shadow] duration-200 shadow-md ${
                       isCurrent
                         ? "bg-brand-orange text-white scale-110 shadow-brand-orange/30 ring-4 ring-brand-orange/20"
                         : isPassed
@@ -137,7 +141,7 @@ export default function HowItWorksTravelJourney() {
                     }`}
                   >
                     {isPassed && !isCurrent ? (
-                      <Check className="w-6 h-6 stroke-[3]" />
+                      <Check className="w-6 h-6 stroke-[3]" aria-hidden="true" />
                     ) : (
                       <span>{s.number}</span>
                     )}
@@ -166,7 +170,7 @@ export default function HowItWorksTravelJourney() {
               <div
                 key={item.number}
                 onMouseEnter={() => setActiveStep(index)}
-                className={`relative rounded-3xl p-6 sm:p-7 transition-all duration-300 flex flex-col justify-between border group bg-white shadow-sm hover:shadow-xl hover:-translate-y-2 ${
+                className={`relative rounded-3xl p-6 sm:p-7 transition-[border-color,box-shadow,transform] duration-200 flex flex-col justify-between border group bg-white shadow-sm hover:shadow-xl hover:-translate-y-2 ${
                   isActive
                     ? "border-brand-orange/60 ring-2 ring-brand-orange/15 shadow-xl -translate-y-1.5"
                     : "border-brand-border hover:border-brand-orange/30"
@@ -229,14 +233,14 @@ export default function HowItWorksTravelJourney() {
         <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-brand-navy text-white border border-white/10 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start gap-2 text-brand-orange text-xs font-bold uppercase tracking-wider">
-              <Clock className="w-4 h-4" />
-              <span>Instant Doorstep Dispatch in Bengaluru</span>
+              <Clock className="w-4 h-4" aria-hidden="true" />
+              <span>Instant Doorstep Driver Dispatch</span>
             </div>
             <h4 className="text-xl sm:text-2xl font-bold font-heading text-white">
               Ready to experience first-class chauffeur travel?
             </h4>
             <p className="text-xs sm:text-sm text-white/70 max-w-xl">
-              Professional acting drivers available 24/7 across Indiranagar, Koramangala, Whitefield, HSR, and all Bengaluru locations.
+              Professional acting drivers available 24/7 across Chennai, New Perungalathur, and all major travel destinations.
             </p>
           </div>
 
@@ -246,18 +250,19 @@ export default function HowItWorksTravelJourney() {
                 variant="accent"
                 size="lg"
                 className="w-full !rounded-full !px-8 shadow-lg font-bold text-sm"
-                rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}
+                rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}
               >
                 Book a Driver Now
               </ButtonMotion>
             </Link>
 
             <a
-              href="tel:+919876543210"
-              className="w-full sm:w-auto px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors"
+              href={`tel:${CONTACT_DETAILS.phoneTel}`}
+              className="w-full sm:w-auto px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors tabular-nums focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+              aria-label={`Call Dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
             >
-              <PhoneCall className="w-3.5 h-3.5 text-brand-orange" />
-              <span>Call Dispatch: +91 98765 43210</span>
+              <PhoneCall className="w-3.5 h-3.5 text-brand-orange" aria-hidden="true" />
+              <span>Call Dispatch: <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
             </a>
           </div>
         </div>

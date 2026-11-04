@@ -89,7 +89,7 @@ export default function AdminLayout({
       <div className="min-h-screen bg-brand-warm-bg flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 rounded-full border-3 border-brand-orange border-t-transparent animate-spin" />
-          <span className="text-xs font-semibold text-brand-navy">Verifying Admin Session...</span>
+          <span className="text-xs font-semibold text-brand-navy">Verifying Admin Session…</span>
         </div>
       </div>
     );

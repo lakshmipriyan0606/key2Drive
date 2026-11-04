@@ -235,71 +235,83 @@ export default function AdminPricingPage() {
 
         {/* Edit Form matching Reference Design */}
         {loading ? (
-          <div className="p-12 text-center space-y-3">
+          <div className="p-12 text-center space-y-3" aria-live="polite">
             <div className="w-8 h-8 rounded-full border-2 border-brand-orange border-t-transparent animate-spin mx-auto" />
-            <p className="text-xs text-secondary-text">Loading tariff parameters...</p>
+            <p className="text-xs text-secondary-text">Loading tariff parameters…</p>
           </div>
         ) : (
           <form onSubmit={handleSaveChanges} className="space-y-6 max-w-2xl">
             {/* 2x2 Grid of Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 tabular-nums">
               {/* Base Rate */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-brand-navy">
+                <label htmlFor="pricing-base-rate" className="block text-xs font-bold text-brand-navy">
                   Base Rate (₹)
                 </label>
                 <input
+                  id="pricing-base-rate"
+                  name="baseRate"
                   type="number"
+                  inputMode="numeric"
                   value={formData.baseRate}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, baseRate: Number(e.target.value) }))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                 />
               </div>
 
               {/* Minimum Hours */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-brand-navy">
+                <label htmlFor="pricing-min-hours" className="block text-xs font-bold text-brand-navy">
                   Minimum Hours
                 </label>
                 <input
+                  id="pricing-min-hours"
+                  name="minHours"
                   type="number"
+                  inputMode="numeric"
                   value={formData.minHours}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, minHours: Number(e.target.value) }))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                 />
               </div>
 
               {/* Extra Hour */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-brand-navy">
+                <label htmlFor="pricing-extra-hour" className="block text-xs font-bold text-brand-navy">
                   Extra Hour (₹)
                 </label>
                 <input
+                  id="pricing-extra-hour"
+                  name="extraHour"
                   type="number"
+                  inputMode="numeric"
                   value={formData.extraHour}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, extraHour: Number(e.target.value) }))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                 />
               </div>
 
               {/* Extra KM */}
               <div className="space-y-1.5">
-                <label className="block text-xs font-bold text-brand-navy">
+                <label htmlFor="pricing-extra-km" className="block text-xs font-bold text-brand-navy">
                   Extra KM (₹)
                 </label>
                 <input
+                  id="pricing-extra-km"
+                  name="extraKm"
                   type="number"
+                  inputMode="numeric"
                   value={formData.extraKm}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, extraKm: Number(e.target.value) }))
                   }
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                 />
               </div>
             </div>
@@ -311,11 +323,12 @@ export default function AdminPricingPage() {
                 onClick={() =>
                   setFormData((prev) => ({ ...prev, isActive: !prev.isActive }))
                 }
-                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-[background-color] duration-200 ease-in-out focus:outline-none ${
+                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-[background-color] duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                   formData.isActive ? "bg-brand-orange" : "bg-gray-300"
                 }`}
                 role="switch"
                 aria-checked={formData.isActive}
+                aria-label="Toggle active status for service"
               >
                 <span
                   className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
@@ -331,7 +344,7 @@ export default function AdminPricingPage() {
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-5 py-2.5 rounded-xl border border-brand-border bg-white text-xs font-bold text-brand-navy hover:bg-gray-50 transition-colors shadow-sm"
+                className="px-5 py-2.5 rounded-xl border border-brand-border bg-white text-xs font-bold text-brand-navy hover:bg-gray-50 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
               >
                 Cancel
               </button>
@@ -343,7 +356,7 @@ export default function AdminPricingPage() {
                 isLoading={saving}
                 className="!rounded-xl font-bold px-6 shadow-sm"
               >
-                {saving ? "Saving..." : "Save Changes"}
+                {saving ? "Saving…" : "Save Changes"}
               </ButtonMotion>
             </div>
           </form>

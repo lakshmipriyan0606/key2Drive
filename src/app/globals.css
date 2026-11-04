@@ -128,6 +128,19 @@
     outline: 2px solid #F28C00;
     outline-offset: 2px;
   }
+
+  /* Typography utilities for headings & numbers */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
 /* Accessibility: Universal prefers-reduced-motion override */

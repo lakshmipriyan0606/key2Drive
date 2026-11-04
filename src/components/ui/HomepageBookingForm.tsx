@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import { toast } from "sonner";
-import { CONTACT_DETAILS } from "@/lib/constants/navigation";
+import { CONTACT_DETAILS, getWhatsAppUrl } from "@/lib/constants/navigation";
 import { SEED_SERVICES } from "@/lib/data/seedData";
 
 interface ServiceOption {
@@ -103,21 +103,21 @@ export default function HomepageBookingForm() {
   const selectedService = services.find((s) => s.id === selectedServiceId) || displayServices[0];
 
   const getDynamicWhatsAppUrl = (): string => {
-    let msg = `Hello Key2Drive! 👋\nI would like to book a verified acting driver for my car.\n\n`;
+    let msg = `*Hello Key2Drive!*\nI would like to book a verified acting driver for my car.\n\n`;
     if (selectedService) {
-      msg += `⏱️ Service: ${selectedService.title}\n`;
+      msg += `• Service: *${selectedService.title}*\n`;
     }
     if (pickupDate && pickupTime) {
-      msg += `📅 Pickup Date & Time: ${pickupDate} at ${pickupTime}\n`;
+      msg += `• Pickup Schedule: ${pickupDate} at ${pickupTime}\n`;
     }
     if (pickupAddress.trim()) {
-      msg += `📍 Pickup Location: ${pickupAddress.trim()}\n`;
+      msg += `• Pickup Location: ${pickupAddress.trim()}\n`;
     }
     if (carMake.trim() || carModel.trim()) {
-      msg += `🚗 Vehicle: ${carMake.trim()} ${carModel.trim()} (${transmission})\n`;
+      msg += `• Vehicle: ${carMake.trim()} ${carModel.trim()} (${transmission})\n`;
     }
     msg += `\nPlease share driver availability and quote. Thank you!`;
-    return `https://wa.me/919876543210?text=${encodeURIComponent(msg)}`;
+    return getWhatsAppUrl(msg);
   };
 
   const calculateFare = (): number => {
@@ -307,12 +307,12 @@ export default function HomepageBookingForm() {
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
               <a
-                href={`https://wa.me/919876543210?text=${encodeURIComponent(
-                  `Hello Key2Drive! 👋\nI have submitted booking reference: ${confirmedBooking.reference}.\n\n• Service: ${confirmedBooking.serviceName}\n• Schedule: ${confirmedBooking.pickupDateTime}\n\nPlease confirm driver assignment and ETA. Thank you!`
-                )}`}
+                href={getWhatsAppUrl(
+                  `*Hello Key2Drive!*\nI have submitted booking reference: *${confirmedBooking.reference}*.\n\n• Service: ${confirmedBooking.serviceName}\n• Schedule: ${confirmedBooking.pickupDateTime}\n\nPlease confirm driver assignment and ETA. Thank you!`
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md transition-[background-color,transform] duration-150 active:scale-95"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Confirm on WhatsApp</span>
@@ -395,71 +395,107 @@ export default function HomepageBookingForm() {
 
             {/* 2. Pickup Schedule (Clean 2-Column Schedule, No Redundant Dropdown) */}
             <div className="space-y-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
+              <span className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
                 2. Pickup Schedule
-              </label>
+              </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Pickup Date</label>
+                  <label htmlFor="hb-pickup-date" className="block text-xs text-secondary-text mb-1">
+                    Pickup Date
+                  </label>
                   <div className="relative">
-                    <Calendar className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <Calendar className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-pickup-date"
+                      name="pickupDate"
                       type="date"
                       value={pickupDate}
                       onChange={(e) => setPickupDate(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.pickupDate}
+                      aria-describedby={errors.pickupDate ? "hb-pickupDate-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
-                  {errors.pickupDate && <p className="text-[11px] text-red-600 mt-1">{errors.pickupDate}</p>}
+                  {errors.pickupDate && (
+                    <p id="hb-pickupDate-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.pickupDate}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Pickup Time</label>
+                  <label htmlFor="hb-pickup-time" className="block text-xs text-secondary-text mb-1">
+                    Pickup Time
+                  </label>
                   <div className="relative">
-                    <Clock className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <Clock className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-pickup-time"
+                      name="pickupTime"
                       type="time"
                       value={pickupTime}
                       onChange={(e) => setPickupTime(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.pickupTime}
+                      aria-describedby={errors.pickupTime ? "hb-pickupTime-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
-                  {errors.pickupTime && <p className="text-[11px] text-red-600 mt-1">{errors.pickupTime}</p>}
+                  {errors.pickupTime && (
+                    <p id="hb-pickupTime-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.pickupTime}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
 
             {/* 3. Pickup Location & Vehicle Info */}
             <div className="space-y-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
+              <span className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
                 3. Pickup Location & Your Car Details
-              </label>
+              </span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Pickup Address & Landmark</label>
+                  <label htmlFor="hb-pickup-address" className="block text-xs text-secondary-text mb-1">
+                    Pickup Address & Landmark
+                  </label>
                   <div className="relative">
-                    <MapPin className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <MapPin className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-pickup-address"
+                      name="pickupAddress"
                       type="text"
-                      placeholder="e.g. 100 Feet Rd, Indiranagar, Bangalore"
+                      autoComplete="street-address"
+                      placeholder="e.g. Saai Avenue, New Perungalathur, Chennai…"
                       value={pickupAddress}
                       onChange={(e) => setPickupAddress(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.pickupAddress}
+                      aria-describedby={errors.pickupAddress ? "hb-pickupAddress-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
-                  {errors.pickupAddress && <p className="text-[11px] text-red-600 mt-1">{errors.pickupAddress}</p>}
+                  {errors.pickupAddress && (
+                    <p id="hb-pickupAddress-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.pickupAddress}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Destination / Drop Location (Optional)</label>
+                  <label htmlFor="hb-drop-address" className="block text-xs text-secondary-text mb-1">
+                    Destination / Drop Location (Optional)
+                  </label>
                   <div className="relative">
-                    <MapPin className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <MapPin className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-drop-address"
+                      name="dropAddress"
                       type="text"
-                      placeholder="e.g. Airport Terminal / City Center"
+                      autoComplete="street-address"
+                      placeholder="e.g. Airport Terminal / City Center…"
                       value={dropAddress}
                       onChange={(e) => setDropAddress(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
                 </div>
@@ -467,50 +503,78 @@ export default function HomepageBookingForm() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-1">
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Car Make</label>
+                  <label htmlFor="hb-car-make" className="block text-xs text-secondary-text mb-1">
+                    Car Make
+                  </label>
                   <input
+                    id="hb-car-make"
+                    name="carMake"
                     type="text"
-                    placeholder="e.g. Maruti, Hyundai, Toyota"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="e.g. Maruti, Hyundai, Toyota…"
                     value={carMake}
                     onChange={(e) => setCarMake(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                    aria-invalid={!!errors.carMake}
+                    aria-describedby={errors.carMake ? "hb-carMake-error" : undefined}
+                    className="w-full px-3 py-2 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                   />
-                  {errors.carMake && <p className="text-[11px] text-red-600 mt-1">{errors.carMake}</p>}
+                  {errors.carMake && (
+                    <p id="hb-carMake-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.carMake}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Car Model</label>
+                  <label htmlFor="hb-car-model" className="block text-xs text-secondary-text mb-1">
+                    Car Model
+                  </label>
                   <input
+                    id="hb-car-model"
+                    name="carModel"
                     type="text"
-                    placeholder="e.g. Swift, Innova, Creta, City"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="e.g. Swift, Innova, Creta, City…"
                     value={carModel}
                     onChange={(e) => setCarModel(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                    aria-invalid={!!errors.carModel}
+                    aria-describedby={errors.carModel ? "hb-carModel-error" : undefined}
+                    className="w-full px-3 py-2 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                   />
-                  {errors.carModel && <p className="text-[11px] text-red-600 mt-1">{errors.carModel}</p>}
+                  {errors.carModel && (
+                    <p id="hb-carModel-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.carModel}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Transmission</label>
-                  <div className="grid grid-cols-2 gap-2">
+                  <span className="block text-xs text-secondary-text mb-1">Transmission</span>
+                  <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Transmission">
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={transmission === "MANUAL"}
                       onClick={() => setTransmission("MANUAL")}
-                      className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                      className={`py-2 rounded-xl text-xs font-bold border transition-[background-color,border-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                         transmission === "MANUAL"
                           ? "bg-brand-navy text-white border-brand-navy"
-                          : "bg-white text-secondary-text border-brand-border"
+                          : "bg-white text-secondary-text border-brand-border hover:border-brand-orange/40"
                       }`}
                     >
                       Manual
                     </button>
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={transmission === "AUTOMATIC"}
                       onClick={() => setTransmission("AUTOMATIC")}
-                      className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                      className={`py-2 rounded-xl text-xs font-bold border transition-[background-color,border-color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                         transmission === "AUTOMATIC"
                           ? "bg-brand-navy text-white border-brand-navy"
-                          : "bg-white text-secondary-text border-brand-border"
+                          : "bg-white text-secondary-text border-brand-border hover:border-brand-orange/40"
                       }`}
                     >
                       Automatic
@@ -522,53 +586,88 @@ export default function HomepageBookingForm() {
 
             {/* 4. Customer Contact Details */}
             <div className="space-y-3">
-              <label className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
+              <span className="block text-xs font-bold uppercase tracking-wider text-brand-navy">
                 4. Your Contact Information
-              </label>
+              </span>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Your Full Name</label>
+                  <label htmlFor="hb-customer-name" className="block text-xs text-secondary-text mb-1">
+                    Your Full Name
+                  </label>
                   <div className="relative">
-                    <User className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <User className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-customer-name"
+                      name="customerName"
                       type="text"
-                      placeholder="e.g. Rajesh Kumar"
+                      autoComplete="name"
+                      placeholder="e.g. Rajesh Kumar…"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.customerName}
+                      aria-describedby={errors.customerName ? "hb-customerName-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
-                  {errors.customerName && <p className="text-[11px] text-red-600 mt-1">{errors.customerName}</p>}
+                  {errors.customerName && (
+                    <p id="hb-customerName-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.customerName}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">10-Digit Mobile Number</label>
+                  <label htmlFor="hb-customer-phone" className="block text-xs text-secondary-text mb-1">
+                    10-Digit Mobile Number
+                  </label>
                   <div className="relative">
-                    <Phone className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <Phone className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-customer-phone"
+                      name="customerPhone"
                       type="tel"
-                      placeholder="e.g. 9876543210"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      placeholder="e.g. 9600992709"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.customerPhone}
+                      aria-describedby={errors.customerPhone ? "hb-customerPhone-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1 tabular-nums"
                     />
                   </div>
-                  {errors.customerPhone && <p className="text-[11px] text-red-600 mt-1">{errors.customerPhone}</p>}
+                  {errors.customerPhone && (
+                    <p id="hb-customerPhone-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.customerPhone}
+                    </p>
+                  )}
                 </div>
 
                 <div>
-                  <label className="block text-xs text-secondary-text mb-1">Email Address</label>
+                  <label htmlFor="hb-customer-email" className="block text-xs text-secondary-text mb-1">
+                    Email Address
+                  </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-secondary-text absolute left-3 top-3" />
+                    <Mail className="w-4 h-4 text-secondary-text absolute left-3 top-3" aria-hidden="true" />
                     <input
+                      id="hb-customer-email"
+                      name="customerEmail"
                       type="email"
+                      autoComplete="email"
+                      spellCheck={false}
                       placeholder="e.g. rajesh@example.com"
                       value={customerEmail}
                       onChange={(e) => setCustomerEmail(e.target.value)}
-                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus:ring-2 focus:ring-brand-orange focus:outline-none"
+                      aria-invalid={!!errors.customerEmail}
+                      aria-describedby={errors.customerEmail ? "hb-customerEmail-error" : undefined}
+                      className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-brand-border text-xs sm:text-sm font-medium focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:outline-none focus-visible:ring-offset-1"
                     />
                   </div>
-                  {errors.customerEmail && <p className="text-[11px] text-red-600 mt-1">{errors.customerEmail}</p>}
+                  {errors.customerEmail && (
+                    <p id="hb-customerEmail-error" className="text-[11px] text-red-600 mt-1" role="alert">
+                      {errors.customerEmail}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -583,7 +682,7 @@ export default function HomepageBookingForm() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
-                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" aria-hidden="true" />
                   <span className="text-[11px] text-secondary-text">
                     Best rates discussed upfront with dispatch • Zero hidden fees • Pay after trip
                   </span>
@@ -596,9 +695,9 @@ export default function HomepageBookingForm() {
                 size="lg"
                 disabled={isSubmitting}
                 className="!px-8 !py-3.5 !rounded-full shadow-lg font-bold text-sm w-full sm:w-auto"
-                rightIcon={<ArrowRight className="w-4 h-4 ml-1" />}
+                rightIcon={<ArrowRight className="w-4 h-4 ml-1" aria-hidden="true" />}
               >
-                {isSubmitting ? "Confirming..." : "Book Driver Now"}
+                {isSubmitting ? "Confirming…" : "Book Driver Now"}
               </ButtonMotion>
             </div>
           </form>

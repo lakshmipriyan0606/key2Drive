@@ -267,11 +267,13 @@ export default function AdminBookingsPage() {
         </div>
 
         <button
+          type="button"
           onClick={fetchBookings}
           disabled={refreshing}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-brand-border text-brand-navy text-xs font-semibold hover:bg-gray-50 shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-brand-border text-brand-navy text-xs font-semibold hover:bg-gray-50 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+          aria-label="Refresh bookings list"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? "animate-spin" : ""}`} aria-hidden="true" />
           <span>Refresh</span>
         </button>
       </div>
@@ -280,16 +282,18 @@ export default function AdminBookingsPage() {
       <div className="bg-white rounded-2xl border border-brand-border p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
         {/* Search input */}
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" />
+          <label htmlFor="admin-search-bookings" className="sr-only">Search bookings</label>
+          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-2.5" aria-hidden="true" />
           <input
-            type="text"
-            placeholder="Search bookings..."
+            id="admin-search-bookings"
+            type="search"
+            placeholder="Search bookings…"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-10 pr-4 py-2 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-xs font-medium"
+            className="w-full pl-10 pr-4 py-2 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-xs font-medium"
           />
         </div>
 
@@ -308,29 +312,29 @@ export default function AdminBookingsPage() {
       </div>
 
       {/* Bookings Table matching Reference Design */}
-      <div className="bg-white rounded-2xl border border-brand-border shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-brand-border shadow-sm overflow-hidden" aria-live="polite">
         {loading ? (
           <div className="p-12 text-center space-y-3">
             <div className="w-8 h-8 rounded-full border-2 border-brand-orange border-t-transparent animate-spin mx-auto" />
-            <p className="text-xs text-secondary-text">Loading bookings...</p>
+            <p className="text-xs text-secondary-text">Loading bookings…</p>
           </div>
         ) : bookings.length === 0 ? (
           <div className="py-16 text-center space-y-2">
-            <Car className="w-8 h-8 text-gray-400 mx-auto" />
+            <Car className="w-8 h-8 text-gray-400 mx-auto" aria-hidden="true" />
             <h3 className="font-bold text-brand-navy text-sm">No Bookings Found</h3>
             <p className="text-xs text-secondary-text">Try adjusting your search or status filter.</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs tabular-nums">
               <thead className="bg-brand-warm-bg/60 border-b border-brand-border text-secondary-text uppercase font-bold text-[11px]">
                 <tr>
-                  <th className="px-5 py-3.5">Ref #</th>
-                  <th className="px-5 py-3.5">Customer</th>
-                  <th className="px-5 py-3.5">Service</th>
-                  <th className="px-5 py-3.5">Date & Time</th>
-                  <th className="px-5 py-3.5">Status</th>
-                  <th className="px-5 py-3.5 text-right">Actions</th>
+                  <th scope="col" className="px-5 py-3.5">Ref #</th>
+                  <th scope="col" className="px-5 py-3.5">Customer</th>
+                  <th scope="col" className="px-5 py-3.5">Service</th>
+                  <th scope="col" className="px-5 py-3.5">Date & Time</th>
+                  <th scope="col" className="px-5 py-3.5">Status</th>
+                  <th scope="col" className="px-5 py-3.5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-border/60">
@@ -339,8 +343,9 @@ export default function AdminBookingsPage() {
                     {/* Ref # */}
                     <td className="px-5 py-3.5 font-mono font-bold text-brand-navy">
                       <button
+                        type="button"
                         onClick={() => handleInspect(b.id)}
-                        className="text-brand-orange hover:underline focus:outline-none"
+                        className="text-brand-orange hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                       >
                         {b.reference}
                       </button>
@@ -371,8 +376,9 @@ export default function AdminBookingsPage() {
                     {/* Action View Button */}
                     <td className="px-5 py-3.5 text-right">
                       <button
+                        type="button"
                         onClick={() => handleInspect(b.id)}
-                        className="px-3 py-1 rounded-lg border border-brand-border text-brand-navy text-xs font-bold hover:bg-gray-50 transition-colors"
+                        className="px-3 py-1 rounded-lg border border-brand-border text-brand-navy text-xs font-bold hover:bg-gray-50 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange"
                       >
                         View
                       </button>
@@ -385,20 +391,24 @@ export default function AdminBookingsPage() {
         )}
 
         {/* Pagination matching Reference Design: "< 1 2 3 >" */}
-        <div className="p-4 border-t border-brand-border flex items-center justify-center gap-1.5 text-xs font-bold">
+        <div className="p-4 border-t border-brand-border flex items-center justify-center gap-1.5 text-xs font-bold tabular-nums">
           <button
+            type="button"
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page === 1}
-            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none"
+            aria-label="Previous page"
+            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange"
           >
-            <ChevronLeft className="w-3.5 h-3.5" />
+            <ChevronLeft className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
             <button
               key={p}
+              type="button"
               onClick={() => setPage(p)}
-              className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors ${
+              aria-current={page === p ? "page" : undefined}
+              className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange ${
                 page === p
                   ? "bg-brand-orange text-white shadow-sm"
                   : "border border-brand-border text-brand-navy hover:bg-gray-50"
@@ -409,11 +419,13 @@ export default function AdminBookingsPage() {
           ))}
 
           <button
+            type="button"
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
             disabled={page === totalPages}
-            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none"
+            aria-label="Next page"
+            className="w-8 h-8 rounded-lg border border-brand-border flex items-center justify-center text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange"
           >
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-3.5 h-3.5" aria-hidden="true" />
           </button>
         </div>
       </div>

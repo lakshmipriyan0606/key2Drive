@@ -167,7 +167,7 @@ export default function MobileNav({
               duration: shouldReduceMotion ? 0.15 : 0.26,
               ease: [0.32, 0.72, 0, 1], // Emil Kowalski drawer easing
             }}
-            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white shadow-2xl flex flex-col z-10 border-l border-brand-border/60 overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-sm bg-white shadow-2xl flex flex-col z-10 border-l border-brand-border/60 overflow-y-auto overscroll-contain"
           >
             {/* Drawer Header */}
             <div className="flex items-center justify-between p-5 border-b border-brand-border/60 bg-warm-bg/50">
@@ -175,14 +175,14 @@ export default function MobileNav({
                 <div className="w-8 h-8 rounded-lg bg-brand-navy flex items-center justify-center text-white">
                   <ShieldCheck className="w-4 h-4 text-brand-orange" aria-hidden="true" />
                 </div>
-                <span className="font-bold text-lg text-brand-navy">Key2Drive</span>
+                <span className="font-bold text-lg text-brand-navy" translate="no">Key2Drive</span>
               </div>
 
               <button
                 ref={closeButtonRef}
                 type="button"
                 onClick={handleDismiss}
-                className="min-w-[44px] min-h-[44px] p-2 rounded-xl text-secondary-text hover:text-brand-navy hover:bg-black/5 active:scale-[0.97] transition-colors duration-150 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-brand-orange"
+                className="min-w-[44px] min-h-[44px] p-2 rounded-xl text-secondary-text hover:text-brand-navy hover:bg-black/5 active:scale-[0.97] transition-colors duration-150 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
                 aria-label="Close navigation menu"
               >
                 <X className="w-6 h-6" aria-hidden="true" />
@@ -198,7 +198,7 @@ export default function MobileNav({
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className={`flex items-center justify-between min-h-[48px] px-4 py-3 rounded-xl text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-brand-orange ${
+                    className={`flex items-center justify-between min-h-[48px] px-4 py-3 rounded-xl text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange ${
                       active
                         ? "bg-brand-navy text-white font-semibold shadow-sm"
                         : "text-primary-text hover:bg-warm-bg active:bg-black/5"
@@ -218,7 +218,7 @@ export default function MobileNav({
                 <Link
                   href="/book"
                   onClick={onClose}
-                  className="flex items-center justify-center gap-2 w-full min-h-[48px] bg-brand-orange hover:bg-brand-orange/90 active:scale-[0.97] text-white font-semibold text-base py-3.5 px-4 rounded-xl shadow-md transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:ring-offset-2"
+                  className="flex items-center justify-center gap-2 w-full min-h-[48px] bg-brand-orange hover:bg-brand-orange/90 active:scale-[0.97] text-white font-semibold text-base py-3.5 px-4 rounded-xl shadow-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
                 >
                   <Calendar className="w-5 h-5" aria-hidden="true" />
                   <span>Book a Driver</span>
@@ -231,15 +231,16 @@ export default function MobileNav({
               {/* Direct Call Trigger */}
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-sm hover:bg-amber-500/20 transition-colors shadow-sm"
+                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-sm hover:bg-amber-500/20 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
                 title="Call Now"
+                aria-label={`Call dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
               >
                 <div className="w-10 h-10 rounded-lg bg-brand-orange text-white flex items-center justify-center flex-shrink-0 shadow-sm">
                   <Phone className="w-5 h-5 animate-pulse" aria-hidden="true" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-bold text-brand-orange uppercase tracking-wide">Call Now (24/7 Dispatch)</span>
-                  <span className="font-extrabold text-brand-navy text-base">{CONTACT_DETAILS.phoneDisplay}</span>
+                  <span className="font-extrabold text-brand-navy text-base" translate="no">{CONTACT_DETAILS.phoneDisplay}</span>
                 </div>
               </a>
 
@@ -248,8 +249,9 @@ export default function MobileNav({
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-emerald-50 border border-emerald-300 text-sm text-emerald-900 hover:bg-emerald-100 transition-colors shadow-sm"
+                className="flex items-center gap-3 min-h-[48px] px-3.5 py-3 rounded-xl bg-emerald-50 border border-emerald-300 text-sm text-emerald-900 hover:bg-emerald-100 transition-colors shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 title="WhatsApp Booking Greeting"
+                aria-label="Chat on WhatsApp with greeting"
               >
                 <div className="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow-sm">
                   <MessageSquare className="w-5 h-5" aria-hidden="true" />

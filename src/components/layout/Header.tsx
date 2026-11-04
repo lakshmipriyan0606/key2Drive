@@ -90,20 +90,22 @@ export default function Header() {
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 text-xs font-semibold transition-all duration-150"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/25 hover:text-emerald-300 text-xs font-semibold transition-[background-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy"
                 title="Chat on WhatsApp (Instant Greeting)"
+                aria-label="Chat on WhatsApp"
               >
-                <MessageSquare className="w-3.5 h-3.5" />
+                <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>WhatsApp</span>
               </a>
 
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-brand-orange hover:bg-amber-500/25 text-xs font-bold transition-all duration-150"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-brand-orange hover:bg-amber-500/25 text-xs font-bold transition-[background-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-navy tabular-nums"
                 title="Call Now for Instant Driver Dispatch"
+                aria-label={`Call Key2Drive dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
               >
-                <Phone className="w-3.5 h-3.5 text-brand-orange" />
-                <span>Call Now: <span className="text-white font-semibold">{CONTACT_DETAILS.phoneDisplay}</span></span>
+                <Phone className="w-3.5 h-3.5 text-brand-orange" aria-hidden="true" />
+                <span>Call Now: <span className="text-white font-semibold" translate="no">{CONTACT_DETAILS.phoneDisplay}</span></span>
               </a>
 
               <Link href="/book">
@@ -111,7 +113,7 @@ export default function Header() {
                   variant="accent"
                   size="sm"
                   className="!px-5 !py-2.5 !rounded-full shadow-md font-bold text-xs"
-                  rightIcon={<ArrowRight className="w-3.5 h-3.5 ml-1" />}
+                  rightIcon={<ArrowRight className="w-3.5 h-3.5 ml-1" aria-hidden="true" />}
                 >
                   Book a Driver
                 </ButtonMotion>
@@ -124,20 +126,20 @@ export default function Header() {
                 href={CONTACT_DETAILS.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center"
+                className="p-2 min-w-[40px] min-h-[40px] rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
                 aria-label="WhatsApp Dispatch"
                 title="Chat on WhatsApp"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-4 h-4" aria-hidden="true" />
               </a>
 
               <a
                 href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                className="px-2.5 py-1.5 rounded-xl bg-amber-500/15 text-brand-orange border border-amber-500/30 flex items-center gap-1 text-xs font-bold"
-                aria-label="Call Dispatch Now"
+                className="px-2.5 py-1.5 min-h-[40px] rounded-xl bg-amber-500/15 text-brand-orange border border-amber-500/30 flex items-center gap-1 text-xs font-bold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange tabular-nums"
+                aria-label={`Call dispatch at ${CONTACT_DETAILS.phoneDisplay}`}
                 title="Call Now"
               >
-                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <Phone className="w-3.5 h-3.5 text-brand-orange" aria-hidden="true" />
                 <span>Call Now</span>
               </a>
 
@@ -145,7 +147,7 @@ export default function Header() {
                 <ButtonMotion
                   variant="accent"
                   size="sm"
-                  className="!px-3 !py-1.5 !rounded-full text-xs font-bold"
+                  className="!px-3 !py-1.5 !rounded-full text-xs font-bold min-h-[40px]"
                 >
                   Book
                 </ButtonMotion>
@@ -155,11 +157,11 @@ export default function Header() {
                 ref={menuButtonRef}
                 type="button"
                 onClick={handleToggleMobileNav}
-                className="min-w-[40px] min-h-[40px] p-2 rounded-xl text-white hover:bg-white/10 active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-brand-orange flex items-center justify-center transition-colors"
+                className="min-w-[40px] min-h-[40px] p-2 rounded-xl text-white hover:bg-white/10 active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange flex items-center justify-center transition-colors"
                 aria-label={isMobileNavOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={isMobileNavOpen}
               >
-                {isMobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                {isMobileNavOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
               </button>
             </div>
           </div>

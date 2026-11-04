@@ -117,16 +117,18 @@ export default function ContactPage() {
             <div className="absolute inset-0 z-0">
               <img
                 src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?q=80&w=1000&auto=format&fit=crop"
-                alt="Key2Drive Bangalore Headquarters"
+                alt="Key2Drive Bangalore Operations Center"
+                width={800}
+                height={600}
                 className="w-full h-full object-cover object-center opacity-30 mix-blend-luminosity scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/90 to-brand-navy/80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/90 to-brand-navy/80" aria-hidden="true" />
             </div>
 
             {/* Content overlay */}
             <div className="relative z-10 space-y-8">
               <div className="space-y-2">
-                <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight text-balance">
                   Get in Touch
                 </h1>
                 <p className="text-white/80 text-sm">
@@ -139,15 +141,16 @@ export default function ContactPage() {
                 {/* 1. Phone */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center shrink-0 text-brand-orange border border-amber-500/30">
-                    <Phone className="w-5 h-5 animate-pulse" />
+                    <Phone className="w-5 h-5 animate-pulse" aria-hidden="true" />
                   </div>
                   <div>
                     <a
                       href={`tel:${CONTACT_DETAILS.phoneTel}`}
-                      className="font-black text-white hover:text-brand-orange transition-colors text-base block"
+                      className="font-black text-white hover:text-brand-orange transition-colors text-base block tabular-nums focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                       title="Tap to Call Now"
                     >
-                      Call Now: {CONTACT_DETAILS.phoneDisplay}
+                      <span>Call Now: </span>
+                      <span translate="no">{CONTACT_DETAILS.phoneDisplay}</span>
                     </a>
                     <p className="text-xs text-brand-orange/90 font-medium">Click to Call (24/7 Dispatch Desk)</p>
                   </div>
@@ -156,14 +159,14 @@ export default function ContactPage() {
                 {/* 2. WhatsApp */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center shrink-0 text-emerald-400 border border-emerald-500/30">
-                    <MessageSquare className="w-5 h-5" />
+                    <MessageSquare className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <a
                       href={CONTACT_DETAILS.whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-black text-emerald-400 hover:text-emerald-300 transition-colors text-base block"
+                      className="font-black text-emerald-400 hover:text-emerald-300 transition-colors text-base block focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-emerald-400 rounded"
                       title="Chat on WhatsApp with Pre-filled Greeting"
                     >
                       WhatsApp Booking
@@ -175,35 +178,35 @@ export default function ContactPage() {
                 {/* 3. Email */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 text-brand-orange border border-white/10">
-                    <Mail className="w-5 h-5" />
+                    <Mail className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
                     <a
                       href={`mailto:${CONTACT_DETAILS.emailMailto}`}
-                      className="font-bold text-white hover:text-brand-orange transition-colors"
+                      className="font-bold text-white hover:text-brand-orange transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
                     >
-                      info@key2drive.com
+                      {CONTACT_DETAILS.emailDisplay}
                     </a>
-                    <p className="text-xs text-white/60">Drop us an email</p>
+                    <p className="text-xs text-white/60">Commercial & customer inquiries</p>
                   </div>
                 </div>
 
                 {/* 4. Office Address */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 text-brand-orange border border-white/10">
-                    <MapPin className="w-5 h-5" />
+                    <MapPin className="w-5 h-5" aria-hidden="true" />
                   </div>
                   <div>
-                    <p className="font-bold text-white">Bengaluru, Karnataka</p>
-                    <p className="text-xs text-white/60">Visit our office</p>
+                    <p className="font-bold text-white leading-snug">{CONTACT_DETAILS.addressDisplay}</p>
+                    <p className="text-xs text-white/60">Operations & dispatch desk</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Bottom notice */}
-            <div className="relative z-10 pt-6 border-t border-white/10 mt-6 text-[11px] text-white/50">
-              [Pending Client Review] Official helpline operating 24 hours daily.
+            <div className="relative z-10 pt-6 border-t border-white/10 mt-6 text-[11px] text-white/70">
+              Official Key2Drive helpline operating 24 hours daily. Professional verified chauffeurs dispatched directly to your vehicle.
             </div>
           </div>
 
@@ -217,7 +220,7 @@ export default function ContactPage() {
               {submittedEnquiry ? (
                 <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-4">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-7 h-7" />
+                    <CheckCircle2 className="w-7 h-7" aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-base text-emerald-900">
                     Message Successfully Sent!
@@ -227,8 +230,9 @@ export default function ContactPage() {
                     Our concierge team will respond within 30 minutes.
                   </p>
                   <button
+                    type="button"
                     onClick={() => setSubmittedEnquiry(null)}
-                    className="px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition-colors"
+                    className="px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   >
                     Send Another Message
                   </button>
@@ -236,76 +240,105 @@ export default function ContactPage() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="contact-name" className="block text-xs font-bold text-brand-navy">
                       Your Name <span className="text-red-500">*</span>
                     </label>
                     <input
+                      id="contact-name"
+                      name="name"
                       type="text"
-                      placeholder="e.g. Ramesh Kumar"
+                      autoComplete="name"
+                      placeholder="e.g. Ramesh Kumar…"
                       value={formData.name}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, name: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "contact-name-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                     {errors.name && (
-                      <p className="text-xs text-red-600 mt-0.5">{errors.name}</p>
+                      <p id="contact-name-error" className="text-xs text-red-600 mt-0.5" role="alert">
+                        {errors.name}
+                      </p>
                     )}
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="contact-phone" className="block text-xs font-bold text-brand-navy">
                         Mobile Number <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="contact-phone"
+                        name="phone"
                         type="tel"
-                        placeholder="9876543210"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        placeholder="9600992709"
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, phone: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? "contact-phone-error" : undefined}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium tabular-nums"
                       />
                       {errors.phone && (
-                        <p className="text-xs text-red-600 mt-0.5">{errors.phone}</p>
+                        <p id="contact-phone-error" className="text-xs text-red-600 mt-0.5" role="alert">
+                          {errors.phone}
+                        </p>
                       )}
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-bold text-brand-navy">
+                      <label htmlFor="contact-email" className="block text-xs font-bold text-brand-navy">
                         Email Address <span className="text-red-500">*</span>
                       </label>
                       <input
+                        id="contact-email"
+                        name="email"
                         type="email"
+                        autoComplete="email"
+                        spellCheck={false}
                         placeholder="ramesh@example.com"
                         value={formData.email}
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, email: e.target.value }))
                         }
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? "contact-email-error" : undefined}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                       />
                       {errors.email && (
-                        <p className="text-xs text-red-600 mt-0.5">{errors.email}</p>
+                        <p id="contact-email-error" className="text-xs text-red-600 mt-0.5" role="alert">
+                          {errors.email}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-brand-navy">
+                    <label htmlFor="contact-message" className="block text-xs font-bold text-brand-navy">
                       Your Message <span className="text-red-500">*</span>
                     </label>
                     <textarea
+                      id="contact-message"
+                      name="message"
                       rows={4}
-                      placeholder="Tell us about your trip requirement, corporate inquiry, or chauffeur preferences..."
+                      placeholder="Tell us about your trip requirement, corporate inquiry, or chauffeur preferences…"
                       value={formData.message}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, message: e.target.value }))
                       }
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus:outline-none focus:ring-2 focus:ring-brand-orange text-sm font-medium"
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? "contact-message-error" : undefined}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-brand-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm font-medium"
                     />
                     {errors.message && (
-                      <p className="text-xs text-red-600 mt-0.5">{errors.message}</p>
+                      <p id="contact-message-error" className="text-xs text-red-600 mt-0.5" role="alert">
+                        {errors.message}
+                      </p>
                     )}
                   </div>
 
@@ -317,9 +350,9 @@ export default function ContactPage() {
                       disabled={isSubmitting}
                       isLoading={isSubmitting}
                       className="w-full justify-center !rounded-xl font-bold shadow-md"
-                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" />}
+                      rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
                     >
-                      {isSubmitting ? "Sending Message..." : "Send Message"}
+                      {isSubmitting ? "Sending Message…" : "Send Message"}
                     </ButtonMotion>
                   </div>
                 </form>

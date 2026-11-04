@@ -111,8 +111,8 @@ export default function AdminLoginPage() {
           </div>
 
           {error && (
-            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2" role="alert" aria-live="polite">
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" aria-hidden="true" />
               <span className="font-medium">{error}</span>
             </div>
           )}
@@ -120,44 +120,51 @@ export default function AdminLoginPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             {/* Email Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-brand-navy tracking-tight">
+              <label htmlFor="admin-email" className="block text-xs font-bold text-brand-navy tracking-tight">
                 Administrator Email
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-brand-orange absolute left-3.5 top-3.5 pointer-events-none" />
+                <Mail className="w-4 h-4 text-brand-orange absolute left-3.5 top-3.5 pointer-events-none" aria-hidden="true" />
                 <input
+                  id="admin-email"
+                  name="email"
                   type="email"
                   required
+                  autoComplete="username"
+                  spellCheck={false}
                   placeholder="admin@key2drive.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-brand-warm-bg/70 border border-brand-border text-brand-navy font-semibold placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange text-sm shadow-xs transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 rounded-xl bg-brand-warm-bg/70 border border-brand-border text-brand-navy font-semibold placeholder:text-gray-400 focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm shadow-xs transition-colors"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-bold text-brand-navy tracking-tight">
+              <label htmlFor="admin-password" className="block text-xs font-bold text-brand-navy tracking-tight">
                 Password
               </label>
               <div className="relative">
-                <Key className="w-4 h-4 text-brand-orange absolute left-3.5 top-3.5 pointer-events-none" />
+                <Key className="w-4 h-4 text-brand-orange absolute left-3.5 top-3.5 pointer-events-none" aria-hidden="true" />
                 <input
+                  id="admin-password"
+                  name="password"
                   type={showPassword ? "text" : "password"}
                   required
+                  autoComplete="current-password"
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-brand-warm-bg/70 border border-brand-border text-brand-navy font-semibold placeholder:text-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange text-sm shadow-xs transition-all"
+                  className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-brand-warm-bg/70 border border-brand-border text-brand-navy font-semibold placeholder:text-gray-400 focus:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange text-sm shadow-xs transition-colors"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3 text-brand-navy/50 hover:text-brand-orange p-0.5 rounded-lg transition-colors cursor-pointer"
+                  className="absolute right-3.5 top-3 text-brand-navy/50 hover:text-brand-orange p-0.5 rounded-lg transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? <EyeOff className="w-4 h-4" aria-hidden="true" /> : <Eye className="w-4 h-4" aria-hidden="true" />}
                 </button>
               </div>
             </div>
@@ -171,9 +178,9 @@ export default function AdminLoginPage() {
                 disabled={isLoading}
                 isLoading={isLoading}
                 className="w-full justify-center !rounded-xl font-bold py-3.5 shadow-md hover:shadow-lg text-sm"
-                rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" />}
+                rightIcon={<ArrowRight className="w-4 h-4 ml-1.5" aria-hidden="true" />}
               >
-                {isLoading ? "Authenticating..." : "Sign In to Admin Portal"}
+                {isLoading ? "Authenticating…" : "Sign In to Admin Portal"}
               </ButtonMotion>
             </div>
           </form>

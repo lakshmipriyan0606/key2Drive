@@ -1,9 +1,6 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Compass, Home } from "lucide-react";
-import ButtonMotion from "@/components/ui/ButtonMotion";
 import BrandLogo from "@/components/ui/BrandLogo";
 
 export default function NotFound() {
@@ -15,9 +12,9 @@ export default function NotFound() {
           <BrandLogo variant="light" size="sm" href="/" />
           <Link
             href="/"
-            className="text-xs text-white/70 hover:text-white inline-flex items-center gap-1.5 transition-colors"
+            className="text-xs text-white/70 hover:text-white inline-flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange rounded"
           >
-            <Home className="w-3.5 h-3.5" />
+            <Home className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Home</span>
           </Link>
         </div>
@@ -27,7 +24,7 @@ export default function NotFound() {
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="max-w-md w-full bg-white rounded-3xl border border-brand-border p-8 sm:p-10 shadow-xl text-center space-y-6">
           <div className="w-16 h-16 rounded-2xl bg-brand-orange/10 text-brand-orange flex items-center justify-center mx-auto border border-brand-orange/20">
-            <Compass className="w-8 h-8" />
+            <Compass className="w-8 h-8" aria-hidden="true" />
           </div>
 
           <div className="space-y-2">
@@ -43,25 +40,19 @@ export default function NotFound() {
           </div>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link href="/" className="w-full sm:w-auto">
-              <ButtonMotion
-                variant="accent"
-                size="md"
-                className="w-full justify-center !rounded-xl font-bold shadow-sm"
-                leftIcon={<ArrowLeft className="w-4 h-4 mr-1.5" />}
-              >
-                Back to Home
-              </ButtonMotion>
+            <Link
+              href="/"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-orange hover:bg-brand-orange-hover text-white font-bold text-sm shadow-sm transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1.5" aria-hidden="true" />
+              <span>Back to Home</span>
             </Link>
 
-            <Link href="/services" className="w-full sm:w-auto">
-              <ButtonMotion
-                variant="secondary"
-                size="md"
-                className="w-full justify-center !rounded-xl font-bold"
-              >
-                Our Services
-              </ButtonMotion>
+            <Link
+              href="/services"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-warm-bg hover:bg-gray-200 text-brand-navy font-bold text-sm border border-brand-border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
+            >
+              <span>Our Services</span>
             </Link>
           </div>
         </div>

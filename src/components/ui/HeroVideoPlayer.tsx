@@ -10,6 +10,16 @@ export default function HeroVideoPlayer() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    // Respect user's motion preference (Vercel Web Interface Guidelines)
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setIsPlaying(false);
+      return;
+    }
+
     // Attempt auto-play safely in both real browsers and jsdom test environments
     if (videoRef.current) {
       try {
@@ -82,6 +92,8 @@ export default function HeroVideoPlayer() {
         <img
           src="/images/chauffeur-indian.jpg"
           alt="Professional Indian Acting Driver & Chauffeur for Personal Cars"
+          width={800}
+          height={450}
           className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 pointer-events-none ${
             isLoaded ? "opacity-0" : "opacity-100"
           }`}
@@ -89,44 +101,44 @@ export default function HeroVideoPlayer() {
         />
 
         {/* Gradient dark overlays for cinematic depth and contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent opacity-80 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy via-brand-navy/30 to-transparent opacity-80 pointer-events-none" aria-hidden="true" />
       </div>
 
       {/* 2. Top-right Video Player Controls (Play/Pause, Mute/Unmute, Restart) */}
       <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
         <button
           onClick={togglePlay}
-          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-150 hover:scale-105 active:scale-95"
+          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-[background-color,transform] duration-150 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
           title={isPlaying ? "Pause Video" : "Play Video"}
           aria-label={isPlaying ? "Pause Video" : "Play Video"}
         >
           {isPlaying ? (
-            <Pause className="w-3.5 h-3.5 fill-current" />
+            <Pause className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
           ) : (
-            <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+            <Play className="w-3.5 h-3.5 fill-current ml-0.5" aria-hidden="true" />
           )}
         </button>
 
         <button
           onClick={toggleMute}
-          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-150 hover:scale-105 active:scale-95"
+          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-[background-color,transform] duration-150 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
           title={isMuted ? "Unmute Sound" : "Mute Sound"}
           aria-label={isMuted ? "Unmute Sound" : "Mute Sound"}
         >
           {isMuted ? (
-            <VolumeX className="w-3.5 h-3.5" />
+            <VolumeX className="w-3.5 h-3.5" aria-hidden="true" />
           ) : (
-            <Volume2 className="w-3.5 h-3.5 text-brand-orange" />
+            <Volume2 className="w-3.5 h-3.5 text-brand-orange" aria-hidden="true" />
           )}
         </button>
 
         <button
           onClick={handleRestart}
-          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-all duration-150 hover:scale-105 active:scale-95 hidden sm:flex items-center justify-center"
+          className="p-2.5 rounded-full bg-brand-navy/80 hover:bg-brand-navy text-white border border-white/20 backdrop-blur-md shadow-md transition-[background-color,transform] duration-150 hover:scale-105 active:scale-95 hidden sm:flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange"
           title="Restart Video"
           aria-label="Restart Video"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
       </div>
 
