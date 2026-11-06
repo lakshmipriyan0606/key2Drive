@@ -54,7 +54,11 @@ export default function AdminLoginPage() {
       }
 
       toast.success("Welcome back, Administrator!");
-      router.push("/admin");
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get("redirect") || "/admin";
+      const safeRedirect =
+        redirectUrl.startsWith("/") && !redirectUrl.startsWith("//") ? redirectUrl : "/admin";
+      window.location.href = safeRedirect;
     } catch (err: any) {
       setError(err.message || "Invalid email or password.");
       toast.error(err.message || "Login failed.");

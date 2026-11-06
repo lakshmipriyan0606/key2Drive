@@ -4,7 +4,13 @@ import type { NextRequest } from 'next/server';
 export const SESSION_COOKIE_NAME = 'k2d_session';
 
 // Public admin paths that do not require an active session
-const PUBLIC_ADMIN_PATHS = ['/admin/login', '/api/admin/auth/login', '/api/admin/login'];
+const PUBLIC_ADMIN_PATHS = [
+  '/admin/login',
+  '/api/admin/auth/login',
+  '/api/admin/login',
+  '/api/admin/auth/me',
+  '/api/admin/me',
+];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -14,10 +20,25 @@ export function middleware(request: NextRequest) {
   const isAdminApi = pathname.startsWith('/api/admin');
 
   if (isAdminPage || isAdminApi) {
+    // If an already authenticated admin visits the login page, redirect directly to dashboard
+    if (pathname === '/admin/login') {
+      const existingSession =
+        request.cookies.get(SESSION_COOKIE_NAME)?.value ||
+        request.cookies.get('key2drive_admin_session')?.value;
+      if (existingSession && existingSession.trim().length > 0) {
+        return NextResponse.redirect(new URL('/admin', request.url));
+      }
+    }
+
     const isPublic = PUBLIC_ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
     if (!isPublic) {
-      const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME)?.value;
+      const authHeader = request.headers.get('authorization');
+      const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7).trim() : undefined;
+      const sessionCookie =
+        request.cookies.get(SESSION_COOKIE_NAME)?.value ||
+        request.cookies.get('key2drive_admin_session')?.value ||
+        bearerToken;
 
       // If session cookie is missing or invalid format
       if (!sessionCookie || sessionCookie.trim().length === 0) {

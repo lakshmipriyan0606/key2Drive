@@ -384,20 +384,17 @@ export default function TariffsPage() {
                 <div className="p-4 sm:p-5 rounded-2xl bg-brand-warm-bg/80 border border-brand-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
                     <span className="text-xs font-bold text-secondary-text uppercase tracking-wider block">
-                      Standard Benchmark Rate
+                      Pricing Policy
                     </span>
-                    <div className="flex items-baseline gap-2 mt-0.5 tabular-nums">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-brand-navy font-manrope">
-                        ₹{displayRate.toLocaleString()}
-                      </span>
-                      <span className="text-sm font-bold text-secondary-text">
-                        / {displayUnit}
+                    <div className="flex items-baseline gap-2 mt-0.5">
+                      <span className="text-xl sm:text-2xl font-extrabold text-brand-orange font-manrope">
+                        Custom Quote on Call / WhatsApp
                       </span>
                     </div>
                   </div>
                   <div className="text-left sm:text-right">
                     <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
-                      Zero Surge Guaranteed
+                      Fair Rates Discussed on Reach
                     </span>
                     <p className="text-xs text-secondary-text mt-1 font-medium">
                       {currentTab.minHoursText}
@@ -458,8 +455,8 @@ export default function TariffsPage() {
                       <span className="text-brand-navy font-bold block">Extra Driving Hour</span>
                       <span className="text-[11px] text-secondary-text">Beyond package hours</span>
                     </div>
-                    <span className="font-extrabold text-brand-navy font-manrope">
-                      ₹{currentTariff?.extraHourRate || 150} / hr
+                    <span className="font-bold text-xs text-brand-orange font-manrope">
+                      Discussed with dispatch
                     </span>
                   </div>
 
@@ -468,8 +465,8 @@ export default function TariffsPage() {
                       <span className="text-brand-navy font-bold block">Extra Distance</span>
                       <span className="text-[11px] text-secondary-text">For full-day & outstation</span>
                     </div>
-                    <span className="font-extrabold text-brand-navy font-manrope">
-                      ₹{currentTariff?.extraKmRate || 12} / km
+                    <span className="font-bold text-xs text-brand-orange font-manrope">
+                      Discussed with dispatch
                     </span>
                   </div>
 
@@ -478,8 +475,8 @@ export default function TariffsPage() {
                       <span className="text-brand-navy font-bold block">Night Surcharge</span>
                       <span className="text-[11px] text-secondary-text">Active between 10:00 PM – 06:00 AM</span>
                     </div>
-                    <span className="font-extrabold text-brand-navy font-manrope">
-                      ₹{currentTariff?.nightChargeRate || 300} / trip
+                    <span className="font-bold text-xs text-brand-orange font-manrope">
+                      Discussed with dispatch
                     </span>
                   </div>
 

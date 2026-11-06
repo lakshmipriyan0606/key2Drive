@@ -16,7 +16,7 @@ import {
   Menu,
   X,
   Car,
-  Settings,
+  Layers,
 } from "lucide-react";
 import BrandLogo from "@/components/ui/BrandLogo";
 
@@ -39,7 +39,10 @@ export default function AdminLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   // If this is the login page, don't wrap with admin dashboard chrome
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage =
+    pathname === "/admin/login" ||
+    pathname?.startsWith("/admin/login") ||
+    (typeof window !== "undefined" && window.location.pathname.startsWith("/admin/login"));
 
   useEffect(() => {
     if (isLoginPage) {
@@ -51,17 +54,20 @@ export default function AdminLayout({
       try {
         const res = await fetch("/api/admin/auth/me");
         if (!res.ok) {
-          router.replace("/admin/login");
+          const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
+          router.replace(`/admin/login${redirectParam}`);
           return;
         }
         const data = await res.json();
-        if (data.success && data.user) {
+        if (data.success && data.authenticated !== false && data.user) {
           setUser(data.user);
         } else {
-          router.replace("/admin/login");
+          const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
+          router.replace(`/admin/login${redirectParam}`);
         }
       } catch (err) {
-        router.replace("/admin/login");
+        const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
+        router.replace(`/admin/login${redirectParam}`);
       } finally {
         setLoading(false);
       }
@@ -74,9 +80,9 @@ export default function AdminLayout({
     try {
       await fetch("/api/admin/auth/logout", { method: "POST" });
       toast.success("Signed out successfully.");
-      router.replace("/admin/login");
+      window.location.href = "/admin/login";
     } catch {
-      router.replace("/admin/login");
+      window.location.href = "/admin/login";
     }
   };
 
@@ -84,7 +90,8 @@ export default function AdminLayout({
     return <>{children}</>;
   }
 
-  if (loading) {
+  // If still checking or not authenticated, render loading screen and NEVER mount protected children
+  if (loading || !user) {
     return (
       <div className="min-h-screen bg-brand-warm-bg flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
@@ -98,7 +105,7 @@ export default function AdminLayout({
   const navItems = [
     { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { label: "Bookings", href: "/admin/bookings", icon: CalendarCheck },
-    { label: "Pricing", href: "/admin/pricing", icon: Tag },
+    { label: "Services", href: "/admin/services", icon: Layers },
     { label: "Enquiries", href: "/admin/enquiries", icon: MessageSquare },
   ];
 
@@ -152,16 +159,6 @@ export default function AdminLayout({
                 </Link>
               );
             })}
-
-            <div className="pt-2 border-t border-white/10 my-2">
-              <button
-                onClick={() => toast.info("System settings are automatically synchronized.")}
-                className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white/70 hover:bg-white/5 hover:text-white transition-colors"
-              >
-                <Settings className="w-4 h-4 shrink-0" />
-                <span>Settings</span>
-              </button>
-            </div>
           </nav>
         </div>
 

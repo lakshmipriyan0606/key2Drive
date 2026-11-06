@@ -40,7 +40,7 @@ const TERMS_SECTIONS: TermSection[] = [
     title: "Cancellation Policy",
     content: [
       "Free cancellation is permitted up to 2 hours prior to scheduled pickup time with zero cancellation charges.",
-      "Cancellations initiated within 2 hours of pickup or after driver departure to location incur a flat nominal dispatch fee of ₹150.",
+      "Cancellations initiated within 2 hours of pickup or after driver departure to location incur a nominal dispatch fee confirmed upfront with dispatch.",
       "In the event of a customer no-show after 30 minutes of scheduled arrival without notice, the booking is marked as cancelled.",
     ],
   },
@@ -58,15 +58,15 @@ const TERMS_SECTIONS: TermSection[] = [
     content: [
       "A complimentary 15-minute grace period applies to all standard city pickups from the scheduled booking time.",
       "Airport arrivals receive a 30-minute complimentary waiting window from flight touchdown.",
-      "Subsequent waiting is billed at ₹100 per hour (or ₹1.67 per minute) as logged in the digital trip ledger.",
+      "Subsequent waiting beyond the grace period is billed at nominal waiting rates agreed upfront with dispatch and logged in the digital trip ledger.",
     ],
   },
   {
     id: 6,
     title: "Additional Charges",
     content: [
-      "Night allowance: Trips operating between 10:00 PM and 06:00 AM incur a night surcharge of ₹250 to compensate drivers.",
-      "Outstation driver food & stay allowance: Outstation trips overnight require food and lodging allowance of ₹400/night.",
+      "Night allowance: Trips operating between 10:00 PM and 06:00 AM incur a nominal night allowance to directly compensate late-night drivers, discussed and agreed with dispatch prior to trip confirmation.",
+      "Outstation driver food & stay allowance: Outstation trips overnight require standard driver food and lodging allowance, agreed upfront with dispatch.",
       "Overtime: Extra hours beyond the booked package slab are calculated in 30-minute increments.",
     ],
   },

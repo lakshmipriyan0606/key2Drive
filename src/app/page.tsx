@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -26,47 +26,84 @@ import HeroVideoPlayer from "@/components/ui/HeroVideoPlayer";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { CONTACT_DETAILS, getServiceWhatsAppUrl } from "@/lib/constants/navigation";
 
+const SERVICE_IMAGES: Record<string, string> = {
+  "hourly-driver":
+    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
+  "full-day-driver":
+    "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop",
+  "airport-transfer":
+    "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=800&auto=format&fit=crop",
+  "outstation-driver":
+    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop",
+  "corporate-services":
+    "https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=800&auto=format&fit=crop",
+  "personal-chauffeur":
+    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
+};
+
+const DEFAULT_SERVICES = [
+  {
+    id: "hourly",
+    title: "Hourly Driver",
+    tagline: "For city traffic, shopping & errands",
+    description: "Convenient hourly acting driver to drive your personal car with zero parking or traffic stress.",
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
+    slug: "hourly-driver",
+  },
+  {
+    id: "full-day",
+    title: "Full Day Driver",
+    tagline: "8 hrs / 80 km for office & family",
+    description: "Dedicated personal driver for your entire day with unlimited city stops across the city.",
+    image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop",
+    slug: "full-day-driver",
+  },
+  {
+    id: "airport",
+    title: "Airport Transfers",
+    tagline: "Punctual terminal drops & pickups",
+    description: "On-time doorstep pickup and airport terminal transfer with flight tracking.",
+    image: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=800&auto=format&fit=crop",
+    slug: "airport-transfer",
+  },
+  {
+    id: "outstation",
+    title: "Outstation Trips",
+    tagline: "Safe highway & weekend road trips",
+    description: "Experienced long-distance driver for weekend getaways and intercity highway travel.",
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop",
+    slug: "outstation-driver",
+  },
+];
+
 export default function HomePage() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [services, setServices] = useState(DEFAULT_SERVICES);
+
+  useEffect(() => {
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && Array.isArray(data.services) && data.services.length > 0) {
+          const mapped = data.services.slice(0, 4).map((svc: any) => ({
+            id: svc.slug,
+            title: svc.title,
+            tagline: svc.tagline || "",
+            description: svc.description || "",
+            image:
+              SERVICE_IMAGES[svc.slug] ||
+              "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
+            slug: svc.slug,
+          }));
+          setServices(mapped);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const toggleFaq = (index: number) => {
     setOpenFaqIndex((prev) => (prev === index ? null : index));
   };
-
-  const services = [
-    {
-      id: "hourly",
-      title: "Hourly Driver",
-      tagline: "For city traffic, shopping & errands",
-      description: "Convenient hourly acting driver to drive your personal car with zero parking or traffic stress.",
-      image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
-      slug: "hourly-driver",
-    },
-    {
-      id: "full-day",
-      title: "Full Day Driver",
-      tagline: "8 hrs / 80 km for office & family",
-      description: "Dedicated personal driver for your entire day with unlimited city stops across the city.",
-      image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop",
-      slug: "full-day-driver",
-    },
-    {
-      id: "airport",
-      title: "Airport Transfers",
-      tagline: "Punctual terminal drops & pickups",
-      description: "On-time doorstep pickup and airport terminal transfer with flight tracking.",
-      image: "https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=800&auto=format&fit=crop",
-      slug: "airport-transfer",
-    },
-    {
-      id: "outstation",
-      title: "Outstation Trips",
-      tagline: "Safe highway & weekend road trips",
-      description: "Experienced long-distance driver for weekend getaways and intercity highway travel.",
-      image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop",
-      slug: "outstation-driver",
-    },
-  ];
 
   const faqs = [
     {
@@ -115,16 +152,16 @@ export default function HomePage() {
             <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-orange text-xs font-bold tracking-wide uppercase">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Professional Acting Driver & Call Driver Services</span>
+                <span>Professional acting drivers Services</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12] text-balance">
-                Need an Acting Driver <br />
-                <span className="text-brand-orange">for Your Car?</span>
+                Need to Hire an Acting Driver <br />
+                <span className="text-brand-orange">for your car?</span>
               </h1>
 
               <p className="text-sm sm:text-base lg:text-lg text-white/80 max-w-xl leading-relaxed">
-                Your trusted travel partner for a smooth, safe and comfortable journey. Experienced, background-checked acting drivers for city commutes, late-night party returns, airport transfers, and outstation trips.
+                Reliable and experienced drivers for your daily travel, airport transfers and outstation trips. Enjoy a safe, comfortable and hassle-free journey with key2drive.
               </p>
 
               {/* Clean Primary Hero CTAs (No Duplicates) */}

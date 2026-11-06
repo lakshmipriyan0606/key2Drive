@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SonnerToaster from "@/components/ui/SonnerToaster";
 import FloatingContactBar from "@/components/ui/FloatingContactBar";
+import VisitorTracker from "@/components/analytics/VisitorTracker";
 
 export const viewport: Viewport = {
   themeColor: "#11243D",
@@ -92,6 +93,9 @@ export default function RootLayout({
 
         {/* Emil Kowalski Sonner Toast Notification Center */}
         <SonnerToaster />
+
+        {/* Real-time Unique Visitor & Action Tracker */}
+        <VisitorTracker />
       </body>
     </html>
   );

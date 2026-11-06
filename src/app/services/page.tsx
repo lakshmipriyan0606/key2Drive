@@ -101,7 +101,15 @@ export default function ServicesPage() {
   const filteredServices = services.filter((service) => {
     if (selectedCategory === "all") return true;
     const activeTab = CATEGORY_TABS.find((t) => t.id === selectedCategory);
-    return activeTab?.slugs ? activeTab.slugs.includes(service.slug) : true;
+    if (!activeTab?.slugs) return true;
+    if (activeTab.slugs.includes(service.slug)) return true;
+    // Fallback keyword matching for custom services created by admin
+    const lower = `${service.title} ${service.tagline || ""}`.toLowerCase();
+    if (selectedCategory === "hourly" && (lower.includes("hour") || lower.includes("day"))) return true;
+    if (selectedCategory === "airport" && lower.includes("airport")) return true;
+    if (selectedCategory === "outstation" && (lower.includes("outstation") || lower.includes("trip") || lower.includes("highway"))) return true;
+    if (selectedCategory === "corporate" && (lower.includes("corp") || lower.includes("month") || lower.includes("personal"))) return true;
+    return false;
   });
 
   return (

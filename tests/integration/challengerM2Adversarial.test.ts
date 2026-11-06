@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest';
 import prisma from '@/lib/db';
 import { POST as postBooking } from '@/app/api/bookings/route';
 import { GET as getBooking } from '@/app/api/bookings/[id]/route';
@@ -545,5 +545,30 @@ describe('Challenger M2-2 Empirical Adversarial Suite', () => {
       const postSearchCount = await prisma.booking.count();
       expect(postSearchCount).toBeGreaterThan(0);
     });
+  });
+
+  afterAll(async () => {
+    try {
+      await prisma.adminNote.deleteMany({});
+      await prisma.bookingStatusHistory.deleteMany({});
+      await prisma.booking.deleteMany({
+        where: {
+          OR: [
+            { customerEmail: { contains: 'example.com' } },
+            { customerName: { in: ['Vikram Seth', 'Priya Sharma', 'Transit Challenger', 'Arun Kumar', 'Case Sensitivity Tester', 'Anand Ranganathan', 'Safe User \'; DROP TA', 'Safe User \' OR \'1\'=\'', 'Safe User admin\' --', 'Safe User 1\' UNION S'] } },
+          ],
+        },
+      });
+      await prisma.enquiry.deleteMany({
+        where: {
+          OR: [
+            { name: { in: ['Dr. Vikram Sarabhai', 'XSS Challenger'] } },
+            { email: { contains: 'example.com' } },
+          ],
+        },
+      });
+    } catch {
+      // ignore
+    }
   });
 });

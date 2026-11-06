@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { ZodError } from 'zod';
 import prisma from '@/lib/db';
 import { AdminLoginSchema } from '@/lib/validations/auth';
-import { verifyPassword, createAdminSession } from '@/lib/auth';
+import { verifyPassword, createAdminSession, SESSION_COOKIE_NAME } from '@/lib/auth';
 import { checkRateLimit, getClientIp } from '@/lib/rateLimit';
 
 export async function POST(request: Request) {
@@ -56,10 +56,16 @@ export async function POST(request: Request) {
       );
     }
 
-    // Creates DB session and writes httpOnly cookie
-    await createAdminSession(user.id);
+    // Creates serverless-proof signed session and sets cookie
+    const session = await createAdminSession(user.id, {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+    });
 
-    return NextResponse.json(
+    const isProduction = process.env.NODE_ENV === 'production';
+    const response = NextResponse.json(
       {
         success: true,
         user: {
@@ -72,6 +78,25 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
+
+    // Explicitly attach cookies to the outgoing response object
+    response.cookies.set(SESSION_COOKIE_NAME, session.token, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      path: '/',
+      expires: session.expiresAt,
+    });
+
+    response.cookies.set('key2drive_admin_session', session.token, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: 'lax',
+      path: '/',
+      expires: session.expiresAt,
+    });
+
+    return response;
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(

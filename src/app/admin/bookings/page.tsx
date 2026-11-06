@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import ButtonMotion from "@/components/ui/ButtonMotion";
 import CustomSelect, { CustomSelectOption } from "@/components/ui/CustomSelect";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 
 interface Booking {
   id: string;
@@ -511,15 +512,37 @@ export default function AdminBookingsPage() {
                   </div>
                   <div>
                     <span className="text-secondary-text">Phone:</span>
-                    <p className="font-bold text-brand-navy">{selectedBooking.customerPhone}</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <p className="font-bold text-brand-navy">{selectedBooking.customerPhone}</p>
+                      <a
+                        href={`tel:${selectedBooking.customerPhone.replace(/[^0-9+]/g, "")}`}
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-amber-50 text-brand-orange hover:bg-amber-100 font-bold text-[10px] transition-colors"
+                        title="Call Customer"
+                      >
+                        <Phone className="w-2.5 h-2.5" />
+                        <span>Call</span>
+                      </a>
+                      <a
+                        href={`https://wa.me/${selectedBooking.customerPhone.replace(/[^0-9]/g, "")}?text=${encodeURIComponent(`Hello ${selectedBooking.customerName}, this is Key2Drive Dispatch regarding your booking request (${selectedBooking.reference}) for ${selectedBooking.service?.title}:`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#25D366]/15 text-[#1e9e4d] hover:bg-[#25D366]/25 font-bold text-[10px] transition-colors"
+                        title="Chat on WhatsApp"
+                      >
+                        <WhatsAppIcon className="w-2.5 h-2.5 fill-current" />
+                        <span>WhatsApp</span>
+                      </a>
+                    </div>
                   </div>
                   <div>
                     <span className="text-secondary-text">Service:</span>
                     <p className="font-bold text-brand-navy">{selectedBooking.service?.title}</p>
                   </div>
                   <div>
-                    <span className="text-secondary-text">Est. Fare:</span>
-                    <p className="font-bold text-brand-orange">₹{selectedBooking.estimatedAmount}</p>
+                    <span className="text-secondary-text">Pricing:</span>
+                    <p className="font-bold text-brand-orange">
+                      Custom Quote on Call / WhatsApp
+                    </p>
                   </div>
                   <div className="col-span-2">
                     <span className="text-secondary-text">Pickup Address:</span>

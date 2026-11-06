@@ -93,4 +93,16 @@ describe('Tier 1: Feature 19 - Admin Authentication & Guard Contract', () => {
     // Subsequent check fails
     expect(manager.verifySession(session.token).valid).toBe(false);
   });
+
+  it('GET /api/admin/auth/me returns 200 with authenticated=false when unauthenticated to avoid console network errors', async () => {
+    const { GET } = await import('@/app/api/admin/auth/me/route');
+    const { NextRequest } = await import('next/server');
+    const req = new NextRequest('http://localhost:3000/api/admin/auth/me');
+    const res = await GET(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.success).toBe(true);
+    expect(data.authenticated).toBe(false);
+    expect(data.user).toBeNull();
+  });
 });

@@ -95,6 +95,57 @@ export const TariffCreateSchema = z.object({
 export type TariffCreateInput = z.infer<typeof TariffCreateSchema>;
 
 /**
+ * Service Create Schema (Admin Creating New Service)
+ */
+export const ServiceCreateSchema = z.object({
+  title: z
+    .string({ required_error: "Title / Name is required" })
+    .trim()
+    .min(2, "Title must be at least 2 characters")
+    .max(100, "Title cannot exceed 100 characters"),
+  slug: z
+    .string()
+    .trim()
+    .min(2, "Slug must be at least 2 characters")
+    .max(100, "Slug cannot exceed 100 characters")
+    .regex(/^[a-z0-9-]+$/, "Slug must only contain lowercase letters, numbers, and hyphens")
+    .optional(),
+  tagline: z
+    .string({ required_error: "Tagline is required" })
+    .trim()
+    .min(3, "Tagline must be at least 3 characters")
+    .max(200, "Tagline cannot exceed 200 characters"),
+  description: z
+    .string({ required_error: "Description is required" })
+    .trim()
+    .min(5, "Description must be at least 5 characters")
+    .max(2000, "Description cannot exceed 2000 characters"),
+  features: z
+    .union([
+      z.array(z.string().trim().min(1)),
+      z.string().trim(),
+    ])
+    .transform((val) => (Array.isArray(val) ? JSON.stringify(val) : val))
+    .default("[]"),
+  basePrice: z
+    .number()
+    .min(0, "Base price cannot be negative")
+    .default(0),
+  priceUnit: z
+    .string()
+    .trim()
+    .min(1, "Price unit cannot be empty")
+    .max(50, "Price unit cannot exceed 50 characters")
+    .default("per trip"),
+  image: z.string().trim().optional(),
+  imageUrl: z.string().trim().optional(),
+  isActive: z.boolean().default(true),
+  sortOrder: z.number().int().min(0).default(0),
+});
+
+export type ServiceCreateInput = z.infer<typeof ServiceCreateSchema>;
+
+/**
  * Service Update Schema (Admin Service Management)
  * Allows updating service details, marketing copy, pricing headline, and active toggle.
  */
@@ -102,25 +153,32 @@ export const ServiceUpdateSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(3, "Title must be at least 3 characters")
+    .min(2, "Title must be at least 2 characters")
     .max(100, "Title cannot exceed 100 characters")
+    .optional(),
+  slug: z
+    .string()
+    .trim()
+    .min(2, "Slug must be at least 2 characters")
+    .max(100, "Slug cannot exceed 100 characters")
+    .regex(/^[a-z0-9-]+$/, "Slug must only contain lowercase letters, numbers, and hyphens")
     .optional(),
   tagline: z
     .string()
     .trim()
-    .min(5, "Tagline must be at least 5 characters")
+    .min(3, "Tagline must be at least 3 characters")
     .max(200, "Tagline cannot exceed 200 characters")
     .optional(),
   description: z
     .string()
     .trim()
-    .min(10, "Description must be at least 10 characters")
-    .max(1500, "Description cannot exceed 1500 characters")
+    .min(5, "Description must be at least 5 characters")
+    .max(2000, "Description cannot exceed 2000 characters")
     .optional(),
   features: z
     .union([
-      z.array(z.string().trim().min(1)).min(1, "At least one feature is required"),
-      z.string().trim().min(2),
+      z.array(z.string().trim().min(1)),
+      z.string().trim(),
     ])
     .transform((val) => (Array.isArray(val) ? JSON.stringify(val) : val))
     .optional(),
@@ -134,6 +192,8 @@ export const ServiceUpdateSchema = z.object({
     .min(1, "Price unit cannot be empty")
     .max(50, "Price unit cannot exceed 50 characters")
     .optional(),
+  image: z.string().trim().optional(),
+  imageUrl: z.string().trim().optional(),
   isActive: z.boolean().optional(),
   sortOrder: z.number().int().min(0).optional(),
 });
