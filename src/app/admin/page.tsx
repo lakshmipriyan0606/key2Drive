@@ -163,6 +163,294 @@ interface AnalyticsStats {
   }>;
 }
 
+interface TrendChartProps {
+  chartPoints: ChartDataPoint[];
+}
+
+const TrendChart = React.memo(function TrendChart({ chartPoints }: TrendChartProps) {
+  const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(null);
+
+  const chartHeight = 220;
+  const chartWidth = 600;
+  const paddingX = 40;
+  const paddingY = 30;
+
+  const maxVal = useMemo(() => {
+    if (!chartPoints || chartPoints.length === 0) return 5;
+    const maxV = Math.max(
+      ...chartPoints.map((p) => Math.max(p.uniqueVisitors, p.pageViews, p.actionClicks, 0))
+    );
+    return Math.max(maxV, 4);
+  }, [chartPoints]);
+
+  const getYCoord = useCallback(
+    (val: number) => {
+      const usableHeight = chartHeight - paddingY * 2;
+      return chartHeight - paddingY - (val / maxVal) * usableHeight;
+    },
+    [maxVal]
+  );
+
+  const getXCoord = useCallback((index: number, total: number) => {
+    if (total <= 1) return paddingX;
+    const usableWidth = chartWidth - paddingX * 2;
+    return paddingX + (index / (total - 1)) * usableWidth;
+  }, []);
+
+  const computeBezierPath = useCallback(
+    (points: number[]) => {
+      if (!points || points.length === 0) return "";
+      const coords = points.map((val, idx) => ({
+        x: getXCoord(idx, points.length),
+        y: getYCoord(val),
+      }));
+
+      if (coords.length === 1) return `M ${coords[0].x} ${coords[0].y}`;
+
+      let path = `M ${coords[0].x} ${coords[0].y}`;
+      for (let i = 0; i < coords.length - 1; i++) {
+        const p0 = coords[i === 0 ? 0 : i - 1];
+        const p1 = coords[i];
+        const p2 = coords[i + 1];
+        const p3 = coords[i + 2] || p2;
+
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+
+        path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+      }
+      return path;
+    },
+    [getXCoord, getYCoord]
+  );
+
+  const uniqueVisitorsPath = useMemo(() => {
+    return computeBezierPath(chartPoints.map((p) => p.uniqueVisitors));
+  }, [chartPoints, computeBezierPath]);
+
+  const uniqueVisitorsAreaPath = useMemo(() => {
+    if (!uniqueVisitorsPath) return "";
+    const firstX = getXCoord(0, chartPoints.length);
+    const lastX = getXCoord(chartPoints.length - 1, chartPoints.length);
+    const baseline = chartHeight - paddingY;
+    return `${uniqueVisitorsPath} L ${lastX} ${baseline} L ${firstX} ${baseline} Z`;
+  }, [uniqueVisitorsPath, chartPoints.length, getXCoord]);
+
+  const actionClicksPath = useMemo(() => {
+    return computeBezierPath(chartPoints.map((p) => p.actionClicks));
+  }, [chartPoints, computeBezierPath]);
+
+  const activePoint = hoveredPointIndex !== null ? chartPoints[hoveredPointIndex] : null;
+
+  return (
+    <div className="space-y-4">
+      {/* Chart Legend & Static Summary */}
+      <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-1.5 rounded-full bg-emerald-500" />
+            <span className="font-semibold text-brand-navy">Unique Clients</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-1.5 rounded-full bg-brand-orange" />
+            <span className="font-semibold text-brand-navy">Lead Actions (WhatsApp/Calls)</span>
+          </div>
+        </div>
+
+        {activePoint ? (
+          <div className="px-3 py-1 rounded-xl bg-slate-100 text-brand-navy font-bold text-xs flex items-center gap-3 animate-in fade-in duration-100">
+            <span>{activePoint.label}</span>
+            <span className="text-emerald-700">Clients: {activePoint.uniqueVisitors}</span>
+            <span className="text-brand-orange">Actions: {activePoint.actionClicks}</span>
+          </div>
+        ) : (
+          <span className="text-[11px] text-slate-400 font-medium">Hover over any time point for details</span>
+        )}
+      </div>
+
+      {/* SVG Interactive Chart Box */}
+      <div
+        className="relative w-full h-64 sm:h-72 bg-gradient-to-b from-slate-50/50 to-white rounded-2xl border border-brand-border/60 p-2 overflow-visible select-none"
+        onMouseLeave={() => setHoveredPointIndex(null)}
+      >
+        {/* Floating Tooltip Card */}
+        {activePoint && hoveredPointIndex !== null && (() => {
+          const xPercent = (getXCoord(hoveredPointIndex, chartPoints.length) / chartWidth) * 100;
+          const transformClass =
+            xPercent < 18
+              ? "translate-x-1"
+              : xPercent > 82
+              ? "-translate-x-[calc(100%-4px)]"
+              : "-translate-x-1/2";
+
+          return (
+            <div
+              className={`absolute top-3 z-30 pointer-events-none transform ${transformClass} transition-all duration-75 shadow-lg rounded-xl bg-brand-navy text-white px-3 py-1.5 text-xs flex items-center gap-2.5 border border-white/10`}
+              style={{
+                left: `${xPercent}%`,
+              }}
+            >
+              <span className="font-bold text-brand-orange">{activePoint.label}</span>
+              <span className="text-emerald-400">● {activePoint.uniqueVisitors} Clients</span>
+              <span className="text-amber-300">⚡ {activePoint.actionClicks} Actions</span>
+            </div>
+          );
+        })()}
+
+        <svg
+          className="w-full h-full overflow-visible"
+          viewBox={`0 0 ${chartWidth} ${chartHeight}`}
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="emeraldAreaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+
+          {/* Grid Lines */}
+          {[0.25, 0.5, 0.75, 1.0].map((frac, idx) => {
+            const y = chartHeight - paddingY - frac * (chartHeight - paddingY * 2);
+            return (
+              <line
+                key={idx}
+                x1={paddingX}
+                y1={y}
+                x2={chartWidth - paddingX}
+                y2={y}
+                stroke="#f1f5f9"
+                strokeWidth="1"
+                strokeDasharray="4 4"
+                className="pointer-events-none"
+              />
+            );
+          })}
+
+          {/* Vertical Guide Line on Hover */}
+          {hoveredPointIndex !== null && (
+            <line
+              x1={getXCoord(hoveredPointIndex, chartPoints.length)}
+              y1={paddingY}
+              x2={getXCoord(hoveredPointIndex, chartPoints.length)}
+              y2={chartHeight - paddingY}
+              stroke="#F28C00"
+              strokeWidth="1.5"
+              strokeDasharray="3 3"
+              className="pointer-events-none"
+            />
+          )}
+
+          {/* Emerald Area Fill (Unique Clients) */}
+          {uniqueVisitorsAreaPath && (
+            <path d={uniqueVisitorsAreaPath} fill="url(#emeraldAreaGradient)" className="pointer-events-none" />
+          )}
+
+          {/* Emerald Spline Curve (Unique Clients) */}
+          {uniqueVisitorsPath && (
+            <path
+              d={uniqueVisitorsPath}
+              fill="none"
+              stroke="#10b981"
+              strokeWidth="3"
+              strokeLinecap="round"
+              className="pointer-events-none"
+            />
+          )}
+
+          {/* Orange Curve (Lead Actions) */}
+          {actionClicksPath && (
+            <path
+              d={actionClicksPath}
+              fill="none"
+              stroke="#f58220"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              className="pointer-events-none"
+            />
+          )}
+
+          {/* Non-overlapping Partitioned Column Hit Targets */}
+          {chartPoints.map((_, idx) => {
+            const total = chartPoints.length;
+            const cx = getXCoord(idx, total);
+            const prevCx = idx > 0 ? getXCoord(idx - 1, total) : 0;
+            const nextCx = idx < total - 1 ? getXCoord(idx + 1, total) : chartWidth;
+            const leftEdge = idx === 0 ? 0 : (prevCx + cx) / 2;
+            const rightEdge = idx === total - 1 ? chartWidth : (cx + nextCx) / 2;
+            const colWidth = Math.max(rightEdge - leftEdge, 10);
+
+            return (
+              <rect
+                key={`hit-${idx}`}
+                x={leftEdge}
+                y={0}
+                width={colWidth}
+                height={chartHeight}
+                fill="transparent"
+                className="cursor-pointer"
+                onMouseEnter={() => setHoveredPointIndex(idx)}
+              />
+            );
+          })}
+
+          {/* Point Markers (Visual Only - pointer-events-none prevents any hover jitter) */}
+          {chartPoints.map((point, idx) => {
+            const cx = getXCoord(idx, chartPoints.length);
+            const cyVisitors = getYCoord(point.uniqueVisitors);
+            const cyActions = getYCoord(point.actionClicks);
+            const isHovered = hoveredPointIndex === idx;
+
+            return (
+              <g key={`marker-${idx}`} className="pointer-events-none">
+                {/* Unique Visitors Point */}
+                <circle
+                  cx={cx}
+                  cy={cyVisitors}
+                  r={isHovered ? 6 : 4}
+                  fill="#ffffff"
+                  stroke="#10b981"
+                  strokeWidth={isHovered ? 3 : 2}
+                  className="transition-all duration-150"
+                />
+
+                {/* Action Point */}
+                {point.actionClicks > 0 && (
+                  <circle
+                    cx={cx}
+                    cy={cyActions}
+                    r={isHovered ? 6 : 4}
+                    fill="#f58220"
+                    stroke="#ffffff"
+                    strokeWidth={isHovered ? 3 : 2}
+                    className="transition-all duration-150"
+                  />
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* X-Axis Labels */}
+        <div className="flex justify-between text-[11px] font-semibold text-secondary-text pt-2 px-3 border-t border-brand-border">
+          {chartPoints.map((p, idx) => (
+            <span
+              key={idx}
+              className={`transition-colors ${
+                hoveredPointIndex === idx ? "text-brand-orange font-bold scale-105" : ""
+              }`}
+            >
+              {p.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+});
+
 export default function AdminOverviewPage() {
   const [metrics, setMetrics] = useState<MetricsData | null>(null);
   const [analytics, setAnalytics] = useState<AnalyticsStats | null>(null);
@@ -176,7 +464,6 @@ export default function AdminOverviewPage() {
   const [clientSearch, setClientSearch] = useState<string>("");
   const [clientFilter, setClientFilter] = useState<"all" | "deals" | "multiday" | "live">("all");
   const [expandedClientIds, setExpandedClientIds] = useState<Set<string>>(new Set());
-  const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(null);
 
   const toggleClientExpanded = (id: string) => {
     setExpandedClientIds((prev) => {
@@ -364,80 +651,6 @@ export default function AdminOverviewPage() {
       return true;
     });
   }, [uniqueClients, clientSearch, clientFilter]);
-
-  // SVG Chart Geometry Calculations
-  const chartHeight = 220;
-  const chartWidth = 600;
-  const paddingX = 40;
-  const paddingY = 30;
-
-  const maxVal = useMemo(() => {
-    if (!chartPoints || chartPoints.length === 0) return 5;
-    const maxV = Math.max(
-      ...chartPoints.map((p) => Math.max(p.uniqueVisitors, p.pageViews, p.actionClicks, 0))
-    );
-    return Math.max(maxV, 4);
-  }, [chartPoints]);
-
-  const getYCoord = useCallback(
-    (val: number) => {
-      const usableHeight = chartHeight - paddingY * 2;
-      return chartHeight - paddingY - (val / maxVal) * usableHeight;
-    },
-    [maxVal]
-  );
-
-  const getXCoord = useCallback((index: number, total: number) => {
-    if (total <= 1) return paddingX;
-    const usableWidth = chartWidth - paddingX * 2;
-    return paddingX + (index / (total - 1)) * usableWidth;
-  }, []);
-
-  // Compute smooth SVG bezier path for a series
-  const computeBezierPath = useCallback(
-    (points: number[]) => {
-      if (!points || points.length === 0) return "";
-      const coords = points.map((val, idx) => ({
-        x: getXCoord(idx, points.length),
-        y: getYCoord(val),
-      }));
-
-      if (coords.length === 1) return `M ${coords[0].x} ${coords[0].y}`;
-
-      let path = `M ${coords[0].x} ${coords[0].y}`;
-      for (let i = 0; i < coords.length - 1; i++) {
-        const p0 = coords[i === 0 ? 0 : i - 1];
-        const p1 = coords[i];
-        const p2 = coords[i + 1];
-        const p3 = coords[i + 2] || p2;
-
-        const cp1x = p1.x + (p2.x - p0.x) / 6;
-        const cp1y = p1.y + (p2.y - p0.y) / 6;
-        const cp2x = p2.x - (p3.x - p1.x) / 6;
-        const cp2y = p2.y - (p3.y - p1.y) / 6;
-
-        path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
-      }
-      return path;
-    },
-    [getXCoord, getYCoord]
-  );
-
-  const uniqueVisitorsPath = useMemo(() => {
-    return computeBezierPath(chartPoints.map((p) => p.uniqueVisitors));
-  }, [chartPoints, computeBezierPath]);
-
-  const uniqueVisitorsAreaPath = useMemo(() => {
-    if (!uniqueVisitorsPath) return "";
-    const firstX = getXCoord(0, chartPoints.length);
-    const lastX = getXCoord(chartPoints.length - 1, chartPoints.length);
-    const baseline = chartHeight - paddingY;
-    return `${uniqueVisitorsPath} L ${lastX} ${baseline} L ${firstX} ${baseline} Z`;
-  }, [uniqueVisitorsPath, chartPoints.length, getXCoord]);
-
-  const actionClicksPath = useMemo(() => {
-    return computeBezierPath(chartPoints.map((p) => p.actionClicks));
-  }, [chartPoints, computeBezierPath]);
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-7xl mx-auto font-sans">
@@ -1160,155 +1373,7 @@ export default function AdminOverviewPage() {
           )}
 
           {/* TAB 4: TREND CHART */}
-          {viewTab === "chart" && (
-            <div className="space-y-4">
-              {/* Chart Legend */}
-              <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-                <div className="flex items-center gap-5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-full bg-emerald-500" />
-                    <span className="font-semibold text-brand-navy">Unique Clients</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-1.5 rounded-full bg-brand-orange" />
-                    <span className="font-semibold text-brand-navy">Lead Actions (WhatsApp/Calls)</span>
-                  </div>
-                </div>
-
-                {hoveredPointIndex !== null && chartPoints[hoveredPointIndex] && (
-                  <div className="px-3 py-1 rounded-xl bg-slate-100 text-brand-navy font-bold text-xs flex items-center gap-3">
-                    <span>{chartPoints[hoveredPointIndex].label}</span>
-                    <span className="text-emerald-700">
-                      Clients: {chartPoints[hoveredPointIndex].uniqueVisitors}
-                    </span>
-                    <span className="text-brand-orange">
-                      Actions: {chartPoints[hoveredPointIndex].actionClicks}
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* SVG Interactive Chart Box */}
-              <div className="relative w-full h-64 sm:h-72 bg-gradient-to-b from-slate-50/50 to-white rounded-2xl border border-brand-border/60 p-2 overflow-visible">
-                <svg
-                  className="w-full h-full overflow-visible"
-                  viewBox={`0 0 ${chartWidth} ${chartHeight}`}
-                  preserveAspectRatio="none"
-                >
-                  <defs>
-                    <linearGradient id="emeraldAreaGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Grid Lines */}
-                  {[0.25, 0.5, 0.75, 1.0].map((frac, idx) => {
-                    const y = chartHeight - paddingY - frac * (chartHeight - paddingY * 2);
-                    return (
-                      <line
-                        key={idx}
-                        x1={paddingX}
-                        y1={y}
-                        x2={chartWidth - paddingX}
-                        y2={y}
-                        stroke="#f1f5f9"
-                        strokeWidth="1"
-                        strokeDasharray="4 4"
-                      />
-                    );
-                  })}
-
-                  {/* Emerald Area Fill (Unique Clients) */}
-                  {uniqueVisitorsAreaPath && (
-                    <path d={uniqueVisitorsAreaPath} fill="url(#emeraldAreaGradient)" />
-                  )}
-
-                  {/* Emerald Spline Curve (Unique Clients) */}
-                  {uniqueVisitorsPath && (
-                    <path
-                      d={uniqueVisitorsPath}
-                      fill="none"
-                      stroke="#10b981"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                    />
-                  )}
-
-                  {/* Orange Curve (Lead Actions) */}
-                  {actionClicksPath && (
-                    <path
-                      d={actionClicksPath}
-                      fill="none"
-                      stroke="#f58220"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                    />
-                  )}
-
-                  {/* Interactive Coordinate Points */}
-                  {chartPoints.map((point, idx) => {
-                    const cx = getXCoord(idx, chartPoints.length);
-                    const cyVisitors = getYCoord(point.uniqueVisitors);
-                    const cyActions = getYCoord(point.actionClicks);
-                    const isHovered = hoveredPointIndex === idx;
-
-                    return (
-                      <g key={idx}>
-                        {/* Hover bar column trigger */}
-                        <rect
-                          x={cx - 18}
-                          y={paddingY}
-                          width={36}
-                          height={chartHeight - paddingY * 2}
-                          fill="transparent"
-                          className="cursor-pointer"
-                          onMouseEnter={() => setHoveredPointIndex(idx)}
-                          onMouseLeave={() => setHoveredPointIndex(null)}
-                        />
-
-                        {/* Unique Visitors Point */}
-                        <circle
-                          cx={cx}
-                          cy={cyVisitors}
-                          r={isHovered ? 6 : 4}
-                          fill="#ffffff"
-                          stroke="#10b981"
-                          strokeWidth={isHovered ? 3 : 2}
-                          className="transition-all"
-                        />
-
-                        {/* Action Point */}
-                        {point.actionClicks > 0 && (
-                          <circle
-                            cx={cx}
-                            cy={cyActions}
-                            r={isHovered ? 6 : 4}
-                            fill="#f58220"
-                            stroke="#ffffff"
-                            strokeWidth={isHovered ? 3 : 2}
-                            className="transition-all"
-                          />
-                        )}
-                      </g>
-                    );
-                  })}
-                </svg>
-
-                {/* X-Axis Labels */}
-                <div className="flex justify-between text-[11px] font-semibold text-secondary-text pt-2 px-3 border-t border-brand-border">
-                  {chartPoints.map((p, idx) => (
-                    <span
-                      key={idx}
-                      className={hoveredPointIndex === idx ? "text-brand-orange font-bold" : ""}
-                    >
-                      {p.label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+          {viewTab === "chart" && <TrendChart chartPoints={chartPoints} />}
         </div>
 
         {/* RIGHT (4 cols): Lead Intent & Device Demographics */}

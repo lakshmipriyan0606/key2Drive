@@ -34,6 +34,10 @@ next-env.d.ts
 *.db-shm
 *.db-wal
 
+# User uploads (preserve .gitkeep, ignore uploaded images)
+/public/images/uploads/*
+!/public/images/uploads/.gitkeep
+
 # OS files
 .DS_Store
 Thumbs.db
