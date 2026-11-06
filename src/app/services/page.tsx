@@ -247,7 +247,7 @@ export default function ServicesPage() {
                   <div
                     key={service.id}
                     id={service.slug}
-                    className="rounded-2xl bg-white border border-brand-border overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group hover:border-brand-orange/40"
+                    className="rounded-2xl bg-white border border-brand-border overflow-hidden shadow-xs hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group hover:border-brand-orange/40 transform-gpu"
                   >
                     <div>
                       {/* Top Visual Image - Compact Height & Clean (No Overlaid Badges) */}
@@ -257,7 +257,7 @@ export default function ServicesPage() {
                           alt={service.title}
                           width={400}
                           height={176}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-out"
                           loading="lazy"
                         />
                       </div>

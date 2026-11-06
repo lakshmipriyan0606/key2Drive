@@ -142,7 +142,11 @@ export default function HomePage() {
           aria-hidden="true"
         />
         <div
-          className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-brand-orange/10 blur-3xl pointer-events-none"
+          className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-brand-orange/15 blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute top-1/3 -left-32 w-80 h-80 rounded-full bg-brand-orange/10 blur-3xl pointer-events-none"
           aria-hidden="true"
         />
 
@@ -150,7 +154,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left Column: Headlines & 3-Way Booking Options */}
             <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-brand-orange text-xs font-bold tracking-wide uppercase">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-brand-orange text-xs font-bold tracking-wide uppercase transition-all duration-300 shadow-xs backdrop-blur-xs">
                 <Sparkles className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Professional acting drivers Services</span>
               </div>
@@ -199,44 +203,44 @@ export default function HomePage() {
 
       {/* 2. FLOATING QUICK TRUST FEATURE STRIP */}
       <section className="-mt-6 sm:-mt-8 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-white rounded-2xl lg:rounded-full border border-brand-border shadow-xl p-4 sm:p-5">
+        <div className="bg-white rounded-2xl lg:rounded-full border border-brand-border shadow-xl p-4 sm:p-5 backdrop-blur-md">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:divide-x lg:divide-brand-border">
-            <div className="flex items-center gap-3 px-2 justify-start">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 px-2 justify-start group cursor-default">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
               <div className="text-left min-w-0">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Professional Drivers</span>
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate group-hover:text-brand-orange transition-colors">Professional Drivers</span>
                 <span className="text-[11px] text-secondary-text hidden sm:block truncate">Govt ID & DL Verified</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6 group cursor-default">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <Clock className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
               <div className="text-left min-w-0">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">24/7 Support</span>
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate group-hover:text-brand-orange transition-colors">24/7 Support</span>
                 <span className="text-[11px] text-secondary-text hidden sm:block truncate">Always on call</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6 group cursor-default">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <Car className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
               <div className="text-left min-w-0">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Safe & Reliable</span>
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate group-hover:text-brand-orange transition-colors">Safe & Reliable</span>
                 <span className="text-[11px] text-secondary-text hidden sm:block truncate">Experienced handling</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 px-2 justify-start lg:pl-6 group cursor-default">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-amber-50 text-brand-orange flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                 <Star className="w-4 h-4 sm:w-5 sm:h-5" aria-hidden="true" />
               </div>
               <div className="text-left min-w-0">
-                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate">Transparent Billing</span>
+                <span className="font-bold text-xs sm:text-sm text-brand-navy block truncate group-hover:text-brand-orange transition-colors">Transparent Billing</span>
                 <span className="text-[11px] text-secondary-text hidden sm:block truncate">Discussed with dispatch</span>
               </div>
             </div>
@@ -260,7 +264,7 @@ export default function HomePage() {
             {services.map((svc) => (
               <div
                 key={svc.id}
-                className="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-lg transition-[box-shadow,border-color,transform] duration-300 hover:border-brand-orange/40 flex flex-col justify-between group"
+                className="bg-white rounded-2xl border border-brand-border overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 hover:border-brand-orange/40 flex flex-col justify-between group transform-gpu"
               >
                 <div>
                   {/* Photo with hover zoom */}
@@ -270,14 +274,15 @@ export default function HomePage() {
                       alt={svc.title}
                       width={400}
                       height={200}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                       loading="lazy"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </div>
 
                   {/* Body */}
                   <div className="p-5 space-y-2 text-left">
-                    <h3 className="font-bold text-lg text-brand-navy">{svc.title}</h3>
+                    <h3 className="font-bold text-lg text-brand-navy group-hover:text-brand-orange transition-colors duration-200">{svc.title}</h3>
                     <p className="text-xs font-semibold text-brand-orange">{svc.tagline}</p>
                     <p className="text-xs text-secondary-text leading-relaxed">{svc.description}</p>
                   </div>
@@ -286,17 +291,17 @@ export default function HomePage() {
                 <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-brand-border/40">
                   <Link
                     href={`/book?service=${svc.id}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-navy hover:text-brand-orange transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brand-orange rounded group/btn"
                   >
                     <span>Book Service</span>
-                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform duration-200" aria-hidden="true" />
                   </Link>
 
                   <a
                     href={getServiceWhatsAppUrl(svc)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] px-3.5 py-1.5 rounded-full shadow-xs transition-[background-color,transform] active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] hover:shadow-md px-3.5 py-1.5 rounded-full shadow-xs transition-all duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     title={`Chat on WhatsApp for ${svc.title}`}
                     aria-label={`Chat on WhatsApp for ${svc.title}`}
                   >
