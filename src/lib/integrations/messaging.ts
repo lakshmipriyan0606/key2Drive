@@ -61,7 +61,7 @@ class MockMessagingServiceImpl implements MessagingService {
   private defaultPhone: string;
 
   constructor() {
-    this.defaultPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919600992709';
+    this.defaultPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '917200132709';
   }
 
   /**
@@ -152,7 +152,7 @@ class MockMessagingServiceImpl implements MessagingService {
     const noteSuffix = note ? ` Note: ${note}` : '';
     const body =
       `Key2Drive Update: Your booking ${reference} is now ${newStatus}.${noteSuffix} ` +
-      `Support: ${process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+91 96009 92709'}`;
+      `Support: ${process.env.NEXT_PUBLIC_SUPPORT_PHONE || '+91 72001 32709'}`;
 
     const entry: MessagingLogEntry = {
       id: `sms_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,

@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
     const sessionContext = await getAdminSession();
 
     if (!sessionContext) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           success: true,
           authenticated: false,
@@ -15,6 +15,9 @@ export async function GET(request: NextRequest) {
         },
         { status: 200 }
       );
+      response.cookies.delete('k2d_session');
+      response.cookies.delete('key2drive_admin_session');
+      return response;
     }
 
     return NextResponse.json(

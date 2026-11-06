@@ -54,20 +54,26 @@ export default function AdminLayout({
       try {
         const res = await fetch("/api/admin/auth/me");
         if (!res.ok) {
+          document.cookie = "k2d_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          document.cookie = "key2drive_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
           const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
-          router.replace(`/admin/login${redirectParam}`);
+          window.location.replace(`/admin/login${redirectParam}`);
           return;
         }
         const data = await res.json();
         if (data.success && data.authenticated !== false && data.user) {
           setUser(data.user);
         } else {
+          document.cookie = "k2d_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+          document.cookie = "key2drive_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
           const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
-          router.replace(`/admin/login${redirectParam}`);
+          window.location.replace(`/admin/login${redirectParam}`);
         }
       } catch (err) {
+        document.cookie = "k2d_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        document.cookie = "key2drive_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         const redirectParam = pathname && pathname !== "/admin" ? `?redirect=${encodeURIComponent(pathname)}` : '';
-        router.replace(`/admin/login${redirectParam}`);
+        window.location.replace(`/admin/login${redirectParam}`);
       } finally {
         setLoading(false);
       }
@@ -79,6 +85,8 @@ export default function AdminLayout({
   const handleLogout = async () => {
     try {
       await fetch("/api/admin/auth/logout", { method: "POST" });
+      document.cookie = "k2d_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      document.cookie = "key2drive_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       toast.success("Signed out successfully.");
       window.location.href = "/admin/login";
     } catch {
@@ -90,13 +98,24 @@ export default function AdminLayout({
     return <>{children}</>;
   }
 
-  // If still checking or not authenticated, render loading screen and NEVER mount protected children
+  // If still checking or not authenticated, render loading screen with proper spinner & recovery CTA
   if (loading || !user) {
     return (
-      <div className="min-h-screen bg-brand-warm-bg flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-3 border-brand-orange border-t-transparent animate-spin" />
-          <span className="text-xs font-semibold text-brand-navy">Verifying Admin Session…</span>
+      <div className="min-h-screen bg-brand-warm-bg flex items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <div className="w-10 h-10 rounded-full border-4 border-brand-orange border-t-transparent animate-spin" />
+          <span className="text-sm font-bold text-brand-navy">Verifying Admin Session…</span>
+          <p className="text-xs text-secondary-text">Redirecting to administrator login…</p>
+          <a
+            href="/admin/login"
+            onClick={() => {
+              document.cookie = "k2d_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+              document.cookie = "key2drive_admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+            }}
+            className="mt-2 inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-navy text-white text-xs font-bold hover:bg-slate-800 transition-colors shadow-sm"
+          >
+            Go to Admin Login
+          </a>
         </div>
       </div>
     );

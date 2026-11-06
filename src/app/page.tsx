@@ -252,7 +252,7 @@ export default function HomePage() {
               Our Services
             </h2>
             <p className="text-secondary-text text-sm sm:text-base">
-              Choose from our professional acting driver and car driver services
+              Choose from our professional acting car driver services.
             </p>
           </div>
 

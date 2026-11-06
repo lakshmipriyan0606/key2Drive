@@ -20,16 +20,6 @@ export function middleware(request: NextRequest) {
   const isAdminApi = pathname.startsWith('/api/admin');
 
   if (isAdminPage || isAdminApi) {
-    // If an already authenticated admin visits the login page, redirect directly to dashboard
-    if (pathname === '/admin/login') {
-      const existingSession =
-        request.cookies.get(SESSION_COOKIE_NAME)?.value ||
-        request.cookies.get('key2drive_admin_session')?.value;
-      if (existingSession && existingSession.trim().length > 0) {
-        return NextResponse.redirect(new URL('/admin', request.url));
-      }
-    }
-
     const isPublic = PUBLIC_ADMIN_PATHS.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
     if (!isPublic) {

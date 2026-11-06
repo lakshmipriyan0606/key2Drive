@@ -263,7 +263,7 @@ function BookingContent() {
     }
     const cleanPhone = formData.customerPhone.replace(/[\s\-\+]/g, "");
     if (!cleanPhone || !/^(?:91)?[6-9]\d{9}$/.test(cleanPhone)) {
-      errs.customerPhone = "Enter a valid 10-digit mobile number (e.g. 9600992709)";
+      errs.customerPhone = "Enter a valid 10-digit mobile number (e.g. 7200132709)";
     }
     if (
       !formData.customerEmail ||
@@ -852,7 +852,7 @@ function BookingContent() {
                       type="tel"
                       inputMode="tel"
                       autoComplete="tel"
-                      placeholder="e.g. 9600992709"
+                      placeholder="e.g. 7200132709"
                       value={formData.customerPhone}
                       onChange={(e) =>
                         setFormData((prev) => ({ ...prev, customerPhone: e.target.value }))

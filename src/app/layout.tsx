@@ -23,7 +23,6 @@ export const metadata: Metadata = {
     "Key2Drive provides professional, background-verified personal car drivers for your car. Hourly acting drivers, full-day drivers, airport transfers, and outstation trips with zero surge.",
   keywords: [
     "acting driver",
-    "call driver",
     "car driver",
     "personal driver",
     "driver for car",

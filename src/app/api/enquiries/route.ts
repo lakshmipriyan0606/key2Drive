@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     ).catch((err) => console.error('Enquiry SMS acknowledgment warning:', err));
 
     const whatsappLink = messagingService.generateWhatsAppLink(
-      process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919600992709',
+      process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '917200132709',
       `Hello Key2Drive Team, I submitted enquiry #${enquiry.id.slice(-6)} regarding: "${enquiry.subject}".`
     );
 

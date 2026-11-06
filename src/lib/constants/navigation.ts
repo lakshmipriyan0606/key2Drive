@@ -111,7 +111,7 @@ Please share driver availability and quote. Thank you!`,
 
 export function getWhatsAppUrl(
   customMessage?: string,
-  phoneNumber: string = "919600992709"
+  phoneNumber: string = "917200132709"
 ): string {
   const message = customMessage || WHATSAPP_GREETINGS.default;
   return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -119,7 +119,7 @@ export function getWhatsAppUrl(
 
 export function getServiceWhatsAppUrl(
   service: { title: string; slug?: string; description?: string },
-  phoneNumber: string = "919600992709"
+  phoneNumber: string = "917200132709"
 ): string {
   const slug = (service.slug || "").toLowerCase();
   const title = (service.title || "").toLowerCase();
@@ -149,10 +149,10 @@ export function getServiceWhatsAppUrl(
 }
 
 export const CONTACT_DETAILS = {
-  phoneDisplay: "+91 96009 92709",
-  phoneTel: "+919600992709",
-  phoneRaw: "9600992709",
-  phoneWhatsapp: "919600992709",
+  phoneDisplay: "+91 72001 32709",
+  phoneTel: "+917200132709",
+  phoneRaw: "7200132709",
+  phoneWhatsapp: "917200132709",
   phoneReviewNotice: "",
   emailDisplay: "key2drivers@gmail.com",
   emailMailto: "key2drivers@gmail.com",

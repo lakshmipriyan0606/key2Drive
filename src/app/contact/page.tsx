@@ -290,7 +290,7 @@ export default function ContactPage() {
                         type="tel"
                         inputMode="tel"
                         autoComplete="tel"
-                        placeholder="9600992709"
+                        placeholder="7200132709"
                         value={formData.phone}
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, phone: e.target.value }))

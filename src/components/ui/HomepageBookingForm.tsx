@@ -628,7 +628,7 @@ export default function HomepageBookingForm() {
                       type="tel"
                       inputMode="tel"
                       autoComplete="tel"
-                      placeholder="e.g. 9600992709"
+                      placeholder="e.g. 7200132709"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       aria-invalid={!!errors.customerPhone}
