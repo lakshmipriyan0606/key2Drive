@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { ZodError } from 'zod';
 import prisma from '@/lib/db';
 import { getAdminSession } from '@/lib/auth';
@@ -125,6 +126,14 @@ export async function POST(request: Request) {
     const { featuresList, image: savedImage } = parseFeaturesAndImage(newService.features);
     const defaultImage = SERVICE_IMAGES[newService.slug] || DEFAULT_IMAGE;
     const finalImage = savedImage || defaultImage;
+
+    try {
+      revalidatePath('/');
+      revalidatePath('/services');
+      revalidatePath('/api/services');
+    } catch {
+      // ignore
+    }
 
     return NextResponse.json(
       {

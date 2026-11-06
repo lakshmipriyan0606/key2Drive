@@ -62,7 +62,7 @@ const CATEGORY_TABS = [
   { id: "hourly", label: "Hourly & Daily", slugs: ["hourly-driver", "full-day-driver"] },
   { id: "airport", label: "Airport Transfers", slugs: ["airport-transfer"] },
   { id: "outstation", label: "Outstation Trips", slugs: ["outstation-driver"] },
-  { id: "corporate", label: "Corporate & Monthly", slugs: ["corporate-services", "personal-chauffeur"] },
+  { id: "corporate", label: "Corporate & Monthly", slugs: ["corporate-services", "corporate-chauffeur", "personal-chauffeur"] },
 ];
 
 export default function ServicesPage() {
@@ -74,7 +74,7 @@ export default function ServicesPage() {
   useEffect(() => {
     async function fetchServices() {
       try {
-        const res = await fetch("/api/services");
+        const res = await fetch("/api/services", { cache: "no-store" });
         const json = await res.json();
         if (json.success && Array.isArray(json.services) && json.services.length > 0) {
           setServices(json.services);
@@ -240,8 +240,15 @@ export default function ServicesPage() {
             /* ===== COMPACT 3-COLUMN SERVICE CARDS (CLEAN IMAGES, REDUCED HEIGHT) ===== */
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredServices.map((service) => {
-                const featureList = parseFeatures(service.features);
-                const carImage = SERVICE_IMAGES[service.slug] || DEFAULT_IMAGE;
+                const featureList =
+                  service.featuresList && service.featuresList.length > 0
+                    ? service.featuresList
+                    : parseFeatures(service.features);
+                const carImage =
+                  (service as any).image ||
+                  (service as any).imageUrl ||
+                  SERVICE_IMAGES[service.slug] ||
+                  DEFAULT_IMAGE;
 
                 return (
                   <div
@@ -330,8 +337,15 @@ export default function ServicesPage() {
             /* ===== BALANCED COMPACT LIST VIEW (NO DEAD SPACE) ===== */
             <div className="max-w-5xl mx-auto space-y-5">
               {filteredServices.map((service) => {
-                const featureList = parseFeatures(service.features);
-                const carImage = SERVICE_IMAGES[service.slug] || DEFAULT_IMAGE;
+                const featureList =
+                  service.featuresList && service.featuresList.length > 0
+                    ? service.featuresList
+                    : parseFeatures(service.features);
+                const carImage =
+                  (service as any).image ||
+                  (service as any).imageUrl ||
+                  SERVICE_IMAGES[service.slug] ||
+                  DEFAULT_IMAGE;
 
                 return (
                   <div

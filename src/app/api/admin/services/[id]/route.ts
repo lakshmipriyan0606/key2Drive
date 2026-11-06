@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { ZodError } from 'zod';
 import prisma from '@/lib/db';
 import { getAdminSession } from '@/lib/auth';
@@ -140,6 +141,14 @@ async function handleUpdate(
     const defaultImage = SERVICE_IMAGES[updated.slug] || DEFAULT_IMAGE;
     const finalImage = customImage || defaultImage;
 
+    try {
+      revalidatePath('/');
+      revalidatePath('/services');
+      revalidatePath('/api/services');
+    } catch {
+      // ignore
+    }
+
     return NextResponse.json(
       {
         success: true,
@@ -236,6 +245,14 @@ export async function DELETE(
     await prisma.service.delete({
       where: { id: existing.id },
     });
+
+    try {
+      revalidatePath('/');
+      revalidatePath('/services');
+      revalidatePath('/api/services');
+    } catch {
+      // ignore
+    }
 
     return NextResponse.json(
       {

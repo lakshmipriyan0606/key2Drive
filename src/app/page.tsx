@@ -81,16 +81,18 @@ export default function HomePage() {
   const [services, setServices] = useState(DEFAULT_SERVICES);
 
   useEffect(() => {
-    fetch("/api/services")
+    fetch("/api/services", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.success && Array.isArray(data.services) && data.services.length > 0) {
-          const mapped = data.services.slice(0, 4).map((svc: any) => ({
+          const mapped = data.services.map((svc: any) => ({
             id: svc.slug,
             title: svc.title,
             tagline: svc.tagline || "",
             description: svc.description || "",
             image:
+              svc.image ||
+              svc.imageUrl ||
               SERVICE_IMAGES[svc.slug] ||
               "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop",
             slug: svc.slug,
@@ -260,7 +262,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${services.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-6`}>
             {services.map((svc) => (
               <div
                 key={svc.id}

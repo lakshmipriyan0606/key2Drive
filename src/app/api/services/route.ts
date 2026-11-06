@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
 import { SEED_SERVICES } from '@/lib/data/seedData';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const SERVICE_IMAGES: Record<string, string> = {
   'hourly-driver': 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=800&auto=format&fit=crop',
   'full-day-driver': 'https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=800&auto=format&fit=crop',
@@ -80,7 +83,7 @@ export async function GET(request: Request) {
       {
         status: 200,
         headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
         },
       }
     );
