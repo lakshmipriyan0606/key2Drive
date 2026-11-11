@@ -304,6 +304,7 @@ function BookingContent() {
         serviceId: formData.serviceId,
         tariffId: formData.tariffId || undefined,
         pickupDateTime: `${formData.pickupDate}T${formData.pickupTime}:00.000Z`,
+        duration: formData.duration || `${formData.duration.includes("8") ? 8 : formData.duration.includes("12") ? 12 : 4} hours`,
         durationHours: formData.duration.includes("8")
           ? 8
           : formData.duration.includes("12")
@@ -311,6 +312,12 @@ function BookingContent() {
           : 4,
         pickupAddress: formData.pickupAddress.trim(),
         dropAddress: formData.dropAddress.trim() || undefined,
+        vehicleInfo: {
+          make: formData.vehicleMake.trim(),
+          model: formData.vehicleModel.trim(),
+          transmission: formData.transmission,
+          category: formData.vehicleCategory,
+        },
         vehicleMake: formData.vehicleMake.trim(),
         vehicleModel: formData.vehicleModel.trim(),
         transmission: formData.transmission,
@@ -335,14 +342,16 @@ function BookingContent() {
         throw new Error(data.error || "Failed to create driver booking.");
       }
 
+      const bookingData = data.booking || data;
+
       setConfirmedBooking({
-        reference: data.booking.reference,
-        id: data.booking.id,
-        status: data.booking.status,
-        estimatedFare: data.booking.estimatedAmount,
-        pickupAddress: data.booking.pickupAddress,
-        dropAddress: data.booking.dropAddress,
-        pickupDateTime: data.booking.pickupDateTime,
+        reference: bookingData.reference || data.bookingReference,
+        id: bookingData.id || data.bookingId,
+        status: bookingData.status || data.status || "REQUESTED",
+        estimatedFare: bookingData.estimatedAmount || data.estimatedFare || calculateEstimatedFare(),
+        pickupAddress: bookingData.pickupAddress || formData.pickupAddress.trim(),
+        dropAddress: bookingData.dropAddress || formData.dropAddress.trim() || undefined,
+        pickupDateTime: bookingData.pickupDateTime || `${formData.pickupDate}T${formData.pickupTime}:00.000Z`,
         serviceName: selectedService?.title || "Acting Driver Service",
         customerName: formData.customerName,
         customerPhone: formData.customerPhone,

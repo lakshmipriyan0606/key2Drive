@@ -13,17 +13,29 @@ import { BookingStatusEnum } from "./status";
 export const VehicleInfoObjectSchema = z.object({
   make: z.string().trim().min(1, "Vehicle make is required"),
   model: z.string().trim().min(1, "Vehicle model is required"),
-  transmission: z.enum(["MANUAL", "AUTOMATIC"], {
-    errorMap: () => ({ message: "Transmission must be MANUAL or AUTOMATIC" }),
-  }),
+  transmission: z
+    .enum(["MANUAL", "AUTOMATIC"], {
+      errorMap: () => ({ message: "Transmission must be MANUAL or AUTOMATIC" }),
+    })
+    .or(
+      z
+        .string()
+        .transform((val) =>
+          val.toUpperCase().includes("MANUAL") ? "MANUAL" : "AUTOMATIC"
+        )
+    ),
   category: z
-    .enum(["HATCHBACK", "SEDAN", "SUV", "LUXURY", "ALL_VEHICLES"])
-    .optional(),
+    .string()
+    .trim()
+    .optional()
+    .nullable()
+    .transform((val) => (val && val.length > 0 ? val : undefined)),
   licensePlate: z
     .string()
     .trim()
     .max(20, "License plate cannot exceed 20 characters")
-    .optional(),
+    .optional()
+    .nullable(),
 });
 
 export type VehicleInfoObject = z.infer<typeof VehicleInfoObjectSchema>;
@@ -36,7 +48,7 @@ export const vehicleInfoSchema = z.union([
   z
     .string({ required_error: "Vehicle info is required" })
     .trim()
-    .min(2, "Vehicle info must be at least 2 characters")
+    .min(1, "Vehicle info must be at least 1 character")
     .max(200, "Vehicle info cannot exceed 200 characters"),
   VehicleInfoObjectSchema.transform(
     (v) =>
@@ -61,7 +73,7 @@ export const durationSchema = z
  * Validates customer name, 10-digit mobile number, valid email, pickup/drop locations,
  * future pickup date/time, duration, vehicle info, special instructions, and idempotency submissionHash.
  */
-export const BookingCreateSchema = z.object({
+export const BaseBookingCreateSchema = z.object({
   customerName: z
     .string({ required_error: "Full name is required" })
     .trim()
@@ -109,7 +121,26 @@ export const BookingCreateSchema = z.object({
   submissionHash: submissionHashSchema,
 });
 
-export type BookingCreateInput = z.infer<typeof BookingCreateSchema>;
+export const BookingCreateSchema = z.preprocess((raw: unknown) => {
+  if (raw && typeof raw === "object") {
+    const data = { ...(raw as Record<string, unknown>) };
+    if (!data.vehicleInfo && (data.vehicleMake || data.vehicleModel)) {
+      data.vehicleInfo = {
+        make: String(data.vehicleMake || "").trim() || "Standard",
+        model: String(data.vehicleModel || "").trim() || "Vehicle",
+        transmission: String(data.transmission || "AUTOMATIC").toUpperCase().includes("MANUAL") ? "MANUAL" : "AUTOMATIC",
+        category: data.vehicleCategory ? String(data.vehicleCategory).trim() : undefined,
+      };
+    }
+    if (!data.duration && data.durationHours) {
+      data.duration = `${data.durationHours} hours`;
+    }
+    return data;
+  }
+  return raw;
+}, BaseBookingCreateSchema);
+
+export type BookingCreateInput = z.infer<typeof BaseBookingCreateSchema>;
 
 /**
  * Booking Status Update Schema (Admin)

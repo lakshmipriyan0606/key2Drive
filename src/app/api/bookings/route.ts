@@ -66,6 +66,7 @@ export async function POST(request: Request) {
           {
             success: true,
             isDuplicate: true,
+            booking: existing,
             bookingReference: existing.reference,
             bookingId: existing.id,
             status: existing.status,
@@ -150,6 +151,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
+        booking,
         bookingReference: booking.reference,
         bookingId: booking.id,
         status: booking.status,
