@@ -105,6 +105,20 @@ export function trackAction(
     referrer: meta.referrer,
   });
 
+  // Forward customer engagement events to Google Analytics (GA4)
+  try {
+    if (typeof window !== 'undefined' && (window as any).gtag && eventType !== 'heartbeat') {
+      (window as any).gtag('event', eventType, {
+        event_category: 'engagement',
+        event_label: label || undefined,
+        page_path: page,
+        ...metadata,
+      });
+    }
+  } catch {
+    // Non-blocking GA catch
+  }
+
   try {
     if (typeof navigator !== 'undefined' && navigator.sendBeacon && eventType !== 'heartbeat') {
       const blob = new Blob([payload], { type: 'application/json' });
