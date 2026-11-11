@@ -5,7 +5,6 @@ import Footer from "@/components/layout/Footer";
 import SonnerToaster from "@/components/ui/SonnerToaster";
 import FloatingContactBar from "@/components/ui/FloatingContactBar";
 import VisitorTracker from "@/components/analytics/VisitorTracker";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 export const viewport: Viewport = {
   themeColor: "#11243D",
@@ -72,8 +71,30 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID || "G-L9W9T6354J";
+
   return (
     <html lang="en" className="scroll-smooth font-sans h-full antialiased">
+      <head>
+        {/* Google Analytics GA4 (gtag.js) in <head> for Google Search Console Verification & Analytics */}
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+        />
+        <script
+          id="google-analytics"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gaId}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-brand-warm-bg text-brand-text flex flex-col font-sans selection:bg-brand-orange/20 selection:text-brand-navy">
         {/* Accessible skip link for keyboard & assistive technology users */}
         <a
@@ -99,9 +120,6 @@ export default function RootLayout({
 
         {/* Emil Kowalski Sonner Toast Notification Center */}
         <SonnerToaster />
-
-        {/* Google Analytics GA4 */}
-        <GoogleAnalytics gaId="G-L9W9T6354J" />
 
         {/* Real-time Unique Visitor & Action Tracker */}
         <VisitorTracker />
