@@ -8,7 +8,7 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import BrandLogo from "@/components/ui/BrandLogo";
 import MobileNav from "@/components/layout/MobileNav";
 import ButtonMotion from "@/components/ui/ButtonMotion";
-import { CONTACT_DETAILS } from "@/lib/constants/navigation";
+import { CONTACT_DETAILS, MAIN_NAV_ITEMS } from "@/lib/constants/navigation";
 
 export default function Header() {
   const pathname = usePathname();
@@ -33,11 +33,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "Services", href: "/services" },
-    { label: "Contact", href: "/contact" },
-  ];
+  const navLinks = MAIN_NAV_ITEMS;
 
   const isActiveLink = (href: string): boolean => {
     if (href === "/") return pathname === "/";

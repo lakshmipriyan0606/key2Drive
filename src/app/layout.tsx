@@ -15,48 +15,62 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.key2drivers.in"),
+  applicationName: "Key2Drive",
   title: {
-    default: "Key2Drive | Professional Acting Driver & Car Driver Services",
+    default: "Acting Driver Service in Tamil Nadu | Key2Drive",
     template: "%s | Key2Drive",
   },
   description:
-    "Key2Drive provides professional, background-verified personal car drivers for your car. Hourly acting drivers, full-day drivers, airport transfers, and outstation trips with zero surge.",
-  keywords: [
-    "acting driver",
-    "car driver",
-    "personal driver",
-    "driver for car",
-    "hire driver",
-    "airport transfer",
-    "outstation driver",
-    "corporate driver",
-    "monthly driver",
-    "Key2Drive",
-  ],
+    "Professional acting driver and call driver services across Tamil Nadu. Book experienced drivers for your personal car with Key2Drive.",
   authors: [{ name: "Key2Drive Mobility Solutions" }],
-  creator: "Key2Drive",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  creator: "Key2Drive Mobility Solutions",
+  publisher: "Key2Drive",
+  alternates: {
+    canonical: "https://www.key2drivers.in",
+  },
   openGraph: {
-    title: "Key2Drive | Professional Acting Driver & Car Driver Services",
+    title: "Acting Driver Service in Tamil Nadu | Key2Drive",
     description:
-      "Professional, background-verified personal drivers for your car. Transparent hourly tariffs, 24/7 dispatch, and safe journey in your vehicle.",
-    url: "/",
+      "Professional acting driver and call driver services across Tamil Nadu. Book experienced drivers for your personal car with Key2Drive.",
+    url: "https://www.key2drivers.in",
     siteName: "Key2Drive",
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/images/chauffeur-indian.jpg",
+        width: 1376,
+        height: 768,
+        alt: "Key2Drive Professional Acting Driver Services in Tamil Nadu",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Key2Drive | Professional Acting Driver & Car Driver Services",
+    title: "Acting Driver Service in Tamil Nadu | Key2Drive",
     description:
-      "Professional, background-verified personal drivers for your car. Transparent hourly tariffs, 24/7 dispatch, and safe journey in your vehicle.",
+      "Professional acting driver and call driver services across Tamil Nadu. Book experienced drivers for your personal car with Key2Drive.",
+    images: ["/images/chauffeur-indian.jpg"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/icon.svg",
   },
   verification: {
     google: [
